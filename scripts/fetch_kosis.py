@@ -133,6 +133,8 @@ def prepare(ind):
             if not match(r, ind.get("filters")):
                 continue
             n, d = num(r.get("DT")), den.get(r[cf])
+            if n is None and rt.get("nullAsZero") and d:
+                n = 0.0  # KOSIS의 '-'(해당 없음)를 0으로 본다
             if n is None or not d:
                 continue
             out.append({"code": r[cf], "name": r.get(nf, ""), "v": n / d * rt.get("scale", 1),

@@ -284,7 +284,8 @@
             "den": {
               "itmId": "T1"
             },
-            "scale": 100
+            "scale": 100,
+            "nullAsZero": true
           },
           "source": "국가데이터처 인구주택총조사",
           "note": "(반)지하 가구 ÷ 총 일반가구"
@@ -304,7 +305,8 @@
             "den": {
               "itmId": "T1"
             },
-            "scale": 100
+            "scale": 100,
+            "nullAsZero": true
           },
           "source": "국가데이터처 인구주택총조사",
           "note": "옥탑 가구 ÷ 총 일반가구"
