@@ -53,22 +53,21 @@ if cand.exists():
 out = {}
 for org, tbl in tables[:MAX_TABLES]:
     itm = meta(org, tbl, "ITM")
-    obj = meta(org, tbl, "OBJ")
     entry = {"orgId": org}
     if isinstance(itm, list):
-        entry["items"] = [{"ITM_ID": r.get("ITM_ID"), "ITM_NM": r.get("ITM_NM"), "UNIT_NM": r.get("UNIT_NM")} for r in itm][:60]
-    else:
-        entry["items_err"] = itm
-    if isinstance(obj, list):
         grp = {}
-        for r in obj:
-            g = grp.setdefault(r.get("OBJ_ID"), {"OBJ_NM": r.get("OBJ_NM"), "n": 0, "sample": []})
+        for r in itm:
+            oid = r.get("OBJ_ID") or "(항목)"
+            g = grp.setdefault(oid, {"OBJ_NM": r.get("OBJ_NM"), "n": 0, "sample": [], "codes_len": {}})
             g["n"] += 1
-            if len(g["sample"]) < 12:
-                g["sample"].append(f'{r.get("ITM_ID")}:{r.get("ITM_NM")}')
+            code = str(r.get("ITM_ID"))
+            g["codes_len"][str(len(code))] = g["codes_len"].get(str(len(code)), 0) + 1
+            if len(g["sample"]) < 14:
+                g["sample"].append(f'{code}:{r.get("ITM_NM")}' + (f'[{r.get("UNIT_NM")}]' if r.get("UNIT_NM") else ""))
         entry["objs"] = grp
+        entry["raw_first"] = itm[:2]
     else:
-        entry["objs_err"] = obj
+        entry["err"] = itm
     out[tbl] = entry
     time.sleep(0.2)
 
