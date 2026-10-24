@@ -3,7 +3,7 @@
 분야 → 지표 2단 체계로 지표를 고르면, 광역 17개 시도와 기초 229개 시군구의 상위 3·하위 3을 보여주는 정적 사이트(GitHub Pages).
 
 ## 구조
-- `index.html` — 화면(스코어카드). 지표 선택 → 광역·기초 상위/하위 3, 동률 묶음, 전체 순위, 지역 검색
+- `index.html` — 화면(스코어카드). 지표 선택 → 광역·기초 상위/하위 3, 동률 묶음, 전체 순위, 지역 검색, 시군구 지도(단계구분도)
 - `data/data.json` — 화면이 읽는 데이터 (`isSample:false`면 실데이터)
 - `scripts/indicators.json` — 분야·지표 설정(KOSIS 통계표 코드)
 - `scripts/fetch_kosis.py` — 수집. 표마다 지역 코드 체계가 달라 (시도, 지역명)으로 맞추고, 시 아래 일반구는 제외(229개 기준)
@@ -30,3 +30,9 @@ Secrets: `KOSIS_API_KEY`(KOSIS), `DATA_GO_KR_KEY`(공공데이터포털, 아직 
 ```
 python -m http.server 8000
 ```
+
+## 추가 구성 (2026-10)
+- `scripts/fetch_realestate.py` — 공공데이터포털 아파트 매매 실거래가 → ㎡당 평균 매매가(`apt_price`). Secret `DATA_GO_KR_KEY` 필요. 키 승인 전에는 `data/realestate_report.txt`에 원인만 남기고 종료.
+- `scripts/build_geo.py` — 통계청 2018 시군구 경계를 현재 행정구역(군위군 대구 편입, 미추홀구 등)에 맞춰 단순화 → `data/geo_*.json`
+- `perPop` — 지표 값을 주민등록인구로 나눠 인구 대비 비율로 만드는 옵션(`fetch_kosis.py` 상단 설명)
+- 한계: 범죄율은 시도만(광주·전남 제외), 기초생활수급률·교육 지표는 전국 시군구 표를 찾지 못해 미포함
