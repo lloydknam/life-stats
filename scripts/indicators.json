@@ -2,105 +2,395 @@
   "_comment": "분야(KOSIS 대분류 이름) → 지표 2단 구조. 통계표 코드는 KOSIS 통계검색·메타 조회로 확인한 값. 반지하·무주택 등은 구조 확인 후 추가.",
   "themes": [
     {
-      "id": "pop", "name": "인구",
+      "id": "pop",
+      "name": "인구",
       "indicators": [
-        {"id": "aging", "name": "고령인구(65세 이상) 비율", "unit": "%", "higherIsBetter": false,
-         "orgId": "101", "tblId": "DT_1B040M5_1", "itmId": "T10", "objL1": "ALL", "objL2": "0", "objL3": "ALL",
-         "shareOf": {"dim": 3, "numRegex": "^(6[5-9]|[7-9][0-9]|1[0-9][0-9])", "totalName": "계", "scale": 100},
-         "source": "국가데이터처 주민등록연앙인구", "note": "65세 이상 인구 ÷ 전체 인구"},
-        {"id": "birth", "name": "합계출산율", "unit": "명", "higherIsBetter": true,
-         "orgId": "101", "tblId": "INH_1B81A17", "itmId": "T1", "objL1": "ALL",
-         "source": "국가데이터처 인구동향조사"},
-        {"id": "marriage_rate", "name": "조혼인율", "unit": "천 명당", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1B8000I", "itmId": "T41", "objL1": "ALL",
-         "source": "국가데이터처 인구동향조사"},
-        {"id": "divorce_rate", "name": "조이혼율", "unit": "천 명당", "higherIsBetter": false,
-         "orgId": "101", "tblId": "DT_1B8000I", "itmId": "T51", "objL1": "ALL",
-         "source": "국가데이터처 인구동향조사"},
-        {"id": "natural_inc", "name": "자연증가율(출생-사망)", "unit": "천 명당", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1B8000I", "itmId": "T31", "objL1": "ALL",
-         "source": "국가데이터처 인구동향조사"}
+        {
+          "id": "aging",
+          "name": "고령인구(65세 이상) 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1B040M5_1",
+          "itmId": "T10",
+          "objL1": "ALL",
+          "objL2": "0",
+          "objL3": "ALL",
+          "shareOf": {
+            "dim": 3,
+            "numRegex": "^(6[5-9]|[7-9][0-9]|1[0-9][0-9])",
+            "totalName": "계",
+            "scale": 100
+          },
+          "source": "국가데이터처 주민등록연앙인구",
+          "note": "65세 이상 인구 ÷ 전체 인구"
+        },
+        {
+          "id": "birth",
+          "name": "합계출산율",
+          "unit": "명",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "INH_1B81A17",
+          "itmId": "T1",
+          "objL1": "ALL",
+          "source": "국가데이터처 인구동향조사"
+        },
+        {
+          "id": "marriage_rate",
+          "name": "조혼인율",
+          "unit": "천 명당",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1B8000I",
+          "itmId": "T41",
+          "objL1": "ALL",
+          "source": "국가데이터처 인구동향조사"
+        },
+        {
+          "id": "divorce_rate",
+          "name": "조이혼율",
+          "unit": "천 명당",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1B8000I",
+          "itmId": "T51",
+          "objL1": "ALL",
+          "source": "국가데이터처 인구동향조사"
+        },
+        {
+          "id": "natural_inc",
+          "name": "자연증가율(출생-사망)",
+          "unit": "천 명당",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1B8000I",
+          "itmId": "T31",
+          "objL1": "ALL",
+          "source": "국가데이터처 인구동향조사"
+        }
       ]
     },
     {
-      "id": "health", "name": "보건",
+      "id": "health",
+      "name": "보건",
       "indicators": [
-        {"id": "suicide", "name": "자살 사망률", "unit": "인구 10만 명당", "higherIsBetter": false,
-         "orgId": "101", "tblId": "DT_1B34E13", "itmId": "T4",
-         "objL1": {"resolve": {"obj": "A", "name": "자살"}}, "objL2": "ALL", "objL3": "0", "regionDim": 2,
-         "source": "국가데이터처 사망원인통계"},
-        {"id": "death_rate", "name": "조사망률", "unit": "천 명당", "higherIsBetter": false,
-         "orgId": "101", "tblId": "DT_1B8000I", "itmId": "T22", "objL1": "ALL",
-         "source": "국가데이터처 인구동향조사"}
+        {
+          "id": "suicide",
+          "name": "자살 사망률",
+          "unit": "인구 10만 명당",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1B34E13",
+          "itmId": "T4",
+          "objL1": {
+            "resolve": {
+              "obj": "A",
+              "name": "자살"
+            }
+          },
+          "objL2": "ALL",
+          "objL3": "0",
+          "regionDim": 2,
+          "source": "국가데이터처 사망원인통계"
+        },
+        {
+          "id": "death_rate",
+          "name": "조사망률",
+          "unit": "천 명당",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1B8000I",
+          "itmId": "T22",
+          "objL1": "ALL",
+          "source": "국가데이터처 인구동향조사"
+        }
       ]
     },
     {
-      "id": "welfare", "name": "복지",
+      "id": "welfare",
+      "name": "복지",
       "indicators": [
-        {"id": "elder_leisure", "name": "노인 천 명당 노인여가복지시설", "unit": "개", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1YL20961", "itmId": "T10", "objL1": "ALL",
-         "source": "국가데이터처(보건복지부 자료)"}
+        {
+          "id": "elder_leisure",
+          "name": "노인 천 명당 노인여가복지시설",
+          "unit": "개",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1YL20961",
+          "itmId": "T10",
+          "objL1": "ALL",
+          "source": "국가데이터처(보건복지부 자료)"
+        }
       ]
     },
     {
-      "id": "labor", "name": "노동",
+      "id": "labor",
+      "name": "노동",
       "indicators": [
-        {"id": "employment", "name": "고용률", "unit": "%", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1ES3A03_A01S", "itmId": "T12", "objL1": "ALL", "objL2": "000",
-         "sidoCodeLen": 0, "sigunguCodeLen": 4, "source": "국가데이터처 지역별고용조사"},
-        {"id": "youth_emp", "name": "청년(15~29세) 고용률", "unit": "%", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1ES3A03_A01S", "itmId": "T12", "objL1": "ALL", "objL2": "010",
-         "sidoCodeLen": 0, "sigunguCodeLen": 4, "source": "국가데이터처 지역별고용조사"},
-        {"id": "lfp", "name": "경제활동참가율", "unit": "%", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1ES3A02S", "itmId": "T6", "objL1": "ALL", "objL2": "S0",
-         "sidoCodeLen": 0, "sigunguCodeLen": 4, "source": "국가데이터처 지역별고용조사"},
-        {"id": "emp_1564", "name": "15~64세 고용률", "unit": "%", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1ES3A02S", "itmId": "T8", "objL1": "ALL", "objL2": "S0",
-         "sidoCodeLen": 0, "sigunguCodeLen": 4, "source": "국가데이터처 지역별고용조사"},
-        {"id": "unemployment", "name": "실업률", "unit": "%", "higherIsBetter": false,
-         "orgId": "101", "tblId": "DT_1ES3A01S", "itmId": "ALL", "objL1": "ALL",
-         "filters": {"ITM_NM": "re:^실업률"}, "exclude": {"ITM_NM": "re:RSE"},
-         "sidoCodeLen": 0, "sigunguCodeLen": 4, "source": "국가데이터처 지역별고용조사"}
+        {
+          "id": "employment",
+          "name": "고용률",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1ES3A03_A01S",
+          "itmId": "T12",
+          "objL1": "ALL",
+          "objL2": "000",
+          "sidoCodeLen": 0,
+          "sigunguCodeLen": 4,
+          "source": "국가데이터처 지역별고용조사"
+        },
+        {
+          "id": "youth_emp",
+          "name": "청년(15~29세) 고용률",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1ES3A03_A01S",
+          "itmId": "T12",
+          "objL1": "ALL",
+          "objL2": "010",
+          "sidoCodeLen": 0,
+          "sigunguCodeLen": 4,
+          "source": "국가데이터처 지역별고용조사"
+        },
+        {
+          "id": "lfp",
+          "name": "경제활동참가율",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1ES3A02S",
+          "itmId": "T6",
+          "objL1": "ALL",
+          "objL2": "S0",
+          "sidoCodeLen": 0,
+          "sigunguCodeLen": 4,
+          "source": "국가데이터처 지역별고용조사"
+        },
+        {
+          "id": "emp_1564",
+          "name": "15~64세 고용률",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1ES3A02S",
+          "itmId": "T8",
+          "objL1": "ALL",
+          "objL2": "S0",
+          "sidoCodeLen": 0,
+          "sigunguCodeLen": 4,
+          "source": "국가데이터처 지역별고용조사"
+        },
+        {
+          "id": "unemployment",
+          "name": "실업률",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1ES3A01S",
+          "itmId": "ALL",
+          "objL1": "ALL",
+          "filters": {
+            "ITM_NM": "re:^실업률"
+          },
+          "exclude": {
+            "ITM_NM": "re:RSE"
+          },
+          "sidoCodeLen": 0,
+          "sigunguCodeLen": 4,
+          "source": "국가데이터처 지역별고용조사"
+        }
       ]
     },
     {
-      "id": "income", "name": "소득·소비·자산",
+      "id": "income",
+      "name": "소득·소비·자산",
       "indicators": [
-        {"id": "wage", "name": "근로소득자 1인당 평균 급여", "unit": "만원", "higherIsBetter": true,
-         "orgId": "133", "tblId": "DT_133001N_4214", "objL1": "ALL",
-         "ratio": {"num": {"itmId": "T002", "objL2": "B01"}, "den": {"itmId": "T001", "objL2": "B01"}, "scale": 100},
-         "sidoCodeLen": 3, "sigunguCodeLen": 5, "source": "국세청 근로소득 연말정산",
-         "note": "원천징수지(근무지) 기준. 급여총계 ÷ 신고 인원"},
-        {"id": "hh_income", "name": "1인당 가계총처분가능소득", "unit": "", "higherIsBetter": true,
-         "orgId": "101", "tblId": "INH_1C96_04", "itmId": "T3", "objL1": "ALL",
-         "source": "국가데이터처 지역소득", "note": "시도 단위만 공표"}
+        {
+          "id": "wage",
+          "name": "근로소득자 1인당 평균 급여",
+          "unit": "만원",
+          "higherIsBetter": true,
+          "orgId": "133",
+          "tblId": "DT_133001N_4214",
+          "objL1": "ALL",
+          "ratio": {
+            "num": {
+              "itmId": "T002",
+              "objL2": "B01"
+            },
+            "den": {
+              "itmId": "T001",
+              "objL2": "B01"
+            },
+            "scale": 100
+          },
+          "sidoCodeLen": 3,
+          "sigunguCodeLen": 5,
+          "source": "국세청 근로소득 연말정산",
+          "note": "원천징수지(근무지) 기준. 급여총계 ÷ 신고 인원"
+        },
+        {
+          "id": "hh_income",
+          "name": "1인당 가계총처분가능소득",
+          "unit": "",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "INH_1C96_04",
+          "itmId": "T3",
+          "objL1": "ALL",
+          "source": "국가데이터처 지역소득",
+          "note": "시도 단위만 공표"
+        }
       ]
     },
     {
-      "id": "economy", "name": "경제일반·경기",
+      "id": "economy",
+      "name": "경제일반·경기",
       "indicators": [
-        {"id": "grdp", "name": "1인당 지역내총생산", "unit": "", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1C96", "itmId": "T1", "objL1": "ALL",
-         "source": "국가데이터처 지역소득", "note": "시도 단위만 공표"}
+        {
+          "id": "grdp",
+          "name": "1인당 지역내총생산",
+          "unit": "",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1C96",
+          "itmId": "T1",
+          "objL1": "ALL",
+          "source": "국가데이터처 지역소득",
+          "note": "시도 단위만 공표"
+        }
       ]
     },
     {
-      "id": "housing", "name": "주거",
+      "id": "housing",
+      "name": "주거",
       "indicators": [
-        {"id": "old_house", "name": "노후주택(30년 이상) 비율", "unit": "%", "higherIsBetter": false,
-         "orgId": "101", "tblId": "DT_1YL202004", "itmId": "T10", "objL1": "ALL",
-         "source": "국가데이터처(국토교통부 자료)"},
-        {"id": "vacant_house", "name": "빈집(미거주주택) 비율", "unit": "%", "higherIsBetter": false,
-         "orgId": "101", "tblId": "DT_1YL202005", "itmId": "T10", "objL1": "ALL",
-         "source": "국가데이터처(국토교통부 자료)"}
+        {
+          "id": "semi_basement",
+          "name": "반지하 거주 가구 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1WE2071",
+          "objL1": "ALL",
+          "ratio": {
+            "num": {
+              "itmId": "T2"
+            },
+            "den": {
+              "itmId": "T1"
+            },
+            "scale": 100
+          },
+          "source": "국가데이터처 인구주택총조사",
+          "note": "(반)지하 가구 ÷ 총 일반가구"
+        },
+        {
+          "id": "rooftop",
+          "name": "옥탑 거주 가구 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1WE2071",
+          "objL1": "ALL",
+          "ratio": {
+            "num": {
+              "itmId": "T3"
+            },
+            "den": {
+              "itmId": "T1"
+            },
+            "scale": 100
+          },
+          "source": "국가데이터처 인구주택총조사",
+          "note": "옥탑 가구 ÷ 총 일반가구"
+        },
+        {
+          "id": "no_house",
+          "name": "무주택 가구 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1MA0041",
+          "itmId": "T001",
+          "objL1": "ALL",
+          "ratio": {
+            "num": {
+              "objL2": "HO30"
+            },
+            "den": {
+              "objL2": "HO10"
+            },
+            "scale": 100
+          },
+          "source": "국가데이터처 주택소유통계",
+          "note": "무주택 가구 ÷ 전체 가구"
+        },
+        {
+          "id": "own_house",
+          "name": "자가 거주 가구 비율",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1PE2008",
+          "objL1": "ALL",
+          "objL2": "0",
+          "ratio": {
+            "num": {
+              "itmId": "T20"
+            },
+            "den": {
+              "itmId": "T10"
+            },
+            "scale": 100
+          },
+          "source": "국가데이터처 인구주택총조사",
+          "note": "2020년 조사 기준. 일반가구 중 자가 비율"
+        },
+        {
+          "id": "old_house",
+          "name": "노후주택(30년 이상) 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1YL202004",
+          "itmId": "T10",
+          "objL1": "ALL",
+          "source": "국가데이터처(국토교통부 자료)"
+        },
+        {
+          "id": "vacant_house",
+          "name": "빈집(미거주주택) 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1YL202005",
+          "itmId": "T10",
+          "objL1": "ALL",
+          "source": "국가데이터처(국토교통부 자료)"
+        }
       ]
     },
     {
-      "id": "fiscal", "name": "정부·재정",
+      "id": "fiscal",
+      "name": "정부·재정",
       "indicators": [
-        {"id": "fiscal_indep", "name": "재정자립도", "unit": "%", "higherIsBetter": true,
-         "orgId": "101", "tblId": "DT_1YL20921", "itmId": "T20", "objL1": "ALL",
-         "source": "국가데이터처(행정안전부 자료)", "note": "세입과목 개편 후 기준"}
+        {
+          "id": "fiscal_indep",
+          "name": "재정자립도",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1YL20921",
+          "itmId": "T20",
+          "objL1": "ALL",
+          "source": "국가데이터처(행정안전부 자료)",
+          "note": "세입과목 개편 후 기준"
+        }
       ]
     }
   ]
