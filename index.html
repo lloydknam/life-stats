@@ -3,19 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>시군구 삶의 질 랭킹</title>
+<title>클사무관 시군구 지표</title>
+<link rel="icon" href="assets/clerk.jpg">
+<meta property="og:title" content="클사무관의 시군구 지표">
+<meta property="og:image" content="assets/clerk-full.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
-  --ink:#101936; --paper:#f2f4f8; --card:#ffffff; --line:#dde2ec; --mute:#6b7488;
-  --band:#101936; --hi:#1f55d6; --lo:#d9382a; --hi-bg:#eef3ff; --lo-bg:#fff1ef; --track:#e8ecf4;
+  --ink:#14275e; --paper:#f4f7fc; --card:#ffffff; --line:#dde2ec; --mute:#6b7488;
+  --band:#eaf0ff; --hi:#1f55d6; --lo:#d9382a; --hi-bg:#eef3ff; --lo-bg:#fff1ef; --track:#e8ecf4;
   --text:#101936;
   --m1:#0f3ea8;--m2:#4a78d8;--m3:#9db8ee;--m4:#f1b4a8;--m5:#cf3a2b;
-}
-@media (prefers-color-scheme:dark){
-  :root{--ink:#e9edf8; --paper:#0b0f1f; --card:#141a33; --line:#252d4d; --mute:#98a2be;
-    --band:#1d2750; --hi:#7da4ff; --lo:#ff8d7d; --hi-bg:#18234d; --lo-bg:#3a1e24; --track:#222b4d; --text:#e9edf8;
-    --m1:#7da4ff;--m2:#5a82e0;--m3:#3b538f;--m4:#8f4a52;--m5:#ff8d7d;}
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -25,13 +23,17 @@ body{margin:0;background:var(--paper);color:var(--text);
 button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--hi);outline-offset:2px}
 
-.hd{background:var(--band);color:#fff}
-.hd-in{max-width:1200px;margin:0 auto;padding:26px 24px 22px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.hd h1{margin:0;font-size:26px;font-weight:750;letter-spacing:-.03em}
-.hd .sub{margin-top:2px;color:#aeb8d8;font-size:13px}
+.hd{background:#fff;border-bottom:1px solid var(--line)}
+.hd-in{max-width:1480px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+.brand img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--hi-bg);box-shadow:0 2px 8px rgba(20,39,94,.15)}
+.brand b{display:block;font-size:24px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1.1}
+.brand b em{font-style:normal;color:var(--hi)}
+.brand span{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+.hd .sub{margin-left:auto;color:var(--mute);font-size:13px}
 .sample{background:#ffd75e;color:#4a3600;font-size:13px;font-weight:600;padding:8px 24px;text-align:center}
 
-.wrap{max-width:1200px;margin:0 auto;padding:22px 24px 56px;display:grid;grid-template-columns:230px 1fr;gap:28px;align-items:start}
+.wrap{max-width:1480px;margin:0 auto;padding:22px 24px 56px;display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
 .rail{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:4px}
 .rail h3{margin:18px 0 6px;font-size:13px;font-weight:700;color:var(--mute);letter-spacing:-.01em}
 .rail h3:first-child{margin-top:0}
@@ -42,31 +44,33 @@ button,select,input{font:inherit;color:inherit}
 .picker{display:none;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:14px}
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.card-h{padding:24px 28px 18px}
+.card-h{padding:22px 24px 16px}
 .crumb{display:inline-block;font-size:13px;font-weight:650;color:var(--hi);background:var(--hi-bg);padding:3px 10px;border-radius:999px}
 .card-h h2{margin:10px 0 10px;font-size:30px;line-height:1.2;font-weight:780;letter-spacing:-.035em}
 .meta{display:flex;flex-wrap:wrap;gap:6px 8px;margin:0;padding:0;list-style:none;color:var(--mute);font-size:13px}
 .meta li{background:var(--paper);padding:2px 10px;border-radius:6px}
 .meta li.dir{color:var(--text);font-weight:600}
 
-.finder{padding:0 28px 18px}
+.finder{padding:0 24px 16px}
 .finder input{width:100%;max-width:340px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
 .found{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .found span{font-size:13px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:5px 11px}
 .found b{font-weight:700}.found em{font-style:normal;color:var(--mute)}
 
-.panels{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:0 28px 24px}
+.panels{display:grid;grid-template-columns:minmax(280px,.95fr) minmax(0,1fr) minmax(0,1fr);gap:16px;padding:0 24px 24px;align-items:start}
+.mappanel .mp{padding:12px 12px 14px}
+.mappanel svg{width:100%;height:auto;max-height:520px;display:block}
 .panel{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
-.panel>h3{margin:0;background:var(--band);color:#fff;text-align:center;padding:13px 10px;font-size:17px;font-weight:700;letter-spacing:-.02em}
-.grp{padding:14px 16px 6px}
+.panel>h3{margin:0;background:var(--band);color:var(--ink);text-align:center;padding:12px 10px;font-size:16px;font-weight:750;letter-spacing:-.02em;border-bottom:1px solid var(--line)}
+.grp{padding:12px 12px 4px}
 .grp h4{margin:0 0 8px;font-size:14px;font-weight:700}
 .grp.top h4{color:var(--hi)} .grp.bot h4{color:var(--lo)}
 .grp ol{list-style:none;margin:0;padding:0}
-.row{display:grid;grid-template-columns:52px 1fr auto;column-gap:10px;align-items:baseline;padding:9px 12px 8px;border-radius:10px;margin-bottom:6px;background:var(--paper);border-left:4px solid var(--hi)}
+.row{display:grid;grid-template-columns:46px 1fr auto;column-gap:8px;align-items:baseline;padding:9px 12px 8px;border-radius:10px;margin-bottom:6px;background:var(--paper);border-left:4px solid var(--hi)}
 .bot .row{border-left-color:var(--lo)}
-.rk{font-size:14px;color:var(--mute);font-weight:600}
-.nm{font-size:17px;font-weight:650;letter-spacing:-.02em;min-width:0}
-.val{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--hi)}
+.rk{white-space:nowrap;font-size:13px;color:var(--mute);font-weight:600}
+.nm{font-size:15px;overflow-wrap:anywhere;font-weight:650;letter-spacing:-.02em;min-width:0}
+.val{font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--hi)}
 .bot .val{color:var(--lo)}
 .val small{font-size:13px;font-weight:600;margin-left:2px;color:var(--mute)}
 .gauge{grid-column:2/4;height:3px;background:var(--track);border-radius:3px;margin-top:6px;overflow:hidden}
@@ -74,7 +78,7 @@ button,select,input{font:inherit;color:inherit}
 .bot .gauge i{background:var(--lo)}
 .tie{background:var(--lo-bg);border-radius:10px;padding:12px 14px;border-left:4px solid var(--lo);margin-bottom:6px}
 .grp.top .tie{background:var(--hi-bg);border-left-color:var(--hi)}
-.tie .big{font-size:26px;font-weight:800;color:var(--lo);letter-spacing:-.03em}
+.tie .big{font-size:22px;font-weight:800;color:var(--lo);letter-spacing:-.03em}
 .grp.top .tie .big{color:var(--hi)}
 .tie .big span{font-size:16px;font-weight:700;color:var(--text);margin-left:6px}
 .tie p{margin:6px 0 0;font-size:13px;color:var(--mute);line-height:1.6}
@@ -93,41 +97,40 @@ details.all[open] summary::before{content:"－ ";}
 .full .b{height:8px;background:var(--track);border-radius:4px;overflow:hidden}
 .full .b i{display:block;height:100%;background:var(--hi);opacity:.55}
 
-.mapbox{padding:0 28px 24px}
-.mapbox h3{margin:0 0 4px;font-size:16px;font-weight:700}
-.mapbox .hint{color:var(--mute);font-size:13px;margin:0 0 10px;min-height:20px}
-.mapbox .hint b{color:var(--text)}
-.mapwrap{display:grid;grid-template-columns:minmax(0,520px) 1fr;gap:24px;align-items:center}
-.mapwrap svg{width:100%;height:auto;max-height:640px;display:block}
-.mapwrap path{stroke:var(--card);stroke-width:.35;vector-effect:non-scaling-stroke;stroke-width:.6px;cursor:pointer;transition:opacity .1s}
-.mapwrap path:hover,.mapwrap path.sel{stroke:var(--ink);stroke-width:1.6px}
+.mappanel path{stroke:var(--card);stroke-width:.35;vector-effect:non-scaling-stroke;stroke-width:.6px;cursor:pointer;transition:opacity .1s}
+.mappanel path:hover,.mappanel path.sel{stroke:var(--ink);stroke-width:1.6px}
 .m0{fill:var(--track)}.m1{fill:var(--m1)}.m2{fill:var(--m2)}.m3{fill:var(--m3)}.m4{fill:var(--m4)}.m5{fill:var(--m5)}
-.legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);margin-top:6px}
+.legend span{white-space:nowrap}
+.legend{flex-wrap:wrap;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);margin-top:6px}
 .legend i{display:inline-block;width:26px;height:10px;border-radius:2px}
-.mapside{font-size:14px}
+.mapside{font-size:14px;margin-top:8px;padding:10px 12px;background:var(--paper);border-radius:10px;min-height:76px}
 .mapside .big{font-size:22px;font-weight:780;letter-spacing:-.03em}
 .mapside p{margin:6px 0;color:var(--mute)}
 
-.card-f{background:var(--band);color:#fff;padding:14px 28px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
-.card-f span{color:#c9d1ea}
+.card-f span{color:var(--mute)}
 
+@media (max-width:1180px) and (min-width:901px){
+  .panels{grid-template-columns:1fr 1fr}.mappanel{grid-column:1/-1}.mappanel svg{max-height:420px}
+}
 @media (max-width:900px){
   .wrap{grid-template-columns:1fr;padding:16px 14px 40px;gap:0}
   .rail{display:none}.picker{display:block}
   .card-h{padding:20px 18px 14px}.card-h h2{font-size:24px}
   .finder{padding:0 18px 14px}
   .panels{grid-template-columns:1fr;padding:0 14px 18px}
-  .mapbox{padding:0 14px 18px}.mapwrap{grid-template-columns:1fr}
   .card-f{padding:14px 18px}
-  .hd-in{padding:20px 16px 16px}.hd h1{font-size:22px}
+  .hd-in{padding:12px 16px}.hd .sub{margin-left:0;width:100%}.brand img{width:46px;height:46px}.brand b{font-size:20px}
   .full li{grid-template-columns:38px 1fr 62px}.full .b{display:none}
 }
 </style>
 </head>
 <body>
 <header class="hd"><div class="hd-in">
-  <div><h1>시군구 삶의 질 랭킹</h1><div class="sub" id="sub"></div></div>
+  <a class="brand" href="./"><img src="assets/clerk.jpg" alt="클사무관" width="56" height="56">
+    <div><b>클사무관<em>의</em> 시군구 지표</b><span>글로벌데스크 · 삶의 질 랭킹</span></div></a>
+  <div class="sub" id="sub"></div>
 </div></header>
 <div id="sample"></div>
 <main class="wrap">
@@ -230,11 +233,10 @@ function render(){
     <div class="card-h"><span class="crumb">${esc(th.name)}</span><h2>${esc(info.name)}</h2><ul class="meta">${meta}</ul></div>
     <div class="finder"><input id="q" type="search" placeholder="지역 이름으로 순위 찾기" aria-label="지역 검색"><div class="found" id="found"></div></div>
     <div class="panels">
+      <section class="panel mappanel"><h3>지도</h3><div class="mp"><div id="map"></div><div class="mapside" id="mapside"></div></div></section>
       ${panel(`광역 ${sidoItems.length}개 시도`,sidoItems,info,sidoName)}
       ${panel(`기초 ${sgItems.length}개 시군구`,sgItems,info,sgName)}
     </div>
-    <div class="mapbox"><h3>지도로 보기</h3><p class="hint" id="maphint">지역 위에 마우스를 올리거나 눌러보세요. 파란색일수록 좋은 쪽입니다.</p>
-      <div class="mapwrap"><div id="map"></div><div class="mapside" id="mapside"></div></div></div>
     <div class="card-f"><span><b>출처</b>${esc(info.source||"-")}</span>${info.note?`<span>${esc(info.note)}</span>`:""}</div>`;
 
   drawMap(sgItems.length?sgItems:null,sidoItems,info,sgName);
