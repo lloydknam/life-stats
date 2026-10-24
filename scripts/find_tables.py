@@ -81,6 +81,17 @@ KEYWORDS = {
     "r2_hospital_dist": ["시군구 응급의료기관 접근성", "시군구 지역별 건강보험 가입자 급여"],
 }
 
+R3 = {
+    "r3_basic_living": ["기초생활수급자 시군구", "국민기초생활보장 수급자 시도 시군구별", "수급자 현황 읍면동 시군구 보건복지부", "생계급여 수급자 시군구", "기초생활보장 수급자 지역별", "시군구 주요통계 기초생활수급"],
+    "r3_crime": ["시군구 범죄 발생", "경찰서 범죄 발생 지역별", "5대 범죄 시군구", "범죄 발생 건수 행정안전부 지방자치단체", "지방자치단체 안전 범죄 교통사고 화재 시군구"],
+    "r3_library": ["공공도서관 시군구", "도서관 수 시군구별", "도서관 현황 지방자치단체", "문화기반시설 시군구별", "문화시설 수 시군구"],
+    "r3_park": ["도시공원 시군구", "공원 면적 시군구별", "1인당 공원면적", "지방자치단체 도시공원 현황"],
+    "r3_edu": ["학교 수 시군구", "초등학교 학생수 시군구별", "교육통계 시군구 학급당 학생수", "고등학교 졸업자 진학 시군구", "학원 수 시군구"],
+    "r3_local": ["지방자치단체 주요통계 시군구", "시군구 주요지표 지방자치단체", "자치단체 기초통계 시군구"],
+}
+if os.environ.get("ROUND") == "3":
+    KEYWORDS = R3
+
 out = {}
 for ind, kws in KEYWORDS.items():
     out[ind] = []
@@ -104,6 +115,6 @@ for ind, kws in KEYWORDS.items():
                              "STRT_PRD_DE": x.get("STRT_PRD_DE"), "END_PRD_DE": x.get("END_PRD_DE")})
 
 (ROOT / "data").mkdir(exist_ok=True)
-(ROOT / "data" / "table_candidates.json").write_text(
+(ROOT / "data" / ("table_candidates_r3.json" if os.environ.get("ROUND") == "3" else "table_candidates.json")).write_text(
     json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
 print({k: len(v) for k, v in out.items()})

@@ -15,13 +15,14 @@ jobs:
           python-version: "3.12"
       - name: Search KOSIS tables
         env:
+          ROUND: "3"
           KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
         run: python scripts/find_tables.py
       - name: Commit candidates
         run: |
           git config user.name "github-actions"
           git config user.email "actions@users.noreply.github.com"
-          git add data/table_candidates.json
+          git add data/table_candidates.json data/table_candidates_r3.json
           git diff --staged --quiet || git commit -m "data: table candidates"
           git pull --rebase -q origin main
           git push
