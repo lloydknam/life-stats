@@ -68,6 +68,91 @@
           "itmId": "T31",
           "objL1": "ALL",
           "source": "국가데이터처 인구동향조사"
+        },
+        {
+          "id": "aging_idx",
+          "name": "노령화지수",
+          "unit": "",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1IN2030",
+          "itmId": "T4",
+          "objL1": "01",
+          "objL2": "ALL",
+          "regionDim": 2,
+          "source": "국가데이터처 인구총조사(등록센서스)",
+          "note": "유소년(0~14세) 100명당 고령(65세 이상) 인구"
+        },
+        {
+          "id": "median_age",
+          "name": "중위연령",
+          "unit": "세",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1IN2030",
+          "itmId": "T5",
+          "objL1": "01",
+          "objL2": "ALL",
+          "regionDim": 2,
+          "source": "국가데이터처 인구총조사(등록센서스)",
+          "note": "낮을수록 젊은 지역"
+        },
+        {
+          "id": "net_migration",
+          "name": "순이동률(전입-전출)",
+          "unit": "인구 천 명당",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "INH_1B26001_A021",
+          "itmId": "T25",
+          "objL1": "ALL",
+          "objL2": "0",
+          "perPop": {
+            "scale": 1000
+          },
+          "source": "국가데이터처 국내인구이동통계",
+          "note": "순이동(명) ÷ 주민등록인구"
+        },
+        {
+          "id": "single_hh",
+          "name": "1인가구 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1JC1505",
+          "itmId": "T00",
+          "objL1": "ALL",
+          "ratio": {
+            "num": {
+              "objL2": "1"
+            },
+            "den": {
+              "objL2": "0"
+            },
+            "scale": 100
+          },
+          "source": "국가데이터처 인구총조사(등록센서스)",
+          "note": "1인 일반가구 ÷ 일반가구"
+        },
+        {
+          "id": "elder_only_hh",
+          "name": "고령자만 사는 가구 비율",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1JC1723",
+          "objL1": "ALL",
+          "ratio": {
+            "num": {
+              "itmId": "T10"
+            },
+            "den": {
+              "itmId": "T00"
+            },
+            "scale": 100
+          },
+          "source": "국가데이터처 인구총조사(등록센서스)",
+          "note": "가구원이 모두 65세 이상인 일반가구 ÷ 일반가구"
         }
       ]
     },
@@ -104,6 +189,23 @@
           "itmId": "T22",
           "objL1": "ALL",
           "source": "국가데이터처 인구동향조사"
+        },
+        {
+          "id": "clinics",
+          "name": "인구 천 명당 요양기관(병·의원 등)",
+          "unit": "개소",
+          "higherIsBetter": true,
+          "orgId": "354",
+          "tblId": "DT_HIRA4B",
+          "objL1": "ALL",
+          "objL2": "A001",
+          "sidoCodeLen": 22,
+          "sigunguCodeLen": 26,
+          "perPop": {
+            "scale": 1000
+          },
+          "source": "건강보험심사평가원 요양기관 현황",
+          "note": "요양기관 수 ÷ 주민등록인구"
         }
       ]
     },
@@ -295,6 +397,27 @@
           },
           "source": "국세청 가동사업자 현황",
           "note": "가동사업자 수 ÷ 주민등록인구"
+        },
+        {
+          "id": "startup_rate",
+          "name": "신생기업 비율",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1BD1035",
+          "objL1": "ALL",
+          "objL2": "0",
+          "ratio": {
+            "num": {
+              "itmId": "T02"
+            },
+            "den": {
+              "itmId": "T01"
+            },
+            "scale": 100
+          },
+          "source": "국가데이터처 기업생멸행정통계",
+          "note": "신생 기업 종사자 ÷ 활동 기업 종사자"
         }
       ]
     },
