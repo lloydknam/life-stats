@@ -290,6 +290,21 @@
           },
           "source": "국가데이터처(보건복지부 자료)",
           "note": "등록장애인 ÷ 주민등록인구"
+        },
+        {
+          "id": "basic_living_rate",
+          "name": "국민기초생활보장 수급률",
+          "unit": "%",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1YL13801E",
+          "itmId": "TT",
+          "objL1": "ALL",
+          "perPop": {
+            "scale": 100
+          },
+          "source": "국가데이터처(보건복지부 자료)",
+          "note": "시도 단위만 공표. 수급자 수 ÷ 주민등록인구"
         }
       ]
     },
@@ -600,6 +615,18 @@
           "objL1": "ALL",
           "source": "국가데이터처(행정안전부 자료)",
           "note": "세입과목 개편 후 기준"
+        },
+        {
+          "id": "welfare_budget",
+          "name": "일반회계 중 사회복지·보건 결산 비중",
+          "unit": "%",
+          "higherIsBetter": true,
+          "orgId": "101",
+          "tblId": "DT_1YL20912",
+          "itmId": "T10",
+          "objL1": "ALL",
+          "source": "국가데이터처(행정안전부 자료)",
+          "note": "높을수록 복지·보건에 쓰는 비중이 큼(재정 구조 특성이며 우열 평가는 아님)"
         }
       ]
     },
@@ -609,19 +636,81 @@
       "indicators": [
         {
           "id": "crime_rate",
-          "name": "인구 10만 명당 총범죄 발생",
+          "name": "인구 천 명당 범죄 발생건수",
           "unit": "건",
           "higherIsBetter": false,
           "orgId": "101",
-          "tblId": "DT_1YL20321",
-          "itmId": "T01",
+          "tblId": "DT_1YL3001",
+          "itmId": "T10",
           "objL1": "ALL",
-          "objL2": "10",
+          "exclude": {
+            "C1": "12"
+          },
+          "sidoExtraLens": [
+            4
+          ],
+          "source": "국가데이터처(경찰청 자료)",
+          "note": "시도 단위만 공표. 발생건수 ÷ 주민등록인구"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "name": "문화·여가",
+      "indicators": [
+        {
+          "orgId": "460",
+          "objL1": "ALL",
+          "sidoCodeLen": 11,
+          "sigunguCodeLen": 14,
+          "source": "국토교통부 도시·군계획시설 결정현황(한국국토정보공사 지적통계)",
+          "id": "park_per_cap",
+          "name": "1인당 도시계획 공원 면적",
+          "unit": "㎡",
+          "higherIsBetter": true,
+          "tblId": "TX_315_2009_H1126",
+          "itmId": "16315T2009_004",
+          "objL2": "15315GWJ000",
+          "perPop": {
+            "scale": 1
+          },
+          "note": "도시·군계획시설로 결정된 공원 면적 ÷ 주민등록인구"
+        },
+        {
+          "orgId": "460",
+          "objL1": "ALL",
+          "sidoCodeLen": 11,
+          "sigunguCodeLen": 14,
+          "source": "국토교통부 도시·군계획시설 결정현황(한국국토정보공사 지적통계)",
+          "id": "culture_fac",
+          "name": "인구 10만 명당 문화시설",
+          "unit": "개",
+          "higherIsBetter": true,
+          "tblId": "TX_315_2009_H1054",
+          "itmId": "16315T2009_013",
+          "objL2": "15315SSB000",
           "perPop": {
             "scale": 100000
           },
-          "source": "국가데이터처(경찰청 자료)",
-          "note": "시도 단위만 공표(광주·전남은 통합 코드 문제로 제외). 발생건수 ÷ 주민등록인구"
+          "note": "공연장·박물관·미술관 등 도시·군계획시설 문화시설 수 ÷ 인구"
+        },
+        {
+          "orgId": "460",
+          "objL1": "ALL",
+          "sidoCodeLen": 11,
+          "sigunguCodeLen": 14,
+          "source": "국토교통부 도시·군계획시설 결정현황(한국국토정보공사 지적통계)",
+          "id": "sports_fac",
+          "name": "인구 10만 명당 체육시설",
+          "unit": "개",
+          "higherIsBetter": true,
+          "tblId": "TX_315_2009_H1055",
+          "itmId": "16315T2009_013",
+          "objL2": "15315GBB000",
+          "perPop": {
+            "scale": 100000
+          },
+          "note": "운동장·공공체육시설 등 도시·군계획시설 체육시설 수 ÷ 인구"
         }
       ]
     }

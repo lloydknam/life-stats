@@ -10,7 +10,7 @@
   orgId, tblId, itmId(없으면 ALL), objL1~objL4, prdSe(없으면 Y→H→Q→M 순 시도), newEstPrdCnt
     objLn 값에 {"resolve": {"obj": "A", "name": "자살"}} 를 쓰면 메타에서 항목 코드를 찾아 넣는다
   regionDim: 지역 분류의 순번(기본 1) → 응답의 C{n}, C{n}_NM
-  sidoCodeLen / sigunguCodeLen: 지역 코드 길이(기본 2 / 5, 없으면 0)
+  sidoCodeLen / sigunguCodeLen: 지역 코드 길이(기본 2 / 5, 없으면 0). sidoExtraLens: 시도 코드가 다른 길이로 섞인 표(예: [4])
   filters / exclude: 응답 행 필터. 값 "re:정규식", "~부분문자열", 그 외는 일치
   ratio: {"num": {...질의 덮어쓰기...}, "den": {...}, "scale": 100}  → 지역별 num/den*scale
   shareOf: {"dim": 3, "numRegex": "...", "totalName": "계", "scale": 100} → 분류 n의 이름이 정규식에 맞는 합 ÷ 총계
@@ -179,7 +179,7 @@ def split_levels(rows, ind, canon_codes=None):
     sl, gl = ind.get("sidoCodeLen", 2), ind.get("sigunguCodeLen", 5)
     sidomap, sd = {}, {}
     for r in rows:
-        if sl and len(r["code"]) == sl and r["code"] != "0" * sl:
+        if sl and (len(r["code"]) == sl or len(r["code"]) in ind.get("sidoExtraLens", [])) and r["code"] != "0" * sl:
             s = short_sido(r["name"]) or SIDO_STAT.get(r["code"])
             if s:
                 sidomap[r["code"]] = s
