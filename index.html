@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시군구 삶의 질 랭킹</title>
+<style>
+:root{
+  --bg:#f6f5f1; --card:#fff; --ink:#1c1b19; --mute:#77736b; --line:#e4e1d8;
+  --good:#1f7a5a; --bad:#c2452d; --accent:#24408e; --bar:#cfd8ee;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#141413; --card:#1e1e1c; --ink:#efece4; --mute:#9a968c; --line:#33322e;
+    --good:#4fc79b; --bad:#ee8a73; --accent:#8ea6ee; --bar:#2c3550;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Pretendard","Noto Sans KR",sans-serif}
+header{padding:28px 20px 8px;max-width:1080px;margin:0 auto}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.02em}
+.sub{color:var(--mute);font-size:13px}
+.banner{margin:12px auto 0;max-width:1040px;padding:8px 14px;border-radius:8px;background:#fff3cd;color:#6b4e00;font-size:13px}
+@media (prefers-color-scheme:dark){.banner{background:#3a3016;color:#f0d98a}}
+main{max-width:1080px;margin:0 auto;padding:12px 20px 60px;display:grid;grid-template-columns:1fr 340px;gap:20px}
+@media (max-width:860px){main{grid-template-columns:1fr}}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.tab,.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer;font-size:13px}
+.tab.on,.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+select,input{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.ind-title{font-size:18px;font-weight:600;margin:4px 0}
+.note{color:var(--mute);font-size:12px;margin-bottom:10px}
+.row{display:grid;grid-template-columns:34px 120px 1fr 70px;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;cursor:pointer}
+.row:hover,.row.sel{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.rk{color:var(--mute);font-variant-numeric:tabular-nums;text-align:right;font-size:13px}
+.nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nm small{color:var(--mute);margin-left:4px}
+.track{height:14px;background:transparent;position:relative}
+.fill{height:100%;background:var(--bar);border-radius:3px}
+.row.top .fill{background:var(--good)} .row.bot .fill{background:var(--bad)}
+.val{text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+.sep{color:var(--mute);text-align:center;font-size:12px;padding:4px}
+aside h2{font-size:16px;margin:0 0 2px}
+.detail-row{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}
+.detail-row:last-child{border:0}
+.pill{font-variant-numeric:tabular-nums;font-weight:600}
+.empty{color:var(--mute);font-size:13px}
+footer{max-width:1080px;margin:0 auto;padding:0 20px 40px;color:var(--mute);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>시군구 삶의 질 랭킹</h1>
+  <div class="sub" id="meta"></div>
+</header>
+<div id="banner"></div>
+<main>
+  <section>
+    <div class="tabs" id="themes"></div>
+    <div class="card">
+      <div class="controls">
+        <select id="indicator"></select>
+        <select id="sido"><option value="">전국</option></select>
+        <input id="q" type="search" placeholder="지역 검색">
+        <span class="chip" id="flip">순위 뒤집기</span>
+      </div>
+      <div class="ind-title" id="indTitle"></div>
+      <div class="note" id="indNote"></div>
+      <div id="list"></div>
+    </div>
+  </section>
+  <aside>
+    <div class="card" id="detail"><div class="empty">왼쪽 목록에서 지역을 누르면 모든 지표의 순위를 볼 수 있어요.</div></div>
+  </aside>
+</main>
+<footer>순위는 '좋은 방향' 기준(자살률·범죄율은 낮을수록 상위). 지표별 출처·기준연도는 data/data.json 참조.</footer>
+
+<script>
+const S={data:null,theme:null,ind:null,sido:"",q:"",flip:false,sel:null};
+const $=id=>document.getElementById(id);
+const fmt=(v,u)=>v==null?"-":Number(v).toLocaleString("ko-KR")+(u&&u.length<=2?u:"");
+
+fetch("data/data.json").then(r=>r.json()).then(d=>{
+  S.data=d; S.theme=d.themes[0].id; S.ind=d.themes[0].indicators[0].id;
+  $("meta").textContent=`업데이트 ${d.meta.updated} · ${d.regions.length}개 시군구`;
+  if(d.meta.isSample) $("banner").innerHTML='<div class="banner">⚠️ 현재 표시된 수치는 화면 확인용 <b>샘플(난수)</b>입니다. 실제 통계가 아닙니다.</div>';
+  const sidos=[...new Set(d.regions.map(r=>r.sido))];
+  $("sido").innerHTML='<option value="">전국</option>'+sidos.map(s=>`<option>${s}</option>`).join("");
+  $("sido").onchange=e=>{S.sido=e.target.value;render()};
+  $("q").oninput=e=>{S.q=e.target.value.trim();render()};
+  $("flip").onclick=()=>{S.flip=!S.flip;$("flip").classList.toggle("on",S.flip);render()};
+  $("indicator").onchange=e=>{S.ind=e.target.value;render()};
+  render();
+});
+
+function indInfo(id){
+  for(const t of S.data.themes) for(const i of t.indicators) if(i.id===id) return i;
+}
+function ranked(id){
+  const info=indInfo(id), vals=S.data.values[id]||{};
+  const all=S.data.regions.filter(r=>vals[r.code]!=null).map(r=>({...r,v:vals[r.code]}));
+  all.sort((a,b)=>info.higherIsBetter?b.v-a.v:a.v-b.v);
+  all.forEach((r,i)=>r.rank=i+1);
+  return all;
+}
+
+function render(){
+  const d=S.data;
+  $("themes").innerHTML=d.themes.map(t=>`<span class="tab ${t.id===S.theme?"on":""}" data-t="${t.id}">${t.name}</span>`).join("");
+  document.querySelectorAll(".tab").forEach(el=>el.onclick=()=>{
+    S.theme=el.dataset.t; S.ind=d.themes.find(t=>t.id===S.theme).indicators[0].id; render();
+  });
+  const th=d.themes.find(t=>t.id===S.theme);
+  $("indicator").innerHTML=th.indicators.map(i=>`<option value="${i.id}" ${i.id===S.ind?"selected":""}>${i.name}</option>`).join("");
+  const info=indInfo(S.ind);
+  $("indTitle").textContent=info.name;
+  $("indNote").textContent=`${info.unit} · ${info.higherIsBetter?"높을수록 좋음":"낮을수록 좋음"} · 출처 ${info.source} · ${info.year}년`;
+
+  let rows=ranked(S.ind);
+  if(S.sido) rows=rows.filter(r=>r.sido===S.sido);
+  if(S.q) rows=rows.filter(r=>(r.sido+r.name).includes(S.q));
+  if(S.flip) rows=[...rows].reverse();
+  const max=Math.max(...rows.map(r=>Math.abs(r.v)),1);
+  const n=ranked(S.ind).length;
+  $("list").innerHTML=rows.length?rows.map(r=>`
+    <div class="row ${r.rank<=5?"top":""} ${r.rank>n-5?"bot":""} ${S.sel===r.code?"sel":""}" data-c="${r.code}">
+      <span class="rk">${r.rank}</span>
+      <span class="nm">${r.name}<small>${r.sido}</small></span>
+      <span class="track"><div class="fill" style="width:${Math.max(r.v/max*100,2)}%"></div></span>
+      <span class="val">${fmt(r.v)}</span>
+    </div>`).join(""):'<div class="empty">결과 없음</div>';
+  document.querySelectorAll(".row").forEach(el=>el.onclick=()=>{S.sel=el.dataset.c;render()});
+  renderDetail();
+}
+
+function renderDetail(){
+  if(!S.sel) return;
+  const reg=S.data.regions.find(r=>r.code===S.sel);
+  let html=`<h2>${reg.sido} ${reg.name}</h2><div class="note">지표별 순위 (전체 ${S.data.regions.length}개 중)</div>`;
+  for(const t of S.data.themes){
+    html+=`<div style="margin-top:10px;font-weight:600;font-size:13px">${t.name}</div>`;
+    for(const i of t.indicators){
+      const rk=ranked(i.id).find(r=>r.code===S.sel);
+      html+=`<div class="detail-row"><span>${i.name}</span><span><span class="pill">${rk?rk.rank+"위":"-"}</span> <span style="color:var(--mute)">${rk?fmt(rk.v,i.unit):""}</span></span></div>`;
+    }
+  }
+  $("detail").innerHTML=html;
+}
+</script>
+</body>
+</html>

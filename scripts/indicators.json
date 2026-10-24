@@ -1,0 +1,19 @@
+{
+  "_comment": "orgId/tblId/itmId/objL1 는 KOSIS OpenAPI URL 생성 화면에서 확인한 실제 값으로 교체하세요. 아래는 구조 예시이며 placeholder 입니다.",
+  "themes": [
+    {
+      "id": "health", "name": "건강·안전",
+      "indicators": [
+        {"id": "suicide", "name": "자살률", "unit": "인구 10만명당", "higherIsBetter": false,
+         "orgId": "101", "tblId": "TODO_TBL_ID", "itmId": "TODO_ITM_ID", "objL1": "ALL", "prdSe": "Y", "source": "국가데이터처"}
+      ]
+    },
+    {
+      "id": "economy", "name": "경제·일자리",
+      "indicators": [
+        {"id": "employment", "name": "고용률", "unit": "%", "higherIsBetter": true,
+         "orgId": "101", "tblId": "TODO_TBL_ID", "itmId": "TODO_ITM_ID", "objL1": "ALL", "prdSe": "Y", "source": "국가데이터처"}
+      ]
+    }
+  ]
+}
