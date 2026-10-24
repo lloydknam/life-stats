@@ -206,6 +206,58 @@
           },
           "source": "건강보험심사평가원 요양기관 현황",
           "note": "요양기관 수 ÷ 주민등록인구"
+        },
+        {
+          "id": "pharmacy",
+          "name": "인구 천 명당 약국",
+          "unit": "개소",
+          "higherIsBetter": true,
+          "orgId": "354",
+          "tblId": "DT_HIRA4B",
+          "objL1": "ALL",
+          "objL2": "A016",
+          "sidoCodeLen": 22,
+          "sigunguCodeLen": 26,
+          "perPop": {
+            "scale": 1000
+          },
+          "source": "건강보험심사평가원 요양기관 현황",
+          "note": "약국 수 ÷ 주민등록인구"
+        },
+        {
+          "id": "gen_hospital",
+          "name": "인구 10만 명당 종합병원",
+          "unit": "개소",
+          "higherIsBetter": true,
+          "orgId": "354",
+          "tblId": "DT_HIRA4B",
+          "objL1": "ALL",
+          "objL2": "A003",
+          "sidoCodeLen": 22,
+          "sigunguCodeLen": 26,
+          "perPop": {
+            "scale": 100000
+          },
+          "source": "건강보험심사평가원 요양기관 현황",
+          "note": "종합병원(상급종합 제외) 수 ÷ 주민등록인구. 없는 지역은 값이 비어 제외"
+        },
+        {
+          "id": "nurses",
+          "name": "인구 천 명당 간호사",
+          "unit": "명",
+          "higherIsBetter": true,
+          "orgId": "354",
+          "tblId": "DT_HIRA4U",
+          "objL1": "1535413102140072B02.1",
+          "objL2": "ALL",
+          "regionDim": 2,
+          "sidoCodeLen": 22,
+          "sigunguCodeLen": 26,
+          "perPop": {
+            "scale": 1000
+          },
+          "source": "건강보험심사평가원 의료인력 현황",
+          "note": "요양기관 근무 간호사 ÷ 주민등록인구(근무지 기준)"
         }
       ]
     },
