@@ -7,13 +7,16 @@ import json, os, sys, time, pathlib, urllib.parse, urllib.request
 
 KEY = os.environ.get("KOSIS_API_KEY") or sys.exit("KOSIS_API_KEY 필요")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-MAX_TABLES = int(os.environ.get("MAX_TABLES", "90"))
+MAX_TABLES = int(os.environ.get("MAX_TABLES", "120"))
 
 FIXED = [
     ("101", "DT_1B34E13"), ("101", "DT_1ES3A03_A01S"), ("101", "DT_1ES3A01S"),
     ("101", "DT_1B81A23"), ("101", "INH_1B81A17"), ("101", "DT_1YL20921"),
     ("101", "DT_1YL202004"), ("133", "DT_133001N_4214"), ("101", "DT_1MH2090"),
     ("101", "DT_1C96"), ("101", "INH_1C96_04"),
+    ("101", "DT_1WE2070"), ("101", "DT_1WE2071"), ("101", "DT_1MA0041"), ("101", "DT_1YL202003E"),
+    ("101", "DT_1YL20321"), ("101", "DT_1YL20961"), ("101", "DT_1B040M5_1"), ("101", "DT_1B8000I"),
+    ("101", "DT_1PE2008"), ("133", "DT_133N_A9811"),
 ]
 
 
