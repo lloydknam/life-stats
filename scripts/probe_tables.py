@@ -7,7 +7,7 @@ import json, os, sys, time, pathlib, urllib.parse, urllib.request
 
 KEY = os.environ.get("KOSIS_API_KEY") or sys.exit("KOSIS_API_KEY 필요")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-MAX_TABLES = int(os.environ.get("MAX_TABLES", "120"))
+MAX_TABLES = int(os.environ.get("MAX_TABLES", "70"))
 
 FIXED = [
     ("101", "DT_1B34E13"), ("101", "DT_1ES3A03_A01S"), ("101", "DT_1ES3A01S"),
@@ -60,7 +60,16 @@ if cand.exists():
             tables.append(key)
 
 out = {}
+prev = ROOT / "data" / "table_meta.json"
+if prev.exists():
+    out = {k: v for k, v in json.loads(prev.read_text(encoding="utf-8")).items() if "objs" in v}  # 이미 조사한 표는 건너뜀
+T0 = time.time()
+(ROOT / "data").mkdir(exist_ok=True)
 for org, tbl in tables[:MAX_TABLES]:
+    if tbl in out:
+        continue
+    if time.time() - T0 > 20 * 60:
+        break
     itm = meta(org, tbl, "ITM")
     entry = {"orgId": org}
     if isinstance(itm, list):
@@ -78,6 +87,7 @@ for org, tbl in tables[:MAX_TABLES]:
     else:
         entry["err"] = itm
     out[tbl] = entry
+    (ROOT / "data" / "table_meta.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     time.sleep(0.2)
 
 (ROOT / "data").mkdir(exist_ok=True)

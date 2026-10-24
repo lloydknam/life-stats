@@ -10,7 +10,7 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -27,6 +27,7 @@ jobs:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
         run: python scripts/fetch_realestate.py
       - name: Commit
+        if: always()
         run: |
           git config user.name "github-actions"
           git config user.email "actions@users.noreply.github.com"

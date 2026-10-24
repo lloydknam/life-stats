@@ -7,8 +7,11 @@
 - 최근 2개월 거래의 (거래금액 합 ÷ 전용면적 합) = ㎡당 평균 가격(만원). 취소 거래 제외, 거래 5건 미만 지역은 제외.
 - 개발계정 일일 호출 한도(약 1,000건)를 넘지 않도록 월 2개·페이지 1,000건으로 호출한다.
 """
-import datetime, json, os, pathlib, sys, time, urllib.parse, urllib.request
+import concurrent.futures, datetime, json, os, pathlib, sys, time, urllib.error, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
+
+T0 = time.time()
+BUDGET = 14 * 60  # 초. 넘으면 지금까지 모은 것으로 마무리
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DKEY = os.environ.get("DATA_GO_KR_KEY")
@@ -34,6 +37,20 @@ def short_sido(n):
     for k, v in SHORT:
         if n.startswith(k):
             return v
+
+
+def fetch_raw(url):
+    """한 번 호출. HTTP 오류도 본문을 돌려줘 원인을 로그에 남긴다."""
+    for a in range(2):
+        try:
+            with urllib.request.urlopen(url, timeout=25) as r:
+                return r.read().decode("utf-8")
+        except urllib.error.HTTPError as e:
+            return f"HTTP{e.code} " + e.read().decode("utf-8", "replace")[:300]
+        except Exception as e:
+            err = str(e)
+            time.sleep(1.5)
+    return "EXC " + err
 
 
 def get(url, as_json=False):
@@ -86,10 +103,14 @@ endpoint = None
 
 def deals(lawd, ym):
     global endpoint
+    if time.time() - T0 > BUDGET:
+        return None
     for ep in ([endpoint] if endpoint else ENDPOINTS):
         q = urllib.parse.urlencode({"serviceKey": DKEY, "LAWD_CD": lawd, "DEAL_YMD": ym, "numOfRows": 1000, "pageNo": 1})
-        body = get(f"{ep}?{q}")
+        body = fetch_raw(f"{ep}?{q}")
         if not body.lstrip().startswith("<"):
+            if len(log) < 15:
+                log.append(f"{ep.split('/')[-1]} {lawd} {ym}: {body[:200]}")
             continue
         try:
             root = ET.fromstring(body)
@@ -118,9 +139,23 @@ def deals(lawd, ym):
 
 agg = {}  # lawd → [sum_amt, sum_area, n]
 fail = 0
-for lawd in sorted(codes):
-    for ym in months:
-        r = deals(lawd, ym)
+# 먼저 1건으로 키·엔드포인트 확인 (안 되면 바로 종료)
+probe = deals("11680", months[0])
+if probe is None:
+    log.append("진단 호출 실패 → 중단(키 승인·엔드포인트 확인 필요)")
+    (ROOT / "data" / "realestate_report.txt").write_text("\n".join(log), encoding="utf-8")
+    sys.exit("\n".join(log))
+log.append(f"진단 호출 OK: 강남구 {months[0]} {len(probe)}건")
+
+
+def work(job):
+    lawd, ym = job
+    return lawd, deals(lawd, ym)
+
+
+jobs = [(c, ym) for c in sorted(codes) for ym in months]
+with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex:
+    for lawd, r in ex.map(work, jobs):
         if r is None:
             fail += 1
         else:
@@ -129,7 +164,6 @@ for lawd in sorted(codes):
                 a[0] += amt
                 a[1] += ar
                 a[2] += 1
-        time.sleep(0.05)
 log.append(f"엔드포인트 {endpoint}, 코드 {len(codes)}개, 실패 호출 {fail}, 개월 {months}")
 
 # 3) 시군구(기준 목록)·시도로 집계 ---------------------------------------------
