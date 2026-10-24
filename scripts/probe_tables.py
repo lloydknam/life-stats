@@ -7,7 +7,6 @@ import json, os, sys, time, pathlib, urllib.parse, urllib.request
 
 KEY = os.environ.get("KOSIS_API_KEY") or sys.exit("KOSIS_API_KEY 필요")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-MAX_TABLES = int(os.environ.get("MAX_TABLES", "70"))
 
 FIXED = [
     ("101", "DT_1B34E13"), ("101", "DT_1ES3A03_A01S"), ("101", "DT_1ES3A01S"),
@@ -24,6 +23,8 @@ FIXED = [
     ("101", "DT_1BD1035"), ("101", "DT_6BD1135"), ("142", "DT_BR11_A008"), ("101", "DT_1IN1502"),
     ("101", "DT_1B040A3"), ("101", "DT_1JC1723"),
 ]
+
+MAX_TABLES = int(os.environ.get("MAX_TABLES", str(len(FIXED))))
 
 
 def get(url):
@@ -62,7 +63,7 @@ if cand.exists():
 out = {}
 prev = ROOT / "data" / "table_meta.json"
 if prev.exists():
-    out = {k: v for k, v in json.loads(prev.read_text(encoding="utf-8")).items() if "objs" in v}  # 이미 조사한 표는 건너뜀
+    out = {k: v for k, v in json.loads(prev.read_text(encoding="utf-8")).items() if "objs" in v and v.get("v") == 2}  # 이미 조사한 표는 건너뜀
 T0 = time.time()
 (ROOT / "data").mkdir(exist_ok=True)
 for org, tbl in tables[:MAX_TABLES]:
@@ -71,16 +72,16 @@ for org, tbl in tables[:MAX_TABLES]:
     if time.time() - T0 > 20 * 60:
         break
     itm = meta(org, tbl, "ITM")
-    entry = {"orgId": org}
+    entry = {"orgId": org, "v": 2}
     if isinstance(itm, list):
         grp = {}
         for r in itm:
             oid = r.get("OBJ_ID") or "(항목)"
-            g = grp.setdefault(oid, {"OBJ_NM": r.get("OBJ_NM"), "n": 0, "sample": [], "codes_len": {}})
+            g = grp.setdefault(oid, {"OBJ_NM": r.get("OBJ_NM"), "sn": r.get("OBJ_ID_SN"), "n": 0, "sample": [], "codes_len": {}})
             g["n"] += 1
             code = str(r.get("ITM_ID"))
             g["codes_len"][str(len(code))] = g["codes_len"].get(str(len(code)), 0) + 1
-            if len(g["sample"]) < 14:
+            if len(g["sample"]) < 45:
                 g["sample"].append(f'{code}:{r.get("ITM_NM")}' + (f'[{r.get("UNIT_NM")}]' if r.get("UNIT_NM") else ""))
         entry["objs"] = grp
         entry["raw_first"] = itm[:2]
