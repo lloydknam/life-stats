@@ -136,7 +136,7 @@ def prepare(ind):
             if n is None or not d:
                 continue
             out.append({"code": r[cf], "name": r.get(nf, ""), "v": n / d * rt.get("scale", 1),
-                        "per": r.get("PRD_DE"), "unit": ""})
+                        "per": r.get("PRD_DE"), "unit": "", "n": n, "d": d, "scale": rt.get("scale", 1)})
         return out
     rows = query(ind)
     if isinstance(rows, dict):
@@ -172,7 +172,7 @@ def prepare(ind):
     return out
 
 
-def split_levels(rows, ind):
+def split_levels(rows, ind, canon_codes=None):
     sl, gl = ind.get("sidoCodeLen", 2), ind.get("sigunguCodeLen", 5)
     sidomap, sd = {}, {}
     for r in rows:
@@ -183,9 +183,25 @@ def split_levels(rows, ind):
                 sd[s] = r["v"]
     cand = [r for r in rows if gl and len(r["code"]) == gl and not r["code"].startswith("0" * gl)]
     codes = {r["code"] for r in cand}
-    sg = {}
+    # 시 행이 없고 일반구만 있는 표: 기준 목록(canon)에 시가 있으면 구의 분자·분모를 합산해 시 값을 만든다
+    kids, skip = {}, set()
+    if gl == 5 and canon_codes:
+        for r in cand:
+            c = r["code"]
+            par = c[:-1] + "0"
+            if c.isdigit() and c[-1] != "0" and par not in codes and par in canon_codes and "n" in r:
+                kids.setdefault(par, []).append(r)
+                skip.add(c)
+    sg, cmap = {}, {}
+    for par, ks in kids.items():
+        d = sum(k["d"] for k in ks)
+        if d:
+            sg[canon_codes[par]] = sum(k["n"] for k in ks) / d * ks[0]["scale"]
+            cmap[canon_codes[par]] = par
     for r in cand:
         c = r["code"]
+        if c in skip:
+            continue
         # 일반구(시 아래 구) 제외: 통계청·행안부식 숫자 5자리 코드(시 31010 → 구 31011)에만 적용.
         # 4자리 순번형(1101…)·국세청식(A0101…)은 순번이라 이 규칙이 맞지 않는다.
         if gl == 5 and c.isdigit() and c[:-1] + "0" in codes and c[-1] != "0":
@@ -201,8 +217,18 @@ def split_levels(rows, ind):
         if short_sido(name) == "세종" and "세종" in name:
             name = "세종"
         sg[(sido, name)] = r["v"]
-    return sd, sg
+        cmap[(sido, name)] = c
+    return sd, sg, cmap
 
+
+# 기준 시·군·구 목록(229): 합계출산율 표에서 가져온다. 다른 표는 이 목록에 있는 지역만 사용.
+_bi = next(i for t in CFG["themes"] for i in t["indicators"] if i["id"] == "birth")
+_rows = prepare(_bi)
+CANON_CODES, CANON_KEYS = {}, set()
+if isinstance(_rows, list):
+    _sd, _sg, _cm = split_levels(_rows, _bi)
+    CANON_KEYS = set(_sg.keys())
+    CANON_CODES = {c: k for k, c in _cm.items()}
 
 regions, rindex = [], {}
 values, sido_values, themes, report = {}, {}, [], []
@@ -214,7 +240,9 @@ for theme in CFG["themes"]:
         if isinstance(rows, dict):
             report.append(f'SKIP {ind["id"]}: {rows.get("errMsg")}')
             continue
-        sd, sg = split_levels(rows, ind)
+        sd, sg, _ = split_levels(rows, ind, CANON_CODES)
+        if CANON_KEYS:
+            sg = {k: v for k, v in sg.items() if k in CANON_KEYS}
         if not sd and not sg:
             report.append(f'EMPTY {ind["id"]}: rows={len(rows)} sample={[r["code"]+":"+r["name"] for r in rows[:3]]}')
             continue
