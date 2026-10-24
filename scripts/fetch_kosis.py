@@ -186,7 +186,9 @@ def split_levels(rows, ind):
     sg = {}
     for r in cand:
         c = r["code"]
-        if c[:-1] + "0" in codes and c[-1] != "0":  # 일반구(시 아래 구)는 제외
+        # 일반구(시 아래 구) 제외: 통계청·행안부식 숫자 5자리 코드(시 31010 → 구 31011)에만 적용.
+        # 4자리 순번형(1101…)·국세청식(A0101…)은 순번이라 이 규칙이 맞지 않는다.
+        if gl == 5 and c.isdigit() and c[:-1] + "0" in codes and c[-1] != "0":
             continue
         sido = sidomap.get(c[:sl]) if sl else None
         sido = sido or SIDO_STAT.get(c[:2]) or short_sido(r["name"].split(" ")[0])
