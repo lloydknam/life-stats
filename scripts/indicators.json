@@ -121,6 +121,21 @@
           "itmId": "T10",
           "objL1": "ALL",
           "source": "국가데이터처(보건복지부 자료)"
+        },
+        {
+          "id": "disabled",
+          "name": "등록장애인 비율",
+          "unit": "인구 천 명당",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1YL202003E",
+          "itmId": "T001",
+          "objL1": "ALL",
+          "perPop": {
+            "scale": 1000
+          },
+          "source": "국가데이터처(보건복지부 자료)",
+          "note": "등록장애인 ÷ 주민등록인구"
         }
       ]
     },
@@ -262,6 +277,24 @@
           "objL1": "ALL",
           "source": "국가데이터처 지역소득",
           "note": "시도 단위만 공표"
+        },
+        {
+          "id": "biz_per_pop",
+          "name": "인구 천 명당 가동사업자",
+          "unit": "명",
+          "higherIsBetter": true,
+          "orgId": "133",
+          "tblId": "DT_133N_A9811",
+          "itmId": "T01",
+          "objL1": "ALL",
+          "objL2": "16133T2008_0245",
+          "sidoCodeLen": 11,
+          "sigunguCodeLen": 13,
+          "perPop": {
+            "scale": 1000
+          },
+          "source": "국세청 가동사업자 현황",
+          "note": "가동사업자 수 ÷ 주민등록인구"
         }
       ]
     },
@@ -392,6 +425,28 @@
           "objL1": "ALL",
           "source": "국가데이터처(행정안전부 자료)",
           "note": "세입과목 개편 후 기준"
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "name": "안전·범죄",
+      "indicators": [
+        {
+          "id": "crime_rate",
+          "name": "인구 10만 명당 총범죄 발생",
+          "unit": "건",
+          "higherIsBetter": false,
+          "orgId": "101",
+          "tblId": "DT_1YL20321",
+          "itmId": "T01",
+          "objL1": "ALL",
+          "objL2": "10",
+          "perPop": {
+            "scale": 100000
+          },
+          "source": "국가데이터처(경찰청 자료)",
+          "note": "시도 단위만 공표. 발생건수 ÷ 주민등록인구"
         }
       ]
     }

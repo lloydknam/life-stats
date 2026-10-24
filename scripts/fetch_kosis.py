@@ -14,6 +14,7 @@
   filters / exclude: 응답 행 필터. 값 "re:정규식", "~부분문자열", 그 외는 일치
   ratio: {"num": {...질의 덮어쓰기...}, "den": {...}, "scale": 100}  → 지역별 num/den*scale
   shareOf: {"dim": 3, "numRegex": "...", "totalName": "계", "scale": 100} → 분류 n의 이름이 정규식에 맞는 합 ÷ 총계
+  perPop: {"scale": 1000}  → 지역별 값 ÷ 주민등록인구(DT_1B040M5_1 총계) × scale  (표가 서로 달라도 (시도,지역명)으로 맞춘다)
 """
 import json, os, re, sys, time, datetime, pathlib, urllib.parse, urllib.request
 
@@ -232,6 +233,16 @@ if isinstance(_rows, list):
     CANON_KEYS = set(_sg.keys())
     CANON_CODES = {c: k for k, c in _cm.items()}
 
+# 인구(분모) — 주민등록연앙인구 총계. perPop 지표가 공통으로 쓴다.
+POP = {}
+_ag = next(i for t in CFG["themes"] for i in t["indicators"] if i["id"] == "aging")
+_pi = {k: v for k, v in _ag.items() if k != "shareOf"}
+_pi["filters"] = {"C3_NM": "계"}
+_prow = prepare(_pi)
+if isinstance(_prow, list):
+    _psd, _psg, _ = split_levels(_prow, _pi, CANON_CODES)
+    POP = {"sd": _psd, "sg": {k: v for k, v in _psg.items() if k in CANON_KEYS}}
+
 regions, rindex = [], {}
 values, sido_values, themes, report = {}, {}, [], []
 
@@ -245,6 +256,13 @@ for theme in CFG["themes"]:
         sd, sg, _ = split_levels(rows, ind, CANON_CODES)
         if CANON_KEYS:
             sg = {k: v for k, v in sg.items() if k in CANON_KEYS}
+        if "perPop" in ind:
+            if not POP:
+                report.append(f'SKIP {ind["id"]}: 인구 분모 없음')
+                continue
+            k = ind["perPop"].get("scale", 1)
+            sd = {a: v / POP["sd"][a] * k for a, v in sd.items() if POP["sd"].get(a)}
+            sg = {a: v / POP["sg"][a] * k for a, v in sg.items() if POP["sg"].get(a)}
         if not sd and not sg:
             report.append(f'EMPTY {ind["id"]}: rows={len(rows)} sample={[r["code"]+":"+r["name"] for r in rows[:3]]}')
             continue
