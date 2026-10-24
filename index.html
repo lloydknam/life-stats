@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>클사무관 시군구 지표</title>
+<title>클사무관의 라이프 인덱스</title>
 <link rel="icon" href="assets/clerk.jpg">
-<meta property="og:title" content="클사무관의 시군구 지표">
+<meta property="og:title" content="클사무관의 라이프 인덱스">
 <meta property="og:image" content="assets/clerk-full.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
@@ -35,7 +35,9 @@ button,select,input{font:inherit;color:inherit}
 
 .wrap{max-width:1480px;margin:0 auto;padding:22px 24px 56px;display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
 .rail{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:4px}
-.rail h3{margin:18px 0 6px;font-size:13px;font-weight:700;color:var(--mute);letter-spacing:-.01em}
+.rail h3{margin:22px 0 6px;padding:0 10px;font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.rail h3 i{font-style:normal;color:var(--hi);margin-right:4px}
+.rail h3.lab{margin-top:30px;padding-top:14px;border-top:1px dashed var(--line);color:var(--mute)}
 .rail h3:first-child{margin-top:0}
 .rail button{display:block;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;
   padding:7px 10px;margin:0;font-size:14px;color:var(--text);cursor:pointer;border-radius:0 8px 8px 0;line-height:1.35}
@@ -157,7 +159,7 @@ details.all[open] summary::before{content:"－ ";}
 <body>
 <header class="hd"><div class="hd-in">
   <a class="brand" href="./"><img src="assets/clerk.jpg" alt="클사무관" width="56" height="56">
-    <div><b>클사무관<em>의</em> 시군구 지표</b><span>글로벌데스크 · 삶의 질 랭킹</span></div></a>
+    <div><b>클사무관<em>의</em> 라이프 인덱스</b></div></a>
   <div class="sub" id="sub"></div>
 </div></header>
 <div id="sample"></div>
@@ -195,10 +197,11 @@ function findInd(id){for(const t of S.d.themes)for(const i of t.indicators)if(i.
 function themeOf(id){return S.d.themes.find(t=>t.indicators.some(i=>i.id===id))}
 
 function buildNav(){
-  $("rail").innerHTML=S.d.themes.map(t=>`<h3>${esc(t.name)}</h3>`+t.indicators.map(i=>
+  let n=0;
+  $("rail").innerHTML=S.d.themes.map(t=>(t.id==="qol"?`<h3 class="lab">🧪 ${esc(t.name.replace("실험실 · ",""))} <small>실험실</small></h3>`:`<h3><i>${++n}.</i> ${esc(t.name)}</h3>`)+t.indicators.map(i=>
     `<button data-i="${i.id}" ${i.id===S.ind?'aria-current="true"':""}>${esc(i.name)}</button>`).join("")).join("");
   $("rail").querySelectorAll("button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.i});
-  $("picker").innerHTML=S.d.themes.map(t=>`<optgroup label="${esc(t.name)}">`+t.indicators.map(i=>
+  $("picker").innerHTML=S.d.themes.map(t=>`<optgroup label="${esc(t.id==="qol"?"🧪 "+t.name:(S.d.themes.filter(x=>x.id!=="qol").indexOf(t)+1)+". "+t.name)}">`+t.indicators.map(i=>
     `<option value="${i.id}" ${i.id===S.ind?"selected":""}>${esc(i.name)}</option>`).join("")+"</optgroup>").join("");
   $("picker").onchange=e=>{location.hash=e.target.value};
 }
@@ -306,7 +309,7 @@ function setupQol(){
   c.dims.forEach(x=>S.w[x.id]=3);
   try{const o=JSON.parse(localStorage.getItem(QKEY)||"null");if(o){c.dims.forEach(x=>{if(o.w&&o.w[x.id]!=null)S.w[x.id]=+o.w[x.id]});if(o.mode)S.mode=o.mode}}catch(e){}
   const mk=(id,name,desc)=>({id,name,unit:"점",higherIsBetter:true,source:"종합 산출(국가데이터처·건강보험심사평가원·국토교통부 등 지표 합성)",yearSido:"지표별 최신",yearSigungu:"지표별 최신",note:desc});
-  S.d.themes.unshift({id:"qol",name:"종합 삶의 질",indicators:[mk("qol",c.name,"분야별 점수를 가중 합성한 0~100점 지수. 아래 슬라이더로 분야 중요도를 직접 정해 보세요.")]
+  S.d.themes.push({id:"qol",name:"실험실 · 종합 삶의 질",indicators:[mk("qol",c.name+" (실험실)","분야별 점수를 가중 합성한 0~100점 지수. 아래 슬라이더로 분야 중요도를 직접 정해 보세요.")]
     .concat(c.dims.map(x=>mk("qol_"+x.id,x.name+" 점수",x.desc+" (분야 점수 0~100점)")))});
   computeQol();
 }
@@ -356,7 +359,7 @@ function computeQol(){
 function qolControls(){
   if(S.ind!=="qol"||!S.cfg)return "";
   const c=S.cfg;
-  return `<div class="qctl"><h3>내 기준으로 가중치 정하기</h3><p>분야마다 얼마나 중요한지 0~5로 정하면 순위와 지도가 바로 바뀝니다. 0이면 제외됩니다.<br><b>시범 지수입니다.</b> 인구 대비 시설·의료 지표가 많아 인구가 적은 군·구도심이 유리하게 나오는 경향이 있으니, 같은 유형끼리 비교해서 보세요.</p>
+  return `<div class="qctl"><h3>내 기준으로 가중치 정하기</h3><p>분야마다 얼마나 중요한지 0~5로 정하면 순위와 지도가 바로 바뀝니다. 0이면 제외됩니다.<br><b>실험실 지수입니다(분야·지표 구성이 자의적).</b> 인구 대비 시설·의료 지표가 많아 인구가 적은 군·구도심이 유리하게 나오는 경향이 있으니, 같은 유형끼리 비교해서 보세요.</p>
     <div class="qgrid">${c.dims.map(x=>`<label><b>${esc(x.name)}</b><em id="qv-${x.id}">${S.w[x.id]}</em><small>${esc(x.desc)}</small><input type="range" min="0" max="5" step="1" value="${S.w[x.id]}" data-w="${x.id}" aria-label="${esc(x.name)} 가중치"></label>`).join("")}</div>
     <div class="qrow"><label>합성 방식 <select id="qmode"><option value="pow" ${S.mode==="pow"?"selected":""}>약점 반영 (멱평균 β=0.5)</option><option value="avg" ${S.mode==="avg"?"selected":""}>단순 가중평균</option></select></label>
     <button id="qreset" type="button">기본값(모두 3)</button></div></div>`;
