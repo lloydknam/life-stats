@@ -10,10 +10,12 @@
   --ink:#101936; --paper:#f2f4f8; --card:#ffffff; --line:#dde2ec; --mute:#6b7488;
   --band:#101936; --hi:#1f55d6; --lo:#d9382a; --hi-bg:#eef3ff; --lo-bg:#fff1ef; --track:#e8ecf4;
   --text:#101936;
+  --m1:#0f3ea8;--m2:#4a78d8;--m3:#9db8ee;--m4:#f1b4a8;--m5:#cf3a2b;
 }
 @media (prefers-color-scheme:dark){
   :root{--ink:#e9edf8; --paper:#0b0f1f; --card:#141a33; --line:#252d4d; --mute:#98a2be;
-    --band:#1d2750; --hi:#7da4ff; --lo:#ff8d7d; --hi-bg:#18234d; --lo-bg:#3a1e24; --track:#222b4d; --text:#e9edf8;}
+    --band:#1d2750; --hi:#7da4ff; --lo:#ff8d7d; --hi-bg:#18234d; --lo-bg:#3a1e24; --track:#222b4d; --text:#e9edf8;
+    --m1:#7da4ff;--m2:#5a82e0;--m3:#3b538f;--m4:#8f4a52;--m5:#ff8d7d;}
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -91,6 +93,21 @@ details.all[open] summary::before{content:"－ ";}
 .full .b{height:8px;background:var(--track);border-radius:4px;overflow:hidden}
 .full .b i{display:block;height:100%;background:var(--hi);opacity:.55}
 
+.mapbox{padding:0 28px 24px}
+.mapbox h3{margin:0 0 4px;font-size:16px;font-weight:700}
+.mapbox .hint{color:var(--mute);font-size:13px;margin:0 0 10px;min-height:20px}
+.mapbox .hint b{color:var(--text)}
+.mapwrap{display:grid;grid-template-columns:minmax(0,520px) 1fr;gap:24px;align-items:center}
+.mapwrap svg{width:100%;height:auto;max-height:640px;display:block}
+.mapwrap path{stroke:var(--card);stroke-width:.35;vector-effect:non-scaling-stroke;stroke-width:.6px;cursor:pointer;transition:opacity .1s}
+.mapwrap path:hover,.mapwrap path.sel{stroke:var(--ink);stroke-width:1.6px}
+.m0{fill:var(--track)}.m1{fill:var(--m1)}.m2{fill:var(--m2)}.m3{fill:var(--m3)}.m4{fill:var(--m4)}.m5{fill:var(--m5)}
+.legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);margin-top:6px}
+.legend i{display:inline-block;width:26px;height:10px;border-radius:2px}
+.mapside{font-size:14px}
+.mapside .big{font-size:22px;font-weight:780;letter-spacing:-.03em}
+.mapside p{margin:6px 0;color:var(--mute)}
+
 .card-f{background:var(--band);color:#fff;padding:14px 28px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:#c9d1ea}
@@ -101,6 +118,7 @@ details.all[open] summary::before{content:"－ ";}
   .card-h{padding:20px 18px 14px}.card-h h2{font-size:24px}
   .finder{padding:0 18px 14px}
   .panels{grid-template-columns:1fr;padding:0 14px 18px}
+  .mapbox{padding:0 14px 18px}.mapwrap{grid-template-columns:1fr}
   .card-f{padding:14px 18px}
   .hd-in{padding:20px 16px 16px}.hd h1{font-size:22px}
   .full li{grid-template-columns:38px 1fr 62px}.full .b{display:none}
@@ -215,7 +233,11 @@ function render(){
       ${panel(`광역 ${sidoItems.length}개 시도`,sidoItems,info,sidoName)}
       ${panel(`기초 ${sgItems.length}개 시군구`,sgItems,info,sgName)}
     </div>
+    <div class="mapbox"><h3>지도로 보기</h3><p class="hint" id="maphint">지역 위에 마우스를 올리거나 눌러보세요. 파란색일수록 좋은 쪽입니다.</p>
+      <div class="mapwrap"><div id="map"></div><div class="mapside" id="mapside"></div></div></div>
     <div class="card-f"><span><b>출처</b>${esc(info.source||"-")}</span>${info.note?`<span>${esc(info.note)}</span>`:""}</div>`;
+
+  drawMap(sgItems.length?sgItems:null,sidoItems,info,sgName);
 
   const rs=rankList(sgItems,info.higherIsBetter), rsido=rankList(sidoItems,info.higherIsBetter);
   const pl=plain(rs.map(x=>x.v),info.unit), plS=plain(rsido.map(x=>x.v),info.unit);
@@ -231,6 +253,51 @@ function render(){
     const names=new Set(rs.filter(r=>sgName(r).includes(q)||r.name.includes(q)).map(sgName));
     document.querySelectorAll(".panel:last-child .full li").forEach(li=>{if(names.has(li.dataset.k))li.classList.add("hit")});
   };
+}
+
+/* ---- 지도 (시군구 단계구분도) ---- */
+const GEO={};
+async function geo(kind){
+  if(!GEO[kind]){
+    const g=await fetch(`data/geo_${kind}.json`).then(r=>r.json());
+    const LON0=124.5,LAT1=38.7,KX=0.8*100,KY=100;
+    const pt=([x,y])=>`${((x-LON0)*KX).toFixed(1)} ${((LAT1-y)*KY).toFixed(1)}`;
+    const ring=r=>"M"+r.map(pt).join("L")+"Z";
+    GEO[kind]=g.features.map(f=>{
+      const polys=f.geometry.type==="Polygon"?[f.geometry.coordinates]:f.geometry.coordinates;
+      return {k:f.properties.k,d:polys.map(p=>p.map(ring).join("")).join("")};
+    });
+  }
+  return GEO[kind];
+}
+let MAPSEQ=0;
+async function drawMap(sgItems,sidoItems,info,sgName){
+  const seq=++MAPSEQ, useSg=!!sgItems;
+  const items=useSg?sgItems:sidoItems;
+  const el=$("map");
+  if(!items.length){el.innerHTML="";return}
+  let paths; try{paths=await geo(useSg?"sigungu":"sido")}catch(e){el.innerHTML='<p class="hint">지도를 불러오지 못했어요.</p>';return}
+  if(seq!==MAPSEQ) return;
+  const ranked=rankList(items,info.higherIsBetter), n=ranked.length;
+  const keyOf=r=>useSg?r.k:r.k, byKey=new Map(ranked.map(r=>[keyOf(r),r]));
+  const pl=plain(ranked.map(x=>x.v),info.unit);
+  const cls=r=>{ // 순위 백분위로 5단계 (동률은 같은 단계)
+    const q=(r.rank-1)/Math.max(n,1); return "m"+(1+Math.min(4,Math.floor(q*5)));
+  };
+  const label=k=>{const r=byKey.get(k);return useSg&&r?sgName(r):k};
+  el.innerHTML=`<svg viewBox="0 0 ${(131.9-124.5)*80+4} ${(38.7-33.0)*100+4}" role="img" aria-label="${esc(info.name)} 지도">`+
+    paths.map(p=>{const r=byKey.get(p.k);return `<path d="${p.d}" class="${r?cls(r):"m0"}" data-k="${esc(p.k)}"><title>${esc(label(p.k))}${r?` ${r.rank}위 ${pl(r.v)}`:" 자료 없음"}</title></path>`}).join("")+`</svg>
+    <div class="legend"><span>좋음</span><i class="m1" style="background:var(--m1)"></i><i style="background:var(--m2)"></i><i style="background:var(--m3)"></i><i style="background:var(--m4)"></i><i style="background:var(--m5)"></i><span>나쁨</span><i style="background:var(--track)"></i><span>자료 없음</span></div>`;
+  const side=$("mapside");
+  const show=k=>{
+    const r=byKey.get(k);
+    side.innerHTML=r?`<div class="big">${esc(label(k))}</div><p>${n}곳 중 <b>${r.rank}위</b></p><div class="big">${pl(r.v)}</div><p>${info.unit&&info.unit.length>2?esc(info.unit):""}</p>`
+      :`<div class="big">${esc(label(k))}</div><p>이 지표는 자료가 없어요.</p>`;
+    el.querySelectorAll("path.sel").forEach(x=>x.classList.remove("sel"));
+    const t=[...el.querySelectorAll("path")].find(x=>x.dataset.k===k); if(t) t.classList.add("sel");
+  };
+  el.querySelectorAll("path").forEach(p=>{p.onmouseenter=()=>show(p.dataset.k);p.onclick=()=>show(p.dataset.k)});
+  side.innerHTML=`<p>${useSg?"시군구":"시도"} 단위 지도입니다. ${useSg?"":"이 지표는 시도 단위만 공표돼요. "}지역을 눌러보세요.</p>`;
 }
 </script>
 </body>
