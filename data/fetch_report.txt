@@ -3,8 +3,14 @@ OK birth: 시도 17, 시군구 229, 2025
 OK marriage_rate: 시도 17, 시군구 229, 2025
 OK divorce_rate: 시도 17, 시군구 229, 2025
 OK natural_inc: 시도 17, 시군구 229, 2025
+OK aging_idx: 시도 17, 시군구 229, 2025
+OK median_age: 시도 17, 시군구 229, 2025
+OK net_migration: 시도 17, 시군구 208, 2025
+OK single_hh: 시도 17, 시군구 229, 2025
+OK elder_only_hh: 시도 17, 시군구 229, 2025
 OK suicide: 시도 17, 시군구 228, 2025
 OK death_rate: 시도 17, 시군구 229, 2025
+OK clinics: 시도 17, 시군구 215, 202602
 OK elder_leisure: 시도 15, 시군구 201, 2025
 OK disabled: 시도 17, 시군구 216, 2025
 OK employment: 시도 0, 시군구 227, 202601
@@ -16,6 +22,7 @@ OK wage: 시도 17, 시군구 227, 2024
 OK hh_income: 시도 17, 시군구 0, 2024
 OK grdp: 시도 17, 시군구 0, 2024
 OK biz_per_pop: 시도 16, 시군구 228, 2025
+OK startup_rate: 시도 17, 시군구 229, 2023
 OK semi_basement: 시도 17, 시군구 229, 2024
 OK rooftop: 시도 17, 시군구 229, 2024
 OK no_house: 시도 17, 시군구 228, 2021
