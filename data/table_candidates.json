@@ -2,1449 +2,150 @@
  "population": [
   {
    "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B04006",
-   "TBL_NM": "행정구역(시군구)별/1세별 주민등록인구",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2008",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M5_1",
-   "TBL_NM": "시군구/성/연령(5세)별 주민등록연앙인구(2023~)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M1_1",
-   "TBL_NM": "시군구/성/연령(1세)별 주민등록연앙인구(2023~)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1011886",
-   "TBL_NM": "공연시설 : 인구 1천명당 객석수 현황",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2004",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1024578",
-   "TBL_NM": "공공지원 : 지방자치단체 : 인구 1,000명당 공연예술예산 현황",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M5",
-   "TBL_NM": "시군구/성/연령(5세)별 주민등록연앙인구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1993",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M1",
-   "TBL_NM": "시군구/성/연령(1세)별 주민등록연앙인구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1993",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26006_A01",
-   "TBL_NM": "인구이동률(월, 분기, 년)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26006",
-   "TBL_NM": "시군구/성/연령(5세)별 이동률",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040A3",
-   "TBL_NM": "행정구역(시군구)별, 성별 인구수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "1992",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040B3",
-   "TBL_NM": "행정구역(시군구)별 주민등록세대수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "1992",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL12001E",
-   "TBL_NM": "인구감소지역 생활인구: 성별(시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL12002E",
-   "TBL_NM": "인구감소지역 생활인구: 연령별(시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "473",
-   "TBL_ID": "DT_473001_ISLAND02",
-   "TBL_NM": "시군구별 유인섬 현황",
-   "ORG_NM": "한국섬진흥원",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 주민등록인구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL202114E",
-   "TBL_NM": "건강보험적용인구현황(시도/시/군/구)",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2004",
-   "END_PRD_DE": "2024"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26003_A02",
-   "TBL_NM": "전출지/전입지(시군구)/성별 이동자수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2012",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26007",
-   "TBL_NM": "시군구별 이동건수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2001",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26006",
-   "TBL_NM": "시군구/성/연령(5세)별 이동률",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_1B26001_A022",
-   "TBL_NM": "전입인구(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26006_A01",
-   "TBL_NM": "인구이동률(월, 분기, 년)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_1B26001_A023",
-   "TBL_NM": "전출인구(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_1B26001_A021",
-   "TBL_NM": "순이동인구(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "110",
-   "TBL_ID": "DT_110001_A004",
-   "TBL_NM": "인구이동",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26001",
-   "TBL_NM": "시군구/성/연령(5세)별 이동자수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26001_A02",
-   "TBL_NM": "시군구/성별 이동자수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26001_A01",
-   "TBL_NM": "시군구별 이동자수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26001_A03",
-   "TBL_NM": "시군구/연령(5세)별 이동자수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26001_A04",
-   "TBL_NM": "시도/성/연령(5세)별 이동자수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26A01",
-   "TBL_NM": "시군구/성/연령(5세)별 1인 이동건수",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2001",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 인구 이동 전입 전출",
-   "ORG_ID": "110",
-   "TBL_ID": "DT_11001N_2013_A004",
-   "TBL_NM": "인구이동",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2009",
-   "END_PRD_DE": "2017"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "aging": [
   {
    "keyword": "시군구 고령인구비율",
-   "ORG_ID": "460",
-   "TBL_ID": "TX_315_2009_H1001",
-   "TBL_NM": "도시지역 인구현황(시군구)",
-   "ORG_NM": "한국국토정보공사",
-   "STRT_PRD_DE": "2005",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N138",
-   "TBL_NM": "시군구별 성별 대사증후군 위험요인별 현황",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N135",
-   "TBL_NM": "시군구별 성별 대사증후군 위험요인 보유개수별 현황",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "117",
-   "TBL_ID": "DT_117108_A008",
-   "TBL_NM": "시·군·구별 신고접수",
-   "ORG_NM": "보건복지부",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "177",
-   "TBL_ID": "DT_117075_DIE_BF02",
-   "TBL_NM": "시·군·구별 아침식사 실천율",
-   "ORG_NM": "질병관리청",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL202004",
-   "TBL_NM": "노후주택비율(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "110",
-   "TBL_ID": "TX_11025_A015_A",
-   "TBL_NM": "한국국적을 가지지 않은 자-기타 외국인(남)",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "110",
-   "TBL_ID": "TX_11025_A014_A",
-   "TBL_NM": "한국국적을 가지지 않은 자-기타 외국인(계)",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "110",
-   "TBL_ID": "TX_11025_A016_A",
-   "TBL_NM": "한국국적을 가지지 않은 자-기타 외국인(여)",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ET0033",
-   "TBL_NM": "시군별 논벼 재배면적",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1975",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL202005",
-   "TBL_NM": "미거주주택(빈집)비율(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "177",
-   "TBL_ID": "DT_117075_DIE_BREAKFAST",
-   "TBL_NM": "시·군·구별 아침결식 예방인구비율",
-   "ORG_NM": "질병관리청",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "696",
-   "TBL_ID": "DT_696003_2023A010",
-   "TBL_NM": "전출",
-   "ORG_NM": "충청남도 논산시",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "203",
-   "TBL_ID": "DT_203013_17_1_11",
-   "TBL_NM": "연도별 전입인구",
-   "ORG_NM": "대구광역시",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 고령인구비율",
-   "ORG_ID": "216",
-   "TBL_ID": "DT_216014_2022A020",
-   "TBL_NM": "연도별 전출인구",
-   "ORG_NM": "경상북도",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2022"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M5_1",
-   "TBL_NM": "시군구/성/연령(5세)별 주민등록연앙인구(2023~)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M1_1",
-   "TBL_NM": "시군구/성/연령(1세)별 주민등록연앙인구(2023~)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M1",
-   "TBL_NM": "시군구/성/연령(1세)별 주민등록연앙인구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1993",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040M5",
-   "TBL_NM": "시군구/성/연령(5세)별 주민등록연앙인구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1993",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26006_A01",
-   "TBL_NM": "인구이동률(월, 분기, 년)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B26006",
-   "TBL_NM": "시군구/성/연령(5세)별 이동률",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1970",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL12002E",
-   "TBL_NM": "인구감소지역 생활인구: 연령별(시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL20961",
-   "TBL_NM": "노인 천명당 노인여가복지시설수(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2003",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B04006",
-   "TBL_NM": "행정구역(시군구)별/1세별 주민등록인구",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2008",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "117",
-   "TBL_ID": "DT_117N_A11109",
-   "TBL_NM": "시군구 시기/24개 암종/성별 암발생자수, 상대빈도, 조발생률, 연령표준화발생률",
-   "ORG_NM": "보건복지부",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35003_A304",
-   "TBL_NM": "시군구(광주,전북,전남,제주)별 연령별 성별 의료보장 적용인구 현황",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N1070",
-   "TBL_NM": "시군구별 연령별 성별 일반건강검진 인지기능장애검사 결과",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35006_N015",
-   "TBL_NM": "시군구별/연령별/등급별/성별 장기요양 급여실적",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2012"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N032",
-   "TBL_NM": "시군구별 성별 영유아 건강검진 대상 및 수검인원 현황",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2011"
-  },
-  {
-   "keyword": "주민등록 연령별 인구 시군구",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N120",
-   "TBL_NM": "시군구별 성별 영유아 건강검진 종합판정현황",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2011",
-   "END_PRD_DE": "2011"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "single_household": [
   {
    "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "800",
-   "TBL_ID": "DT_800001_I000003",
-   "TBL_NM": "주택소유현황",
-   "ORG_NM": "경상남도 양산시",
-   "STRT_PRD_DE": "2016",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "218",
-   "TBL_ID": "DT_21802_I001027",
-   "TBL_NM": "주택소유현황",
-   "ORG_NM": "제주특별자치도",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "212",
-   "TBL_ID": "DT_B18_2018",
-   "TBL_NM": "주택소유현황",
-   "ORG_NM": "충청북도",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "512",
-   "TBL_ID": "DT_512002_2021_B005",
-   "TBL_NM": "분거가족과 분거이유",
-   "ORG_NM": "서울특별시 은평구",
-   "STRT_PRD_DE": "2021",
-   "END_PRD_DE": "2021"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "807",
-   "TBL_ID": "DT_80701_I017",
-   "TBL_NM": "주택소유현황",
-   "ORG_NM": "경상남도 산청군",
-   "STRT_PRD_DE": "2021",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "655",
-   "TBL_ID": "DT_655002_K0071",
-   "TBL_NM": "이주계획 및 지역",
-   "ORG_NM": "강원특별자치도 태백시",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2019"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "655",
-   "TBL_ID": "DT_655002_A003_2",
-   "TBL_NM": "분거가족과 분거지역",
-   "ORG_NM": "강원특별자치도 태백시",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "211",
-   "TBL_ID": "DT_21108_2018_C002R",
-   "TBL_NM": "분거지역(가구주)",
-   "ORG_NM": "강원특별자치도",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "660",
-   "TBL_ID": "DT_660002_K022",
-   "TBL_NM": "분거가족과 분거이유",
-   "ORG_NM": "강원특별자치도 영월군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "659",
-   "TBL_ID": "DT_659002_088",
-   "TBL_NM": "분거지역",
-   "ORG_NM": "강원특별자치도 횡성군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "666",
-   "TBL_ID": "DT_666002_A009",
-   "TBL_NM": "분거지역",
-   "ORG_NM": "강원특별자치도 인제군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "661",
-   "TBL_ID": "DT_661002_058",
-   "TBL_NM": "분거지역",
-   "ORG_NM": "강원특별자치도 평창군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "665",
-   "TBL_ID": "DT_665002_A008",
-   "TBL_NM": "분거가족과 분거이유",
-   "ORG_NM": "강원특별자치도 양구군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "657",
-   "TBL_ID": "DT_657002_057",
-   "TBL_NM": "분거지역",
-   "ORG_NM": "강원특별자치도 삼척시",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 1인가구 비율",
-   "ORG_ID": "655",
-   "TBL_ID": "DT_655002_K007",
-   "TBL_NM": "이주계획 및 지역",
-   "ORG_NM": "강원특별자치도 태백시",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2017"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "foreigner": [
   {
    "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040B3",
-   "TBL_NM": "행정구역(시군구)별 주민등록세대수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "1992",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B040A3",
-   "TBL_NM": "행정구역(시군구)별, 성별 인구수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "1992",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B04006",
-   "TBL_NM": "행정구역(시군구)별/1세별 주민등록인구",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2008",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL12002E",
-   "TBL_NM": "인구감소지역 생활인구: 연령별(시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL12001E",
-   "TBL_NM": "인구감소지역 생활인구: 성별(시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "110",
-   "TBL_ID": "DT_11001N_2013_A033",
-   "TBL_NM": "자동차 등록대수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2009",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "110",
-   "TBL_ID": "TX_11025_A001",
-   "TBL_NM": "시군구별 외국인주민 현황(2007~2015)",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2007",
-   "END_PRD_DE": "2015"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "110",
-   "TBL_ID": "DT_11001N_2013_A049",
-   "TBL_NM": "교통사고건수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2009",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "110",
-   "TBL_ID": "TX_11025_A001A",
-   "TBL_NM": "시군구별 외국인주민 현황(2006)",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2006",
-   "END_PRD_DE": "2006"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "612",
-   "TBL_ID": "DT_B414",
-   "TBL_NM": "인구이동",
-   "ORG_NM": "경기도 성남시",
-   "STRT_PRD_DE": "2012",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "619",
-   "TBL_ID": "DT_61901_B000019",
-   "TBL_NM": "인구이동",
-   "ORG_NM": "경기도 안산시",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "640",
-   "TBL_ID": "DT_64001_B000019",
-   "TBL_NM": "인구이동",
-   "ORG_NM": "경기도 가평군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "611",
-   "TBL_ID": "DT_B400003",
-   "TBL_NM": "시·군·구별 인구이동",
-   "ORG_NM": "경기도 수원시",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "637",
-   "TBL_ID": "DT_63701_B000019",
-   "TBL_NM": "인구이동",
-   "ORG_NM": "경기도 광주시",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 외국인 주민 등록",
-   "ORG_ID": "620",
-   "TBL_ID": "DT_1B00098",
-   "TBL_NM": "인구이동",
-   "ORG_NM": "경기도 고양시",
-   "STRT_PRD_DE": "2012",
-   "END_PRD_DE": "2024"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "birth": [
   {
    "keyword": "합계출산율 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B81A17",
-   "TBL_NM": "시군구/합계출산율, 모의 연령별 출산율",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "합계출산율 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B81A23",
-   "TBL_NM": "시군구/출생아수, 합계출산율",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "합계출산율 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_1B81A17",
-   "TBL_NM": "합계출산율(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2025"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B81A23",
-   "TBL_NM": "시군구/출생아수, 합계출산율",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1BB0006",
-   "TBL_NM": "지역별 다문화 출생",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2008",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_23",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "인천광역시",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B81A28",
-   "TBL_NM": "시군구/ 모의 평균 출산연령, 모의 연령별(5세간격) 출생",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_31",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "경기도",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_34",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "충청남도",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_21",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "부산광역시",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_26",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "울산광역시",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_33",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "충청북도",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_35",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "전북특별자치도",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_38",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "경상남도",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_39",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "제주특별자치도",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_32",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "강원특별자치도",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_25",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "대전광역시",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
-  },
-  {
-   "keyword": "시군구 출생아수 조출생률",
-   "ORG_ID": "101",
-   "TBL_ID": "INH_PB0004_2022_11",
-   "TBL_NM": "장래 인구변동요인(출생, 사망, 인구이동 등)",
-   "ORG_NM": "서울특별시",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2042"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "marriage": [
   {
    "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B8000I",
-   "TBL_NM": "시군구/인구동태건수 및 동태율(출생,사망,혼인,이혼)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027050",
-   "TBL_NM": "문화예술공간이용 횟수-시군구민 회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027085",
-   "TBL_NM": "문화예술활동 공간/환경 만족도-시군구민회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027097",
-   "TBL_NM": "문화행사 참석횟수-시군구민 회관 이용자",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1MR2060",
-   "TBL_NM": "성, 연령 및 혼인상태별 인구 - 시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC2007",
-   "TBL_NM": "성별/혼인상태별/종사상지위별 취업인구(15세이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PM2003",
-   "TBL_NM": "성, 연령, 혼인상태 및 교육정도별 인구(15세 이상, 내국인)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC2003",
-   "TBL_NM": "성, 혼인상태 및 경제활동상태인구(15세이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC2018",
-   "TBL_NM": "성별/혼인상태별/현 직업 근무연수별 취업인구(15세이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PB2004",
-   "TBL_NM": "현 거주지, 성, 연령, 혼인상태 및 출생지 유형별 인구(15세 이상)-시도",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1MR2061",
-   "TBL_NM": "가구주의 성, 연령 및 혼인상태별 가구 - 시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "154",
-   "TBL_ID": "DT_MOGE_1001301259",
-   "TBL_NM": "지난 1년동안 한국생활의 어려움",
-   "ORG_NM": "성평등가족부",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1029837",
-   "TBL_NM": "문화예술활동 공간별 이용률 - 시군구민회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PG2002",
-   "TBL_NM": "연령별/성별/혼인상태별 고령자(60세 이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 혼인 이혼 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PM2005",
-   "TBL_NM": "성별/연령별/혼인상태별/세대구성별 인구(일반가구)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "suicide": [
   {
    "keyword": "시군구 자살률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B34E13",
-   "TBL_NM": "시군구/사망원인(50항목)/성/ 사망자수, 사망률, 연령표준화 사망률(1998~)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1998",
-   "END_PRD_DE": "2025"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "사망원인 시군구 자살",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B34E13",
-   "TBL_NM": "시군구/사망원인(50항목)/성/ 사망자수, 사망률, 연령표준화 사망률(1998~)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1998",
-   "END_PRD_DE": "2025"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "life_exp": [
   {
    "keyword": "시군구 기대수명",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   },
   {
    "keyword": "시군구 건강수명",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
  "mortality": [
   {
    "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1B34E13",
-   "TBL_NM": "시군구/사망원인(50항목)/성/ 사망자수, 사망률, 연령표준화 사망률(1998~)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1998",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "798",
-   "TBL_ID": "DT_798001_B000008",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "경상남도 밀양시",
-   "STRT_PRD_DE": "2021",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "206",
-   "TBL_ID": "DT_20603_B0010234",
-   "TBL_NM": "사망원인별 사망(시군구별)",
-   "ORG_NM": "대전광역시",
-   "STRT_PRD_DE": "2021",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "721",
-   "TBL_ID": "DT_721001_B000014",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "전북특별자치도 임실군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "719",
-   "TBL_ID": "DT_719001_B000006",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "전북특별자치도 무주군",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "791",
-   "TBL_ID": "DT_791004_B010",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "경상남도 창원시",
-   "STRT_PRD_DE": "2011",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "561",
-   "TBL_ID": "DT_561001_B000002",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "인천광역시 제물포구",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "749",
-   "TBL_ID": "DT_749001_B000009",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "전남광주통합특별시 장성군",
-   "STRT_PRD_DE": "2021",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "739",
-   "TBL_ID": "DT_739001_B000005",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "전남광주통합특별시 고흥군",
-   "STRT_PRD_DE": "2021",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "604",
-   "TBL_ID": "DT_604001_B000009",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "울산광역시 북구",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "678",
-   "TBL_ID": "DT_678001_B000004",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "충청북도 진천군",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "701",
-   "TBL_ID": "DT_701001_B000003",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "충청남도 청양군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "673",
-   "TBL_ID": "DT_67301_B000013",
-   "TBL_NM": "사망원인별 사망",
-   "ORG_NM": "충청북도 제천시",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사망률 사망원인",
-   "ORG_ID": "202",
-   "TBL_ID": "DT_20205Y2014F01N005",
-   "TBL_NM": "순환기계통 질환 인식수준(01)_부산시 여성 사망원인 1위가 순환기계통 질환이다",
-   "ORG_NM": "부산광역시",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2014"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "crime": [
   {
    "keyword": "시군구 범죄 발생 건수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL20321",
-   "TBL_NM": "중요범죄 발생 및 검거 현황(시도)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL20321",
-   "TBL_NM": "중요범죄 발생 및 검거 현황(시도)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "155",
-   "TBL_ID": "DT_155008_A032",
-   "TBL_NM": "사법경찰관 결정",
-   "ORG_NM": "해양경찰청",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "155",
-   "TBL_ID": "DT_155008_A058",
-   "TBL_NM": "여성피의자 사법경찰관 결정",
-   "ORG_NM": "해양경찰청",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "155",
-   "TBL_ID": "DT_155008_A066",
-   "TBL_NM": "고령피의자 사법경찰관 결정",
-   "ORG_NM": "해양경찰청",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "155",
-   "TBL_ID": "DT_155008_A062",
-   "TBL_NM": "외국인피의자 사법경찰관 결정",
-   "ORG_NM": "해양경찰청",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "679",
-   "TBL_ID": "DT_67901_P000002",
-   "TBL_NM": "범죄발생 및 검거",
-   "ORG_NM": "충청북도 괴산군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "682",
-   "TBL_ID": "DT_68201_P000003",
-   "TBL_NM": "소년범죄",
-   "ORG_NM": "충청북도 증평군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "682",
-   "TBL_ID": "DT_68201_P000002",
-   "TBL_NM": "범죄발생 및 검거",
-   "ORG_NM": "충청북도 증평군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "679",
-   "TBL_ID": "DT_67901_P000003",
-   "TBL_NM": "소년범죄",
-   "ORG_NM": "충청북도 괴산군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "543",
-   "TBL_ID": "DT_54301_P001013",
-   "TBL_NM": "범죄유형별 발생건수,검거건수",
-   "ORG_NM": "부산광역시 연제구",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "538",
-   "TBL_ID": "DT_53801_P001013",
-   "TBL_NM": "범죄발생 및 검거",
-   "ORG_NM": "부산광역시 북구",
-   "STRT_PRD_DE": "2011",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "668",
-   "TBL_ID": "DT_66801_P000002",
-   "TBL_NM": "범죄발생 및 검거",
-   "ORG_NM": "강원특별자치도 양양군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "543",
-   "TBL_ID": "DT_54301_P001016",
-   "TBL_NM": "소년범죄",
-   "ORG_NM": "부산광역시 연제구",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "668",
-   "TBL_ID": "DT_66801_P000003",
-   "TBL_NM": "소년범죄",
-   "ORG_NM": "강원특별자치도 양양군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "경찰서 관할 범죄",
-   "ORG_ID": "752",
-   "TBL_ID": "DT_75201_P001013",
-   "TBL_NM": "범죄발생 및 검거",
-   "ORG_NM": "전남광주통합특별시 신안군",
-   "STRT_PRD_DE": "2012",
-   "END_PRD_DE": "2018"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "traffic": [
   {
    "keyword": "시군구 교통사고 사망자",
-   "ORG_ID": "110",
-   "TBL_ID": "DT_11001N_2013_A049",
-   "TBL_NM": "교통사고건수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2009",
-   "END_PRD_DE": "2020"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "fire": [
   {
    "keyword": "시군구 화재 발생 사망",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
@@ -1452,8 +153,8 @@
   {
    "keyword": "지역사회건강조사 시군구 흡연율 음주율",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
@@ -1461,832 +162,110 @@
   {
    "keyword": "시군구 의료기관 병상수 의사수",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
  "employment": [
   {
    "keyword": "시군구 고용률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A03_A01S",
-   "TBL_NM": "시군구/연령별 취업자 및 고용률 (전체)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A03_A02S",
-   "TBL_NM": "시군구/연령별 취업자 및 고용률 (남자)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A03_A03S",
-   "TBL_NM": "시군구/연령별 취업자 및 고용률 (여자)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A02S",
-   "TBL_NM": "시군구/성별 경제활동인구 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A01S",
-   "TBL_NM": "시군구 경제활동인구 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "667",
-   "TBL_ID": "DT_66701_C000002",
-   "TBL_NM": "연령별 취업자",
-   "ORG_NM": "강원특별자치도 고성군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2021"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "681",
-   "TBL_ID": "DT_681006_2024C001",
-   "TBL_NM": "경제활동인구 현황",
-   "ORG_NM": "충청북도 단양군",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "203",
-   "TBL_ID": "DT_203013_17_3_01",
-   "TBL_NM": "경제활동인구 현황",
-   "ORG_NM": "대구광역시",
-   "STRT_PRD_DE": "2016",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "692",
-   "TBL_ID": "DT_692003_2024C001",
-   "TBL_NM": "경제활동인구 현황",
-   "ORG_NM": "충청남도 공주시",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 고용률",
-   "ORG_ID": "202",
-   "TBL_ID": "DT_202021_C021",
-   "TBL_NM": "청년 경제활동",
-   "ORG_NM": "부산광역시",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2023"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A03_A01S",
-   "TBL_NM": "시군구/연령별 취업자 및 고용률 (전체)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A02S",
-   "TBL_NM": "시군구/성별 경제활동인구 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A03_A02S",
-   "TBL_NM": "시군구/연령별 취업자 및 고용률 (남자)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A01S",
-   "TBL_NM": "시군구 경제활동인구 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A31S",
-   "TBL_NM": "시군구/직업별 취업자(8차)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3C05S",
-   "TBL_NM": "시군구/성/연령별 지역활동인구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A11S",
-   "TBL_NM": "시군구 타지역 통근 취업자",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A03_A03S",
-   "TBL_NM": "시군구/연령별 취업자 및 고용률 (여자)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3C01S",
-   "TBL_NM": "시군구/성/연령별 취업자(근무지기준)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3C08S",
-   "TBL_NM": "시군구/성/연령별 지역활동인구 비중",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2022",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3C07S",
-   "TBL_NM": "시군구/직업별 취업자(근무지기준, 8차)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3C04S",
-   "TBL_NM": "시군구/종사상지위별 취업자(근무지기준)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A07S",
-   "TBL_NM": "시군구/종사상지위별 취업자",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A10S",
-   "TBL_NM": "시군구/교육정도별 비경제활동인구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지역별고용조사 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A09S",
-   "TBL_NM": "시군구/활동상태별 비경제활동인구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "unemployment": [
   {
    "keyword": "시군구 실업률",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1ES3A01S",
-   "TBL_NM": "시군구 경제활동인구 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 실업률",
-   "ORG_ID": "203",
-   "TBL_ID": "DT_203013_17_3_01",
-   "TBL_NM": "경제활동인구 현황",
-   "ORG_NM": "대구광역시",
-   "STRT_PRD_DE": "2016",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 실업률",
-   "ORG_ID": "692",
-   "TBL_ID": "DT_692003_2024C001",
-   "TBL_NM": "경제활동인구 현황",
-   "ORG_NM": "충청남도 공주시",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 실업률",
-   "ORG_ID": "202",
-   "TBL_ID": "DT_202021_C021",
-   "TBL_NM": "청년 경제활동",
-   "ORG_NM": "부산광역시",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2023"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "income": [
   {
    "keyword": "시군구 개인소득 지역소득",
-   "ORG_ID": "133",
-   "TBL_ID": "DT_133N_A9811",
-   "TBL_NM": "9.8.8 가동사업자 현황Ⅲ (시·군·구)[2008~]",
-   "ORG_NM": "국세청",
-   "STRT_PRD_DE": "2008",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 개인소득 지역소득",
-   "ORG_ID": "564",
-   "TBL_ID": "DT_56401_N000021",
-   "TBL_NM": "지방세 징수",
-   "ORG_NM": "인천광역시 연수구",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2023"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "시군구 근로소득 연말정산",
-   "ORG_ID": "133",
-   "TBL_ID": "DT_133001N_4214",
-   "TBL_NM": "4.2.14 시·군·구별 근로소득 연말정산 신고현황(원천징수지)[2016~]",
-   "ORG_NM": "국세청",
-   "STRT_PRD_DE": "2016",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 근로소득 연말정산",
-   "ORG_ID": "133",
-   "TBL_ID": "DT_133001N_4215",
-   "TBL_NM": "4.2.15 시·군·구별 근로소득 연말정산 신고현황(주소지)[2016~]",
-   "ORG_NM": "국세청",
-   "STRT_PRD_DE": "2016",
-   "END_PRD_DE": "2023"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "grdp": [
   {
    "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "211",
-   "TBL_ID": "DT_2020Y32GRDP1",
-   "TBL_NM": "강원특별자치도 경제활동별 지역내총생산",
-   "ORG_NM": "강원특별자치도",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "206",
-   "TBL_ID": "DT_2020Y25GRDP1",
-   "TBL_NM": "대전광역시 경제활동별 지역내총생산",
-   "ORG_NM": "대전광역시",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "214",
-   "TBL_ID": "DT_2020Y35GRDP1",
-   "TBL_NM": "전북특별자치도 경제활동별 지역내총생산",
-   "ORG_NM": "전북특별자치도",
-   "STRT_PRD_DE": "2005",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "212",
-   "TBL_ID": "DT_2020Y33GRDP1",
-   "TBL_NM": "충청북도 경제활동별 지역내총생산",
-   "ORG_NM": "충청북도",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "205",
-   "TBL_ID": "DT_2020Y24GRDP1",
-   "TBL_NM": "광주광역시 경제활동별 지역내총생산",
-   "ORG_NM": "전남광주통합특별시",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "215",
-   "TBL_ID": "DT_2020Y36GRDP1",
-   "TBL_NM": "전라남도 경제활동별 지역내총생산",
-   "ORG_NM": "전남광주통합특별시",
-   "STRT_PRD_DE": "2005",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "204",
-   "TBL_ID": "DT_2020Y23GRDP1",
-   "TBL_NM": "인천광역시 경제활동별 지역내총생산",
-   "ORG_NM": "인천광역시",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "217",
-   "TBL_ID": "DT_2020Y38GRDP1",
-   "TBL_NM": "경상남도 경제활동별 지역내총생산",
-   "ORG_NM": "경상남도",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "203",
-   "TBL_ID": "DT_2020Y22GRDP1",
-   "TBL_NM": "대구광역시 경제활동별 지역내총생산",
-   "ORG_NM": "대구광역시",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "213",
-   "TBL_ID": "DT_2020Y34GRDP1",
-   "TBL_NM": "충청남도 경제활동별 지역내총생산",
-   "ORG_NM": "충청남도",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "202",
-   "TBL_ID": "DT_F10107",
-   "TBL_NM": "부산광역시 경제활동별 지역내총생산",
-   "ORG_NM": "부산광역시",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "206",
-   "TBL_ID": "DT_2015Y25GRDP1",
-   "TBL_NM": "대전광역시 경제활동별 지역내총생산",
-   "ORG_NM": "대전광역시",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2021"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "213",
-   "TBL_ID": "DT_2015Y34GRDP1",
-   "TBL_NM": "충청남도 경제활동별 지역내총생산",
-   "ORG_NM": "충청남도",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2021"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "204",
-   "TBL_ID": "DT_2015Y23GRDP1",
-   "TBL_NM": "인천광역시 경제활동별 지역내총생산",
-   "ORG_NM": "인천광역시",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2021"
-  },
-  {
-   "keyword": "시군구 지역내총생산 GRDP",
-   "ORG_ID": "203",
-   "TBL_ID": "DT_2015Y22GRDP1",
-   "TBL_NM": "대구광역시 경제활동별 지역내총생산",
-   "ORG_NM": "대구광역시",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2021"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "fiscal_indep": [
   {
    "keyword": "재정자립도 시군구",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL20921",
-   "TBL_NM": "재정자립도(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2001",
-   "END_PRD_DE": "2026"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
    "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1024552",
-   "TBL_NM": "공연시설 : 재정자립도",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2006",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL20921",
-   "TBL_NM": "재정자립도(시도/시/군/구)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2001",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1019941",
-   "TBL_NM": "공연시설 : 문예회관 재정자립도",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2004",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "110",
-   "TBL_ID": "TX_11007_B818",
-   "TBL_NM": "자치단체별지방재정의 자립도",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "1965",
-   "END_PRD_DE": "1965"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "201",
-   "TBL_ID": "DT_201004_O140017",
-   "TBL_NM": "재정자립도",
-   "ORG_NM": "서울특별시",
-   "STRT_PRD_DE": "2000",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "721",
-   "TBL_ID": "DT_721001_N000003",
-   "TBL_NM": "지방재정자립지표",
-   "ORG_NM": "전북특별자치도 임실군",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "627",
-   "TBL_ID": "DT_62701_N000027",
-   "TBL_NM": "지방재정자립지표",
-   "ORG_NM": "경기도 의왕시",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "805",
-   "TBL_ID": "DT_805001_N000001",
-   "TBL_NM": "지방재정자립지표",
-   "ORG_NM": "경상남도 남해군",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "지방자치단체 재정자립도",
-   "ORG_ID": "656",
-   "TBL_ID": "DT_65601_N000027",
-   "TBL_NM": "지방재정자립지표",
-   "ORG_NM": "강원특별자치도 속초시",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2023"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "business": [
   {
    "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM78",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM80",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별, 남자 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM79",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM81",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별, 여자 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM76",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 종사상지위별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM75",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM77",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 종사상지위별 성별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN78",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN77",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 종사상지위별 성별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN80",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별, 남자 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN81",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별, 여자 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN76",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 종사상지위별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN79",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN75",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 사업체수 종사자수 전국사업체조사",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_2KI2010",
-   "TBL_NM": "시 군 구별/산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "self_employed": [
   {
    "keyword": "시군구 자영업자 폐업",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
  "wage": [
   {
    "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR11_A008",
-   "TBL_NM": "시군구별·산업대분류별·기업규모별 기업수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR11_C018",
-   "TBL_NM": "시군구별·기업규모별 여성경영인 매출액",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR11_C008",
-   "TBL_NM": "시군구별·산업대분류별·기업규모별 매출액",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR11_A018",
-   "TBL_NM": "시군구별·기업규모별·기업규모별 여성경영인 기업수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR11_B008",
-   "TBL_NM": "시군구별·산업대분류별·기업규모별 종사자수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR11_B018",
-   "TBL_NM": "시군구별·기업규모별 여성경영인 종사자수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR_A008",
-   "TBL_NM": "시군구별·산업대분류별·기업규모별 기업수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR_C008",
-   "TBL_NM": "시군구별·산업대분류별·기업규모별 매출액",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR_C018",
-   "TBL_NM": "시군구별·기업규모별 여성경영인 매출액",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR_B008",
-   "TBL_NM": "시군구별·산업대분류별·기업규모별 종사자수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR_B018",
-   "TBL_NM": "시군구별·기업규모별 여성경영인 종사자수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "142",
-   "TBL_ID": "DT_BR_A018",
-   "TBL_NM": "시군구별·기업규모별 여성 경영인 기업수",
-   "ORG_NM": "중소벤처기업부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027050",
-   "TBL_NM": "문화예술공간이용 횟수-시군구민 회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027097",
-   "TBL_NM": "문화행사 참석횟수-시군구민 회관 이용자",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 임금 근로자 평균임금",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027085",
-   "TBL_NM": "문화예술활동 공간/환경 만족도-시군구민회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "house_price": [
   {
    "keyword": "시군구 주택 매매가격 아파트",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
@@ -2294,8 +273,8 @@
   {
    "keyword": "시군구 자가보유율 주거실태",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
@@ -2303,8 +282,8 @@
   {
    "keyword": "시군구 주택보급률 미분양",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
@@ -2312,8 +291,8 @@
   {
    "keyword": "시군구 1인당 도시공원 면적",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
@@ -2321,686 +300,220 @@
   {
    "keyword": "시군구 대중교통 버스 지하철 이용",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
  "car": [
   {
    "keyword": "시군구 자동차 등록대수",
-   "ORG_ID": "426",
-   "TBL_ID": "DT_426002_001",
-   "TBL_NM": "용도별 차종별 규모별 시군구별 자동차검사현황",
-   "ORG_NM": "한국교통안전공단",
-   "STRT_PRD_DE": "2021",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 자동차 등록대수",
-   "ORG_ID": "116",
-   "TBL_ID": "DT_MLTM_5498",
-   "TBL_NM": "자동차등록대수현황 시도별",
-   "ORG_NM": "국토교통부",
-   "STRT_PRD_DE": "2011",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 자동차 등록대수",
-   "ORG_ID": "110",
-   "TBL_ID": "DT_11001N_2013_A033",
-   "TBL_NM": "자동차 등록대수",
-   "ORG_NM": "행정안전부",
-   "STRT_PRD_DE": "2009",
-   "END_PRD_DE": "2020"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "air": [
   {
    "keyword": "시군구 대기오염 미세먼지",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
  "school": [
   {
    "keyword": "시군구 학교수 학생수 학급당",
-   "ORG_ID": "218",
-   "TBL_ID": "TX_218020413",
-   "TBL_NM": "일반계 고등학교(1996~2000)",
-   "ORG_NM": "제주특별자치도",
-   "STRT_PRD_DE": "1996",
-   "END_PRD_DE": "2000"
-  },
-  {
-   "keyword": "시군구 학교수 학생수 학급당",
-   "ORG_ID": "218",
-   "TBL_ID": "TX_218020308",
-   "TBL_NM": "중학교(설립별,시군구별)(1997)",
-   "ORG_NM": "제주특별자치도",
-   "STRT_PRD_DE": "1997",
-   "END_PRD_DE": "1997"
-  },
-  {
-   "keyword": "시군구 학교수 학생수 학급당",
-   "ORG_ID": "218",
-   "TBL_ID": "TX_218020418",
-   "TBL_NM": "초등학교(시군구별,시도별)(1998~1999)",
-   "ORG_NM": "제주특별자치도",
-   "STRT_PRD_DE": "1998",
-   "END_PRD_DE": "1999"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "univ_rate": [
   {
    "keyword": "시군구 대학 진학률 고등학교 졸업자",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
  "private_edu": [
   {
    "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_2FG002F",
-   "TBL_NM": "교육 또는 훈련 받은 기관(복수응답, 이민자)",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC2004",
-   "TBL_NM": "성, 교육정도 및 경제활동상태인구(15세이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC2008",
-   "TBL_NM": "성, 교육정도 및 종사상지위별 취업인구(15세이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_2KI2010_11",
-   "TBL_NM": "시 군 구별/산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_2KI2010",
-   "TBL_NM": "시 군 구별/산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC1504",
-   "TBL_NM": "성별/교육정도별/경제활동상태별 인구(15세이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2015"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC1508",
-   "TBL_NM": "성별/교육정도별/종사상지위별 취업인구(15세이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2015"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1KI1510_10",
-   "TBL_NM": "시군구별 산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2015"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1KI1510",
-   "TBL_NM": "시·군·구별/산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2015"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1KI2002",
-   "TBL_NM": "시군구 및 산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2010"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC1004",
-   "TBL_NM": "성, 교육정도 및 경제활동상태별 인구(15세 이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2010"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1PC1008",
-   "TBL_NM": "성, 교육정도 및 종사상 지위별 취업 인구(15세 이상)-시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2010"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "202",
-   "TBL_ID": "DT_20205Y2014F01N025",
-   "TBL_NM": "구직 경로(복수응답)",
-   "ORG_NM": "부산광역시",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2014"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "630",
-   "TBL_ID": "DT_630003_046",
-   "TBL_NM": "교육 또는 훈련 받은 기관, 목적 및  비용 지불방법",
-   "ORG_NM": "경기도 파주시",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2017"
-  },
-  {
-   "keyword": "시군구 사교육 학원수",
-   "ORG_ID": "611",
-   "TBL_ID": "DT_611005_2019055",
-   "TBL_NM": "교육 또는 훈련 받은 기관",
-   "ORG_NM": "경기도 수원시",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2019"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "library": [
   {
    "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "460",
-   "TBL_ID": "TX_315_2009_H1054",
-   "TBL_NM": "문화시설",
-   "ORG_NM": "한국국토정보공사",
-   "STRT_PRD_DE": "2005",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_2KI2010_11",
-   "TBL_NM": "시 군 구별/산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_2KI2010",
-   "TBL_NM": "시 군 구별/산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2020"
-  },
-  {
-   "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1KI1510_10",
-   "TBL_NM": "시군구별 산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2015"
-  },
-  {
-   "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1KI1510",
-   "TBL_NM": "시·군·구별/산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2015",
-   "END_PRD_DE": "2015"
-  },
-  {
-   "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1KI2002",
-   "TBL_NM": "시군구 및 산업소분류별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2010"
-  },
-  {
-   "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1K82002",
-   "TBL_NM": "시·군·구/산업(소분류)별 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2001",
-   "END_PRD_DE": "2001"
-  },
-  {
-   "keyword": "시군구 공공도서관 수",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1K9A012",
-   "TBL_NM": "시군구/산업(소분류)별 서비스업 총괄",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "1996",
-   "END_PRD_DE": "1996"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "culture": [
   {
    "keyword": "시군구 문화기반시설 공연장 박물관",
    "error": {
-    "err": "30",
-    "errMsg": "데이터가 존재하지 않습니다."
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
    }
   }
  ],
  "sports": [
   {
    "keyword": "시군구 공공체육시설",
-   "ORG_ID": "460",
-   "TBL_ID": "TX_315_2009_H1055",
-   "TBL_NM": "체육시설",
-   "ORG_NM": "한국국토정보공사",
-   "STRT_PRD_DE": "2005",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_MONA59",
-   "TBL_NM": "행정구역(시군구)/산업별 고용",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2026"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_MONA49",
-   "TBL_NM": "행정구역(시군구)/산업별 고용",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_MON061",
-   "TBL_NM": "행정구역(시도)/ 산업/규모별 임금 및 근로시간(상용근로자, 상용근로자 1인이상 사업체, 2020년~2025년)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2020",
-   "END_PRD_DE": "2025"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM78",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM81",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별, 여자 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM79",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM77",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 종사상지위별 성별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM76",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 종사상지위별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM75",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPM80",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별, 남자 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN75",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN76",
-   "TBL_NM": "시군구별(8개시), 산업별, 규모별, 종사상지위별 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN81",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 종사상지위별, 여자 종사자수",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "시군구 공공체육시설",
-   "ORG_ID": "118",
-   "TBL_ID": "DT_118N_SAUPN78",
-   "TBL_NM": "시군구별(9개도), 산업별, 규모별, 사업체수 및 종사자수(성별)",
-   "ORG_NM": "고용노동부",
-   "STRT_PRD_DE": "2017",
-   "END_PRD_DE": "2023"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "basic_living": [
   {
    "keyword": "국민기초생활수급자 시군구",
-   "ORG_ID": "749",
-   "TBL_ID": "DT_74901_K001030",
-   "TBL_NM": "국민기초생활보장 수급자",
-   "ORG_NM": "전남광주통합특별시 장성군",
-   "STRT_PRD_DE": "2012",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "국민기초생활수급자 시군구",
-   "ORG_ID": "701",
-   "TBL_ID": "DT_70101_K000027",
-   "TBL_NM": "국민기초생활보장 수급자",
-   "ORG_NM": "충청남도 청양군",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "국민기초생활수급자 시군구",
-   "ORG_ID": "592",
-   "TBL_ID": "DT_59201_K001030",
-   "TBL_NM": "국민기초생활보장 수급자",
-   "ORG_NM": "대전광역시 중구",
-   "STRT_PRD_DE": "2012",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "국민기초생활수급자 시군구",
-   "ORG_ID": "564",
-   "TBL_ID": "DT_56401_K000067",
-   "TBL_NM": "국민기초생활보장 수급자",
-   "ORG_NM": "인천광역시 연수구",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2023"
-  },
-  {
-   "keyword": "국민기초생활수급자 시군구",
-   "ORG_ID": "564",
-   "TBL_ID": "DT_56401_K000044",
-   "TBL_NM": "저소득 및 한부모 가족",
-   "ORG_NM": "인천광역시 연수구",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2019"
-  },
-  {
-   "keyword": "국민기초생활수급자 시군구",
-   "ORG_ID": "619",
-   "TBL_ID": "DT_619004_A027",
-   "TBL_NM": "국민기초생활보장 수급자 현황",
-   "ORG_NM": "경기도 안산시",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "basic_pension": [
   {
    "keyword": "시군구 기초연금 수급자",
-   "ORG_ID": "592",
-   "TBL_ID": "DT_59201_K001030",
-   "TBL_NM": "국민기초생활보장 수급자",
-   "ORG_NM": "대전광역시 중구",
-   "STRT_PRD_DE": "2012",
-   "END_PRD_DE": "2024"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "childcare": [
   {
    "keyword": "시군구 어린이집 보육 아동수",
-   "ORG_ID": "564",
-   "TBL_ID": "DT_56401_K000045",
-   "TBL_NM": "어린이집",
-   "ORG_NM": "인천광역시 연수구",
-   "STRT_PRD_DE": "2013",
-   "END_PRD_DE": "2024"
-  },
-  {
-   "keyword": "시군구 어린이집 보육 아동수",
-   "ORG_ID": "619",
-   "TBL_ID": "DT_619004_B010",
-   "TBL_NM": "외국인 아동 재원 어린이집 유형별 현황",
-   "ORG_NM": "경기도 안산시",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
-  },
-  {
-   "keyword": "시군구 어린이집 보육 아동수",
-   "ORG_ID": "619",
-   "TBL_ID": "DT_619004_B011",
-   "TBL_NM": "어린이집 유형별 외국인 아동 재원 현황",
-   "ORG_NM": "경기도 안산시",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2018"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "elderly_care": [
   {
    "keyword": "시군구 노인복지시설 장기요양",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35006_N014",
-   "TBL_NM": "시군구별/등급별/급여종류별 장기요양 급여실적",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2012"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ],
  "disability": [
   {
    "keyword": "시군구 등록장애인",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1YL202003E",
-   "TBL_NM": "등록장애인수(시도/시/군/구)",
-   "ORG_NM": "보건복지부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2025"
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
+  }
+ ],
+ "semi_basement": [
+  {
+   "keyword": "반지하 옥탑 주택 시군구 인구주택총조사",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "117",
-   "TBL_ID": "DT_11761_N009",
-   "TBL_NM": "시군구별,장애정도별,성별 등록장애인수",
-   "ORG_NM": "보건복지부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2025"
+   "keyword": "지하 옥상 거처 가구 시군구",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1DP2040",
-   "TBL_NM": "연령 및 성별 장애인 인구 - 시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2025"
+   "keyword": "주택이외의 거처 지하",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
+  }
+ ],
+ "homeless_household": [
+  {
+   "keyword": "주택소유통계 시군구 무주택 가구",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1DP2041",
-   "TBL_NM": "장애유형 및 장애정도별 장애인 인구 - 시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2023",
-   "END_PRD_DE": "2025"
+   "keyword": "무주택가구비율 시군구",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1WE2070",
-   "TBL_NM": "(반)지하 및 옥탑 주택 - 시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
+   "keyword": "주택소유 가구 시군구",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
+  }
+ ],
+ "basic_living_rate": [
+  {
+   "keyword": "국민기초생활보장 수급률 시군구",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "101",
-   "TBL_ID": "DT_1WE2071",
-   "TBL_NM": "(반)지하 및 옥탑 가구 - 시군구",
-   "ORG_NM": "국가데이터처",
-   "STRT_PRD_DE": "2024",
-   "END_PRD_DE": "2024"
+   "keyword": "기초생활수급자 시군구 수급자수 인구",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
+  }
+ ],
+ "disposable_income": [
+  {
+   "keyword": "시군구 가계 총처분가능소득",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "117",
-   "TBL_ID": "DT_11761_N006",
-   "TBL_NM": "시군구별,장애등급별,성별 등록장애인수",
-   "ORG_NM": "보건복지부",
-   "STRT_PRD_DE": "2007",
-   "END_PRD_DE": "2018"
+   "keyword": "1인당 가계총처분가능소득",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   },
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N1070",
-   "TBL_NM": "시군구별 연령별 성별 일반건강검진 인지기능장애검사 결과",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2018",
-   "END_PRD_DE": "2024"
-  },
+   "keyword": "지역소득 시군구 개인소득 가계",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
+  }
+ ],
+ "tfr_trend": [
   {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027097",
-   "TBL_NM": "문화행사 참석횟수-시군구민 회관 이용자",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027050",
-   "TBL_NM": "문화예술공간이용 횟수-시군구민 회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1027085",
-   "TBL_NM": "문화예술활동 공간/환경 만족도-시군구민회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2014",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "113",
-   "TBL_ID": "DT_113_STBL_1029837",
-   "TBL_NM": "문화예술활동 공간별 이용률 - 시군구민회관",
-   "ORG_NM": "문화체육관광부",
-   "STRT_PRD_DE": "2019",
-   "END_PRD_DE": "2022"
-  },
-  {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N027",
-   "TBL_NM": "시군구별 성별 생애전환기(66세) 건강진단 2차 판정현황",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2010",
-   "END_PRD_DE": "2017"
-  },
-  {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N119",
-   "TBL_NM": "시군구별 성별 생애전환기(66세) 건강진단 정신건강검사 결과 : 인지기능장애",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2011",
-   "END_PRD_DE": "2017"
-  },
-  {
-   "keyword": "시군구 등록장애인",
-   "ORG_ID": "350",
-   "TBL_ID": "DT_35007_N107",
-   "TBL_NM": "시군구별 성별 일반건강검진 정신건강검사 결과 : 인지기능장애",
-   "ORG_NM": "국민건강보험공단",
-   "STRT_PRD_DE": "2011",
-   "END_PRD_DE": "2017"
+   "keyword": "인구동향조사 시군구 합계출산율",
+   "error": {
+    "err": "11",
+    "errMsg": "유효하지않은 인증KEY입니다."
+   }
   }
  ]
 }
