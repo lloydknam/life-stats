@@ -16,6 +16,7 @@ OK gen_hospital: 시도 17, 시군구 215, 202602
 OK nurses: 시도 17, 시군구 215, 202602
 OK elder_leisure: 시도 15, 시군구 201, 2025
 OK disabled: 시도 17, 시군구 216, 2025
+OK basic_living_rate: 시도 17, 시군구 0, 2025
 OK employment: 시도 0, 시군구 227, 202601
 OK youth_emp: 시도 0, 시군구 227, 202601
 OK lfp: 시도 0, 시군구 227, 202601
@@ -33,4 +34,8 @@ OK own_house: 시도 17, 시군구 228, 2020
 OK old_house: 시도 15, 시군구 201, 2025
 OK vacant_house: 시도 15, 시군구 201, 2025
 OK fiscal_indep: 시도 15, 시군구 199, 2026
-OK crime_rate: 시도 15, 시군구 0, 2024
+OK welfare_budget: 시도 15, 시군구 199, 2024
+OK crime_rate: 시도 17, 시군구 0, 2024
+OK park_per_cap: 시도 17, 시군구 229, 2025
+OK culture_fac: 시도 17, 시군구 196, 2025
+OK sports_fac: 시도 17, 시군구 198, 2025
