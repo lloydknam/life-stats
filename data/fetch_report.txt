@@ -6,6 +6,7 @@ OK natural_inc: 시도 17, 시군구 229, 2025
 OK suicide: 시도 17, 시군구 228, 2025
 OK death_rate: 시도 17, 시군구 229, 2025
 OK elder_leisure: 시도 15, 시군구 201, 2025
+OK disabled: 시도 17, 시군구 216, 2025
 OK employment: 시도 0, 시군구 227, 202601
 OK youth_emp: 시도 0, 시군구 227, 202601
 OK lfp: 시도 0, 시군구 227, 202601
@@ -14,6 +15,7 @@ OK unemployment: 시도 0, 시군구 227, 202601
 OK wage: 시도 17, 시군구 227, 2024
 OK hh_income: 시도 17, 시군구 0, 2024
 OK grdp: 시도 17, 시군구 0, 2024
+EMPTY biz_per_pop: rows=246 sample=['15133JYB00:지역별', '15133JYB07:서울', '15133JYB0701:강남구']
 OK semi_basement: 시도 17, 시군구 229, 2024
 OK rooftop: 시도 17, 시군구 229, 2024
 OK no_house: 시도 17, 시군구 228, 2021
@@ -21,3 +23,4 @@ OK own_house: 시도 17, 시군구 228, 2020
 OK old_house: 시도 15, 시군구 201, 2025
 OK vacant_house: 시도 15, 시군구 201, 2025
 OK fiscal_indep: 시도 15, 시군구 199, 2026
+OK crime_rate: 시도 15, 시군구 0, 2024
