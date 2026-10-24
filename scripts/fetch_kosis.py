@@ -85,7 +85,7 @@ def query(ind, over=None):
                 return {"err": "resolve", "errMsg": f"항목 코드 못 찾음: {v}"}
             v = code
         q[f"objL{i}"] = v
-    order = [cfg["prdSe"]] if cfg.get("prdSe") else ["Y", "H", "Q", "M"]
+    order = [cfg["prdSe"]] if cfg.get("prdSe") else ["Y", "H", "Q", "M", "F", "IR"]
     last = None
     for pd in order:
         q["prdSe"] = pd
