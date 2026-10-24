@@ -10,6 +10,7 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,6 +24,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@users.noreply.github.com"
-          git add data/data.json
+          git add data/data.json data/fetch_report.txt
           git diff --staged --quiet || git commit -m "data: update $(date +%F)"
+          git pull --rebase -q origin main
           git push

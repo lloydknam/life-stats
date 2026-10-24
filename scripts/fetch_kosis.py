@@ -2,34 +2,49 @@
 
 사용:  KOSIS_API_KEY=키 python scripts/fetch_kosis.py
 
-indicators.json 의 분야(themes) → 지표(indicators) 2단 구조.
-지표 필드:
-  id, name, unit, higherIsBetter, source, note(선택)
-  orgId, tblId, itmId(없으면 ALL), objL1(기본 ALL), objL2/objL3(선택), prdSe(기본 Y)
-  filters  : 행 필터. {"ITM_NM": "...", "C2_NM": "..."} 처럼 응답 필드가 일치하는 행만 사용
-  sidoCodeLen / sigunguCodeLen : 행정구역 코드 길이(기본 2 / 5)
+표마다 지역 코드 체계가 달라(통계청 11010 / 행안부 11110 / 국세청 A0101) 코드가 아니라
+(시도 약칭, 지역명)으로 지역을 식별한다. 시 아래 일반구는 제외해 시·군·구 기준으로 맞춘다.
+
+지표 필드(indicators.json):
+  id, name, unit, higherIsBetter, source, note
+  orgId, tblId, itmId(없으면 ALL), objL1~objL4, prdSe(없으면 Y→H→Q→M 순 시도), newEstPrdCnt
+    objLn 값에 {"resolve": {"obj": "A", "name": "자살"}} 를 쓰면 메타에서 항목 코드를 찾아 넣는다
+  regionDim: 지역 분류의 순번(기본 1) → 응답의 C{n}, C{n}_NM
+  sidoCodeLen / sigunguCodeLen: 지역 코드 길이(기본 2 / 5, 없으면 0)
+  filters / exclude: 응답 행 필터. 값 "re:정규식", "~부분문자열", 그 외는 일치
+  ratio: {"num": {...질의 덮어쓰기...}, "den": {...}, "scale": 100}  → 지역별 num/den*scale
+  shareOf: {"dim": 3, "numRegex": "...", "totalName": "계", "scale": 100} → 분류 n의 이름이 정규식에 맞는 합 ÷ 총계
 """
-import json, os, sys, time, datetime, pathlib, urllib.parse, urllib.request
+import json, os, re, sys, time, datetime, pathlib, urllib.parse, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CFG = json.loads((ROOT / "scripts" / "indicators.json").read_text(encoding="utf-8"))
 KEY = os.environ.get("KOSIS_API_KEY") or sys.exit("KOSIS_API_KEY 환경변수가 필요합니다.")
 
-SIDO = {"11": "서울", "21": "부산", "22": "대구", "23": "인천", "24": "광주", "25": "대전",
-        "26": "울산", "29": "세종", "31": "경기", "32": "강원", "33": "충북", "34": "충남",
-        "35": "전북", "36": "전남", "37": "경북", "38": "경남", "39": "제주"}
-BASE = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
+SIDO_ORDER = ["서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원",
+              "충북", "충남", "전북", "전남", "경북", "경남", "제주"]
+SIDO_STAT = {"11": "서울", "21": "부산", "22": "대구", "23": "인천", "24": "광주", "25": "대전",
+             "26": "울산", "29": "세종", "31": "경기", "32": "강원", "33": "충북", "34": "충남",
+             "35": "전북", "36": "전남", "37": "경북", "38": "경남", "39": "제주"}
+SHORT = [("서울", "서울"), ("부산", "부산"), ("대구", "대구"), ("인천", "인천"), ("광주", "광주"),
+         ("대전", "대전"), ("울산", "울산"), ("세종", "세종"), ("경기", "경기"), ("강원", "강원"),
+         ("충청북", "충북"), ("충북", "충북"), ("충청남", "충남"), ("충남", "충남"),
+         ("전라북", "전북"), ("전북", "전북"), ("전라남", "전남"), ("전남", "전남"),
+         ("경상북", "경북"), ("경북", "경북"), ("경상남", "경남"), ("경남", "경남"), ("제주", "제주")]
+DATA_URL = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
+META_URL = "https://kosis.kr/openapi/statisticsData.do"
 
 
-def fetch(ind):
-    q = {"method": "getList", "apiKey": KEY, "format": "json", "jsonVD": "Y",
-         "orgId": ind["orgId"], "tblId": ind["tblId"], "itmId": ind.get("itmId", "ALL"),
-         "objL1": ind.get("objL1", "ALL"), "prdSe": ind.get("prdSe", "Y"),
-         "newEstPrdCnt": ind.get("newEstPrdCnt", 1)}
-    for k in ("objL2", "objL3", "objL4"):
-        if k in ind:
-            q[k] = ind[k]
-    url = BASE + "?" + urllib.parse.urlencode(q)
+def short_sido(name):
+    n = (name or "").replace(" ", "")
+    for k, v in SHORT:
+        if n.startswith(k):
+            return v
+    return None
+
+
+def http(url):
+    err = ""
     for a in range(3):
         try:
             with urllib.request.urlopen(url, timeout=90) as r:
@@ -40,57 +55,189 @@ def fetch(ind):
     return {"err": "exc", "errMsg": err}
 
 
-regions, seen = [], set()
+def resolve(ind, spec):
+    q = urllib.parse.urlencode({"method": "getMeta", "apiKey": KEY, "format": "json", "jsonVD": "Y",
+                                "type": "ITM", "orgId": ind["orgId"], "tblId": ind["tblId"]})
+    rows = http(META_URL + "?" + q)
+    if isinstance(rows, list):
+        for r in rows:
+            if r.get("OBJ_ID") == spec["obj"] and spec["name"] in (r.get("ITM_NM") or ""):
+                return r["ITM_ID"]
+    return None
+
+
+def query(ind, over=None):
+    """질의 1회. prdSe 가 틀리면 Y→H→Q→M 순으로 재시도."""
+    cfg = {**ind, **(over or {})}
+    q = {"method": "getList", "apiKey": KEY, "format": "json", "jsonVD": "Y",
+         "orgId": cfg["orgId"], "tblId": cfg["tblId"], "itmId": cfg.get("itmId", "ALL"),
+         "newEstPrdCnt": cfg.get("newEstPrdCnt", 1)}
+    for i in range(1, 5):
+        v = cfg.get(f"objL{i}")
+        if v is None:
+            if i == 1:
+                v = "ALL"
+            else:
+                continue
+        if isinstance(v, dict):
+            code = resolve(cfg, v["resolve"])
+            if code is None:
+                return {"err": "resolve", "errMsg": f"항목 코드 못 찾음: {v}"}
+            v = code
+        q[f"objL{i}"] = v
+    order = [cfg["prdSe"]] if cfg.get("prdSe") else ["Y", "H", "Q", "M"]
+    last = None
+    for pd in order:
+        q["prdSe"] = pd
+        rows = http(DATA_URL + "?" + urllib.parse.urlencode(q))
+        if isinstance(rows, list):
+            return rows
+        last = rows
+    return last
+
+
+def match(row, spec):
+    for k, cond in (spec or {}).items():
+        v = str(row.get(k, ""))
+        if cond.startswith("re:"):
+            if not re.search(cond[3:], v):
+                return False
+        elif cond.startswith("~"):
+            if cond[1:] not in v:
+                return False
+        elif v != cond:
+            return False
+    return True
+
+
+def num(x):
+    try:
+        return float(str(x).replace(",", ""))
+    except ValueError:
+        return None
+
+
+def prepare(ind):
+    """질의·가공을 거쳐 (code, name, DT, period, unit) 행 목록을 만든다."""
+    rd = ind.get("regionDim", 1)
+    cf, nf = f"C{rd}", f"C{rd}_NM"
+    if "ratio" in ind:
+        rt = ind["ratio"]
+        a, b = query(ind, rt["num"]), query(ind, rt["den"])
+        for x in (a, b):
+            if isinstance(x, dict):
+                return x
+        den = {r[cf]: num(r.get("DT")) for r in b if match(r, ind.get("filters"))}
+        out = []
+        for r in a:
+            if not match(r, ind.get("filters")):
+                continue
+            n, d = num(r.get("DT")), den.get(r[cf])
+            if n is None or not d:
+                continue
+            out.append({"code": r[cf], "name": r.get(nf, ""), "v": n / d * rt.get("scale", 1),
+                        "per": r.get("PRD_DE"), "unit": ""})
+        return out
+    rows = query(ind)
+    if isinstance(rows, dict):
+        return rows
+    if "shareOf" in ind:
+        so = ind["shareOf"]
+        d = f"C{so['dim']}_NM"
+        rx = re.compile(so["numRegex"])
+        agg = {}
+        for r in rows:
+            if not match(r, ind.get("filters")):
+                continue
+            v = num(r.get("DT"))
+            if v is None:
+                continue
+            g = agg.setdefault(r[cf], {"name": r.get(nf, ""), "n": 0.0, "t": None, "per": r.get("PRD_DE")})
+            nm = (r.get(d) or "").strip()
+            if nm == so.get("totalName", "계"):
+                g["t"] = v
+            elif rx.search(nm):
+                g["n"] += v
+        return [{"code": c, "name": g["name"], "v": g["n"] / g["t"] * so.get("scale", 100),
+                 "per": g["per"], "unit": "%"} for c, g in agg.items() if g["t"]]
+    out = []
+    for r in rows:
+        if not match(r, ind.get("filters")) or match(r, ind.get("exclude")) and ind.get("exclude"):
+            continue
+        v = num(r.get("DT"))
+        if v is None:
+            continue
+        out.append({"code": r.get(cf, ""), "name": r.get(nf, ""), "v": v,
+                    "per": r.get("PRD_DE"), "unit": r.get("UNIT_NM") or ""})
+    return out
+
+
+def split_levels(rows, ind):
+    sl, gl = ind.get("sidoCodeLen", 2), ind.get("sigunguCodeLen", 5)
+    sidomap, sd = {}, {}
+    for r in rows:
+        if sl and len(r["code"]) == sl and r["code"] != "0" * sl:
+            s = short_sido(r["name"]) or SIDO_STAT.get(r["code"])
+            if s:
+                sidomap[r["code"]] = s
+                sd[s] = r["v"]
+    cand = [r for r in rows if gl and len(r["code"]) == gl and not r["code"].startswith("0" * gl)]
+    codes = {r["code"] for r in cand}
+    sg = {}
+    for r in cand:
+        c = r["code"]
+        if c[:-1] + "0" in codes and c[-1] != "0":  # 일반구(시 아래 구)는 제외
+            continue
+        sido = sidomap.get(c[:sl]) if sl else None
+        sido = sido or SIDO_STAT.get(c[:2]) or short_sido(r["name"].split(" ")[0])
+        if not sido:
+            continue
+        name = r["name"].strip()
+        parts = name.split(" ")
+        if len(parts) > 1 and short_sido(parts[0]):
+            name = " ".join(parts[1:])
+        if short_sido(name) == "세종" and "세종" in name:
+            name = "세종"
+        sg[(sido, name)] = r["v"]
+    return sd, sg
+
+
+regions, rindex = [], {}
 values, sido_values, themes, report = {}, {}, [], []
 
 for theme in CFG["themes"]:
     items = []
     for ind in theme["indicators"]:
-        rows = fetch(ind)
+        rows = prepare(ind)
         if isinstance(rows, dict):
             report.append(f'SKIP {ind["id"]}: {rows.get("errMsg")}')
             continue
-        fl = ind.get("filters", {})
-        sl, gl = ind.get("sidoCodeLen", 2), ind.get("sigunguCodeLen", 5)
-        sg, sd, year = {}, {}, None
-        for r in rows:
-            if any(r.get(k) != v for k, v in fl.items()):
-                continue
-            dt = r.get("DT")
-            if dt in (None, "", "-", "X"):
-                continue
-            try:
-                val = float(str(dt).replace(",", ""))
-            except ValueError:
-                continue
-            code = str(r.get("C1", ""))
-            if code in ("", "00"):
-                continue
-            year = r.get("PRD_DE", year)
-            if len(code) == sl:
-                sd[SIDO.get(code, r.get("C1_NM", code))] = val
-            elif len(code) == gl:
-                if code not in seen:
-                    seen.add(code)
-                    regions.append({"code": code, "sido": SIDO.get(code[:2], code[:2]), "name": r.get("C1_NM", code)})
-                sg[code] = val
-        if not sg and not sd:
-            report.append(f'EMPTY {ind["id"]} (filters={fl})')
+        sd, sg = split_levels(rows, ind)
+        if not sd and not sg:
+            report.append(f'EMPTY {ind["id"]}: rows={len(rows)} sample={[r["code"]+":"+r["name"] for r in rows[:3]]}')
             continue
-        values[ind["id"]] = sg
+        gv = {}
+        for (sido, name), v in sg.items():
+            key = f"{sido}|{name}"
+            if key not in rindex:
+                rindex[key] = True
+                regions.append({"code": key, "sido": sido, "name": name})
+            gv[key] = v
+        values[ind["id"]] = gv
         sido_values[ind["id"]] = sd
-        unit = ind.get("unit") or next((r.get("UNIT_NM") for r in rows if r.get("UNIT_NM")), "")
+        per = max((r["per"] for r in rows if r.get("per")), default=None)
+        unit = ind.get("unit") or next((r["unit"] for r in rows if r.get("unit")), "")
         items.append({"id": ind["id"], "name": ind["name"], "unit": unit,
                       "higherIsBetter": ind["higherIsBetter"], "source": ind.get("source", "KOSIS"),
-                      "yearSido": year if sd else None, "yearSigungu": year if sg else None,
+                      "yearSido": per if sd else None, "yearSigungu": per if sg else None,
                       "note": ind.get("note", "")})
-        report.append(f'OK {ind["id"]}: sido {len(sd)}, sigungu {len(sg)}, {year}')
+        report.append(f'OK {ind["id"]}: 시도 {len(sd)}, 시군구 {len(sg)}, {per}')
         time.sleep(0.3)
     if items:
         themes.append({"id": theme["id"], "name": theme["name"], "indicators": items})
 
 out = {"meta": {"isSample": False, "updated": datetime.date.today().isoformat()},
-       "themes": themes, "sidos": list(SIDO.values()), "regions": regions,
+       "themes": themes, "sidos": SIDO_ORDER, "regions": regions,
        "values": values, "sidoValues": sido_values}
 (ROOT / "data").mkdir(exist_ok=True)
 (ROOT / "data" / "data.json").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
