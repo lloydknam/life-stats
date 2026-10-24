@@ -30,11 +30,15 @@ def call(parent):
 
 
 found, seen_tbl = [], set()
-queue = [("", "")]  # (parentListId, 경로)
+# 루트("")가 비어 올 수 있어 최상위 분류 코드 A~Z를 함께 시드로 사용
+queue = [("", "")] + [(c, c) for c in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"]
+errors = []
 while queue and calls < MAX_CALLS:
     parent, path = queue.pop(0)
     rows = call(parent)
     if not isinstance(rows, list):
+        if len(errors) < 5:
+            errors.append({"parent": parent, "resp": rows})
         continue
     for x in rows:
         nm = x.get("LIST_NM") or x.get("TBL_NM") or ""
@@ -53,6 +57,6 @@ while queue and calls < MAX_CALLS:
 
 (ROOT / "data").mkdir(exist_ok=True)
 (ROOT / "data" / "kosis_sigungu_tables.json").write_text(
-    json.dumps({"calls": calls, "remaining_folders": len(queue), "tables": found},
+    json.dumps({"calls": calls, "remaining_folders": len(queue), "errors": errors, "tables": found},
                ensure_ascii=False, indent=1), encoding="utf-8")
 print("calls", calls, "tables", len(found), "remaining", len(queue))
