@@ -1,0 +1,21 @@
+{
+  "name": "종합 삶의 질 지수",
+  "dims": [
+    {"id": "job", "name": "일자리·소득", "desc": "고용·임금·창업 활력", "inds": [
+      {"id": "employment", "dir": 1}, {"id": "unemployment", "dir": -1}, {"id": "youth_emp", "dir": 1},
+      {"id": "wage", "dir": 1}, {"id": "startup_rate", "dir": 1}, {"id": "hh_income", "dir": 1}, {"id": "grdp", "dir": 1}]},
+    {"id": "house", "name": "주거", "desc": "무주택·자가·주거 환경", "inds": [
+      {"id": "no_house", "dir": -1}, {"id": "own_house", "dir": 1}, {"id": "semi_basement", "dir": -1}, {"id": "old_house", "dir": -1}]},
+    {"id": "health", "name": "건강·의료", "desc": "자살률·의료 접근성", "inds": [
+      {"id": "suicide", "dir": -1}, {"id": "clinics", "dir": 1}, {"id": "nurses", "dir": 1}, {"id": "pharmacy", "dir": 1}]},
+    {"id": "care", "name": "복지·재정", "desc": "노인 여가복지, 지방재정 여력", "inds": [
+      {"id": "elder_leisure", "dir": 1}, {"id": "fiscal_indep", "dir": 1}, {"id": "basic_living_rate", "dir": -1}]},
+    {"id": "culture", "name": "문화·여가·환경", "desc": "공원·문화·체육시설", "inds": [
+      {"id": "park_per_cap", "dir": 1}, {"id": "culture_fac", "dir": 1}, {"id": "sports_fac", "dir": 1}]},
+    {"id": "vital", "name": "인구·가족", "desc": "출산·혼인·이동·연령 구조", "inds": [
+      {"id": "birth", "dir": 1}, {"id": "marriage_rate", "dir": 1}, {"id": "divorce_rate", "dir": -1},
+      {"id": "net_migration", "dir": 1}, {"id": "median_age", "dir": -1}]},
+    {"id": "safe", "name": "안전", "desc": "범죄 발생(광역만 공표)", "inds": [
+      {"id": "crime_rate", "dir": -1}]}
+  ]
+}

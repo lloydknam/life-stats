@@ -107,6 +107,34 @@ details.all[open] summary::before{content:"－ ";}
 .mapside .big{font-size:22px;font-weight:780;letter-spacing:-.03em}
 .mapside p{margin:6px 0;color:var(--mute)}
 
+.qctl{margin:0 24px 16px;border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--paper)}
+.qctl h3{margin:0 0 4px;font-size:15px;font-weight:750}
+.qctl p{margin:0 0 12px;color:var(--mute);font-size:13px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px 22px}
+.qgrid label{display:block;font-size:13px}
+.qgrid label b{font-weight:650}.qgrid label em{font-style:normal;color:var(--hi);font-weight:700;float:right}
+.qgrid small{display:block;color:var(--mute);font-size:12px}
+.qgrid input[type=range]{width:100%;accent-color:var(--hi)}
+.qrow{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:12px;font-size:13px}
+.qrow select,.qrow button{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);cursor:pointer}
+.method{margin:0 24px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.method summary{cursor:pointer;padding:14px 18px;font-weight:700;color:var(--hi);list-style:none}
+.method summary::-webkit-details-marker{display:none}
+.method .mb{padding:0 18px 16px;font-size:14px;color:var(--text)}
+.method table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0 14px}
+.method th,.method td{border-top:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+.method th{color:var(--mute);font-weight:650;background:var(--paper)}
+.method ul{margin:6px 0 0;padding-left:18px;color:var(--mute);font-size:13px}
+.method a{color:var(--hi)}
+
+.frow{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.frow input{flex:1 1 220px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
+.seg button{border:0;background:none;padding:8px 14px;font-size:13px;cursor:pointer;color:var(--text)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--hi);color:#fff;font-weight:650}
+.peerhint{margin:8px 0 0;font-size:12.5px;color:var(--mute)}
+
 .card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:var(--mute)}
@@ -142,12 +170,17 @@ details.all[open] summary::before{content:"－ ";}
 </main>
 
 <script>
-const S={d:null,ind:null};
+const S={d:null,ind:null,peer:"all"};
+const PEERS=[["all","전체"],["구","자치구"],["시","시"],["군","군"]];
+const typeOf=r=>r.name=="세종"?"시":r.name.slice(-1)==="구"?"구":r.name.slice(-1)==="군"?"군":"시";
+const peerOk=r=>S.peer==="all"||typeOf(r)===S.peer;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-fetch("data/data.json").then(r=>r.json()).then(d=>{
+fetch("data/data.json").then(r=>r.json()).then(async d=>{
   S.d=d;
+  try{const pr=localStorage.getItem("lifestats-peer");if(pr&&PEERS.some(x=>x[0]===pr))S.peer=pr}catch(e){}
+  try{S.cfg=await fetch("data/qol_config.json").then(r=>r.json());setupQol()}catch(e){S.cfg=null}
   const first=d.themes[0].indicators[0].id;
   const h=decodeURIComponent(location.hash.slice(1));
   S.ind=findInd(h)?h:first;
@@ -220,7 +253,7 @@ function render(){
   const sv=(d.sidoValues&&d.sidoValues[S.ind])||{};
   const gv=d.values[S.ind]||{};
   const sidoItems=Object.entries(sv).filter(([,v])=>v!=null).map(([k,v])=>({k,v}));
-  const sgItems=d.regions.filter(r=>gv[r.code]!=null).map(r=>({...r,k:r.code,v:gv[r.code]}));
+  const sgItems=d.regions.filter(r=>gv[r.code]!=null&&peerOk(r)).map(r=>({...r,k:r.code,v:gv[r.code]}));
   const sgName=r=>r.sido==="세종"?"세종":`${r.sido} ${r.name}`;
   const sidoName=r=>r.k;
 
@@ -231,14 +264,21 @@ function render(){
 
   $("card").innerHTML=`
     <div class="card-h"><span class="crumb">${esc(th.name)}</span><h2>${esc(info.name)}</h2><ul class="meta">${meta}</ul></div>
-    <div class="finder"><input id="q" type="search" placeholder="지역 이름으로 순위 찾기" aria-label="지역 검색"><div class="found" id="found"></div></div>
+    <div class="finder"><div class="frow"><input id="q" type="search" placeholder="지역 이름으로 순위 찾기" aria-label="지역 검색">
+      <div class="seg" role="group" aria-label="기초 비교 대상">${PEERS.map(([k,l])=>`<button type="button" data-peer="${k}" aria-pressed="${S.peer===k}">${l}</button>`).join("")}</div></div>
+      ${S.peer==="all"?'<p class="peerhint">팁: 군·시·자치구는 여건이 달라 지표에 따라 한쪽이 유리하게 나옵니다. 같은 유형끼리 비교하려면 위 버튼을 눌러보세요.</p>':""}
+      <div class="found" id="found"></div></div>
+    ${qolControls()}
     <div class="panels">
       <section class="panel mappanel"><h3>지도</h3><div class="mp"><div id="map"></div><div class="mapside" id="mapside"></div></div></section>
       ${panel(`광역 ${sidoItems.length}개 시도`,sidoItems,info,sidoName)}
-      ${panel(`기초 ${sgItems.length}개 시군구`,sgItems,info,sgName)}
+      ${panel(`기초 ${sgItems.length}개 ${S.peer==="all"?"시군구":PEERS.find(x=>x[0]===S.peer)[1]}`,sgItems,info,sgName)}
     </div>
+    ${methodBox()}
     <div class="card-f"><span><b>출처</b>${esc(info.source||"-")}</span>${info.note?`<span>${esc(info.note)}</span>`:""}</div>`;
 
+  document.querySelectorAll("[data-peer]").forEach(b=>b.onclick=()=>{S.peer=b.dataset.peer;try{localStorage.setItem("lifestats-peer",S.peer)}catch(e){}if(S.cfg)computeQol();render()});
+  bindQol();
   drawMap(sgItems.length?sgItems:null,sidoItems,info,sgName);
 
   const rs=rankList(sgItems,info.higherIsBetter), rsido=rankList(sidoItems,info.higherIsBetter);
@@ -255,6 +295,100 @@ function render(){
     const names=new Set(rs.filter(r=>sgName(r).includes(q)||r.name.includes(q)).map(sgName));
     document.querySelectorAll(".panel:last-child .full li").forEach(li=>{if(names.has(li.dataset.k))li.classList.add("hit")});
   };
+}
+
+/* ---- 종합 삶의 질 지수 ----
+   해외 사례(OECD 지역 웰빙, 東洋経済 住みよさ, EU-SPI)를 따라: 지표를 5~95백분위로 절단한 min-max(0~100)로 바꾸고,
+   분야 안에서는 단순평균, 분야끼리는 사용자 가중치로 합성한다(산술평균 또는 약점 반영 멱평균 β=0.5). */
+const QKEY="lifestats-qol-v1";
+function setupQol(){
+  const c=S.cfg; S.w={}; S.mode="pow";
+  c.dims.forEach(x=>S.w[x.id]=3);
+  try{const o=JSON.parse(localStorage.getItem(QKEY)||"null");if(o){c.dims.forEach(x=>{if(o.w&&o.w[x.id]!=null)S.w[x.id]=+o.w[x.id]});if(o.mode)S.mode=o.mode}}catch(e){}
+  const mk=(id,name,desc)=>({id,name,unit:"점",higherIsBetter:true,source:"종합 산출(국가데이터처·건강보험심사평가원·국토교통부 등 지표 합성)",yearSido:"지표별 최신",yearSigungu:"지표별 최신",note:desc});
+  S.d.themes.unshift({id:"qol",name:"종합 삶의 질",indicators:[mk("qol",c.name,"분야별 점수를 가중 합성한 0~100점 지수. 아래 슬라이더로 분야 중요도를 직접 정해 보세요.")]
+    .concat(c.dims.map(x=>mk("qol_"+x.id,x.name+" 점수",x.desc+" (분야 점수 0~100점)")))});
+  computeQol();
+}
+function pctl(sorted,p){const i=(sorted.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return sorted[lo]+(sorted[hi]-sorted[lo])*(i-lo)}
+function computeQol(){
+  const d=S.d,c=S.cfg;
+  const out=lv=>{
+    const keys=lv==="sg"?d.regions.filter(peerOk).map(r=>r.code):d.sidos;
+    const get=(id,k)=>{const m=lv==="sg"?d.values[id]:d.sidoValues[id];const v=m&&m[k];return v==null?null:v};
+    const minN=lv==="sg"?Math.min(100,Math.floor(keys.length*.5)):12;
+    const dimScore={}; // dim -> key -> score
+    c.dims.forEach(dim=>{
+      const act=[];
+      dim.inds.forEach(ind=>{
+        const vals=keys.map(k=>get(ind.id,k)).filter(v=>v!=null);
+        if(vals.length<minN)return;
+        const so=[...vals].sort((a,b)=>a-b),lo=pctl(so,.05),hi=pctl(so,.95);
+        if(hi<=lo)return;
+        act.push({id:ind.id,dir:ind.dir,lo,hi});
+      });
+      const res={};
+      if(act.length){
+        const need=Math.ceil(act.length*.6);
+        keys.forEach(k=>{
+          const ss=[];
+          act.forEach(a=>{const v=get(a.id,k);if(v==null)return;let t=(Math.min(Math.max(v,a.lo),a.hi)-a.lo)/(a.hi-a.lo)*100;if(a.dir<0)t=100-t;ss.push(t)});
+          if(ss.length>=need)res[k]=ss.reduce((x,y)=>x+y,0)/ss.length;
+        });
+      }
+      dimScore[dim.id]={res,active:act.length>0};
+    });
+    const total=c.dims.filter(x=>dimScore[x.id].active).reduce((a,x)=>a+S.w[x.id],0);
+    const comp={};
+    keys.forEach(k=>{
+      let sw=0,sa=0;
+      c.dims.forEach(x=>{const w=S.w[x.id],v=dimScore[x.id].res[k];if(w>0&&v!=null){sw+=w;sa+=w*(S.mode==="pow"?Math.sqrt(v):v)}});
+      if(sw>0&&total>0&&sw>=.6*total){const m=sa/sw;comp[k]=+((S.mode==="pow"?m*m:m).toFixed(1))}
+    });
+    const r={qol:comp};
+    c.dims.forEach(x=>{r["qol_"+x.id]=Object.fromEntries(Object.entries(dimScore[x.id].res).map(([k,v])=>[k,+v.toFixed(1)]))});
+    return r;
+  };
+  const sg=out("sg"),sd=out("sd");
+  Object.keys(sg).forEach(id=>{d.values[id]=sg[id];d.sidoValues[id]=sd[id]});
+  // 종합·분야 점수는 비교집단 안에서만 값이 있으므로, 집단 밖 지역은 자연히 제외된다
+}
+function qolControls(){
+  if(S.ind!=="qol"||!S.cfg)return "";
+  const c=S.cfg;
+  return `<div class="qctl"><h3>내 기준으로 가중치 정하기</h3><p>분야마다 얼마나 중요한지 0~5로 정하면 순위와 지도가 바로 바뀝니다. 0이면 제외됩니다.<br><b>시범 지수입니다.</b> 인구 대비 시설·의료 지표가 많아 인구가 적은 군·구도심이 유리하게 나오는 경향이 있으니, 같은 유형끼리 비교해서 보세요.</p>
+    <div class="qgrid">${c.dims.map(x=>`<label><b>${esc(x.name)}</b><em id="qv-${x.id}">${S.w[x.id]}</em><small>${esc(x.desc)}</small><input type="range" min="0" max="5" step="1" value="${S.w[x.id]}" data-w="${x.id}" aria-label="${esc(x.name)} 가중치"></label>`).join("")}</div>
+    <div class="qrow"><label>합성 방식 <select id="qmode"><option value="pow" ${S.mode==="pow"?"selected":""}>약점 반영 (멱평균 β=0.5)</option><option value="avg" ${S.mode==="avg"?"selected":""}>단순 가중평균</option></select></label>
+    <button id="qreset" type="button">기본값(모두 3)</button></div></div>`;
+}
+function bindQol(){
+  if(S.ind!=="qol"||!S.cfg)return;
+  const save=()=>{try{localStorage.setItem(QKEY,JSON.stringify({w:S.w,mode:S.mode}))}catch(e){}};
+  document.querySelectorAll("input[data-w]").forEach(el=>{
+    el.oninput=()=>{$("qv-"+el.dataset.w).textContent=el.value};
+    el.onchange=()=>{S.w[el.dataset.w]=+el.value;save();computeQol();render()};
+  });
+  $("qmode").onchange=e=>{S.mode=e.target.value;save();computeQol();render()};
+  $("qreset").onclick=()=>{S.cfg.dims.forEach(x=>S.w[x.id]=3);S.mode="pow";save();computeQol();render()};
+}
+function methodBox(){
+  if(!S.ind.startsWith("qol"))return "";
+  const dims=S.cfg.dims.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${x.inds.map(i=>{const f=findInd(i.id);return f?esc(f.name)+(i.dir<0?" (−)":""):""}).filter(Boolean).join(", ")}</td></tr>`).join("");
+  return `<details class="method"><summary>산식과 해외 사례 보기</summary><div class="mb">
+  <p><b>이렇게 계산합니다.</b> ❶ 지표마다 5·95백분위로 극단값을 자른 뒤 0~100점으로 바꿉니다(낮을수록 좋은 지표는 뒤집음). ❷ 분야 점수 = 분야 안 지표 점수의 단순평균(해당 지표의 60% 이상 값이 있어야 산출). ❸ 종합 = 분야 점수를 가중치로 합성. 광역과 기초는 각각 따로 점수를 매기므로 서로 직접 비교하지는 않습니다.</p>
+  <table><tr><th>분야</th><th>들어간 지표 ((−)는 낮을수록 좋음)</th></tr>${dims}</table>
+  <table><tr><th>해외 사례</th><th>방식</th><th>여기서 가져온 것</th></tr>
+  <tr><td><a href="https://www.oecdregionalwellbeing.org/assets/downloads/Regional-Well-Being-User-Guide.pdf" target="_blank" rel="noopener">OECD 지역 웰빙</a><br>(11개 분야, 468개 지역)</td><td>분야별 점수만 제공하고 종합 순위는 두지 않음. min-max 0~10, 일부 지표는 5·95백분위 절단</td><td>분야별 점수 + 이용자 가중치 슬라이더, 5·95백분위 절단</td></tr>
+  <tr><td><a href="https://corp.toyokeizai.net/news/.assets/20250616.pdf" target="_blank" rel="noopener">일본 도요게이자 ‘살기 좋은 도시’</a><br>(812개 시·구, 20개 지표)</td><td>지표별 편차값(평균 50, 30~70 절단)의 단순평균. 인구 대비 지표 중심(의료·복지시설, 범죄, 순이동, 공원, 재정력, 소득 등)</td><td>인구 대비 지표 위주 구성, 극단값 절단, 단순평균</td></tr>
+  <tr><td><a href="https://www.countyhealthrankings.org/explore-health-rankings/our-methods" target="_blank" rel="noopener">미국 County Health Rankings</a></td><td>모델 가중치(예: 지역 여건 = 사회경제 50·보건 인프라 25·물리 환경 25)로 합성하고, 순위 대신 10개 군으로 묶어 표시. 차이가 통계적으로 유의하지 않을 수 있음을 명시</td><td>지도는 5단계로 묶어 표시, 근소한 순위 차이는 해석 주의</td></tr>
+  <tr><td><a href="https://ec.europa.eu/regional_policy/sources/work/spi_2024/EUSPI_2024_working%20paper.pdf" target="_blank" rel="noopener">EU 지역 사회진보지수</a><br>(53개 지표, 12개 구성요소)</td><td>min-max 0~100, 구성요소는 단순평균, 상위 합성은 멱평균(β=0.5)으로 한 영역의 약점이 다른 영역 강점에 완전히 상쇄되지 않게 함</td><td>‘약점 반영’ 합성 옵션(기본값), 결측 허용 기준</td></tr></table>
+  <p><b>한계</b></p><ul>
+  <li>인구 대비(인구 1천 명당 등) 지표가 많아 인구가 줄어든 군·구도심은 점수가 높게 나오는 구조적 편향이 있습니다. 같은 유형끼리 비교하거나 해당 분야 가중치를 낮춰 보세요.</li>
+  <li>가계소득·GRDP·범죄·수급률은 시도만 공표돼 광역 점수에만 반영됩니다(시군구 종합에는 빠짐).</li>
+  <li>교육, 대기질, 주관적 만족도, 교통·치안 같은 시군구 자료는 아직 없어 포함하지 못했습니다.</li>
+  <li>지표 기준 연도가 다르고(2020~2026), 인구가 작은 군은 값이 크게 출렁일 수 있습니다.</li>
+  <li>‘낮을수록 좋음’ 방향(고령화·1인가구 등)과 분야 구성은 가치 판단이 들어간 설정입니다. 가중치 0으로 빼서 확인해 보세요.</li></ul>
+  </div></details>`;
 }
 
 /* ---- 지도 (시군구 단계구분도) ---- */
@@ -288,7 +422,7 @@ async function drawMap(sgItems,sidoItems,info,sgName){
   };
   const label=k=>{const r=byKey.get(k);return useSg&&r?sgName(r):k};
   el.innerHTML=`<svg viewBox="0 0 ${(131.9-124.5)*80+4} ${(38.7-33.0)*100+4}" role="img" aria-label="${esc(info.name)} 지도">`+
-    paths.map(p=>{const r=byKey.get(p.k);return `<path d="${p.d}" class="${r?cls(r):"m0"}" data-k="${esc(p.k)}"><title>${esc(label(p.k))}${r?` ${r.rank}위 ${pl(r.v)}`:" 자료 없음"}</title></path>`}).join("")+`</svg>
+    paths.map(p=>{const r=byKey.get(p.k);return `<path d="${p.d}" class="${r?cls(r):"m0"}" data-k="${esc(p.k)}"><title>${esc(label(p.k))}${r?` ${r.rank}위 ${pl(r.v)}`:" 자료 없음·비교 대상 아님"}</title></path>`}).join("")+`</svg>
     <div class="legend"><span>좋음</span><i class="m1" style="background:var(--m1)"></i><i style="background:var(--m2)"></i><i style="background:var(--m3)"></i><i style="background:var(--m4)"></i><i style="background:var(--m5)"></i><span>나쁨</span><i style="background:var(--track)"></i><span>자료 없음</span></div>`;
   const side=$("mapside");
   const show=k=>{
