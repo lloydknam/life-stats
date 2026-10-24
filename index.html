@@ -4,147 +4,233 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>시군구 삶의 질 랭킹</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
-  --bg:#f6f5f1; --card:#fff; --ink:#1c1b19; --mute:#77736b; --line:#e4e1d8;
-  --good:#1f7a5a; --bad:#c2452d; --accent:#24408e; --bar:#cfd8ee;
+  --ink:#101936; --paper:#f2f4f8; --card:#ffffff; --line:#dde2ec; --mute:#6b7488;
+  --band:#101936; --hi:#1f55d6; --lo:#d9382a; --hi-bg:#eef3ff; --lo-bg:#fff1ef; --track:#e8ecf4;
+  --text:#101936;
 }
 @media (prefers-color-scheme:dark){
-  :root{--bg:#141413; --card:#1e1e1c; --ink:#efece4; --mute:#9a968c; --line:#33322e;
-    --good:#4fc79b; --bad:#ee8a73; --accent:#8ea6ee; --bar:#2c3550;}
+  :root{--ink:#e9edf8; --paper:#0b0f1f; --card:#141a33; --line:#252d4d; --mute:#98a2be;
+    --band:#1d2750; --hi:#7da4ff; --lo:#ff8d7d; --hi-bg:#18234d; --lo-bg:#3a1e24; --track:#222b4d; --text:#e9edf8;}
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Pretendard","Noto Sans KR",sans-serif}
-header{padding:28px 20px 8px;max-width:1080px;margin:0 auto}
-h1{font-size:24px;margin:0 0 4px;letter-spacing:-.02em}
-.sub{color:var(--mute);font-size:13px}
-.banner{margin:12px auto 0;max-width:1040px;padding:8px 14px;border-radius:8px;background:#fff3cd;color:#6b4e00;font-size:13px}
-@media (prefers-color-scheme:dark){.banner{background:#3a3016;color:#f0d98a}}
-main{max-width:1080px;margin:0 auto;padding:12px 20px 60px;display:grid;grid-template-columns:1fr 340px;gap:20px}
-@media (max-width:860px){main{grid-template-columns:1fr}}
-.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-.tab,.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer;font-size:13px}
-.tab.on,.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
-select,input{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
-.ind-title{font-size:18px;font-weight:600;margin:4px 0}
-.note{color:var(--mute);font-size:12px;margin-bottom:10px}
-.row{display:grid;grid-template-columns:34px 120px 1fr 70px;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;cursor:pointer}
-.row:hover,.row.sel{background:color-mix(in srgb,var(--accent) 10%,transparent)}
-.rk{color:var(--mute);font-variant-numeric:tabular-nums;text-align:right;font-size:13px}
-.nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nm small{color:var(--mute);margin-left:4px}
-.track{height:14px;background:transparent;position:relative}
-.fill{height:100%;background:var(--bar);border-radius:3px}
-.row.top .fill{background:var(--good)} .row.bot .fill{background:var(--bad)}
-.val{text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
-.sep{color:var(--mute);text-align:center;font-size:12px;padding:4px}
-aside h2{font-size:16px;margin:0 0 2px}
-.detail-row{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}
-.detail-row:last-child{border:0}
-.pill{font-variant-numeric:tabular-nums;font-weight:600}
-.empty{color:var(--mute);font-size:13px}
-footer{max-width:1080px;margin:0 auto;padding:0 20px 40px;color:var(--mute);font-size:12px}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);
+  font:15px/1.55 "Pretendard Variable",Pretendard,-apple-system,"Noto Sans KR","Malgun Gothic",sans-serif;
+  font-feature-settings:"tnum" 1}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+
+.hd{background:var(--band);color:#fff}
+.hd-in{max-width:1200px;margin:0 auto;padding:26px 24px 22px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.hd h1{margin:0;font-size:26px;font-weight:750;letter-spacing:-.03em}
+.hd .sub{margin-top:2px;color:#aeb8d8;font-size:13px}
+.sample{background:#ffd75e;color:#4a3600;font-size:13px;font-weight:600;padding:8px 24px;text-align:center}
+
+.wrap{max-width:1200px;margin:0 auto;padding:22px 24px 56px;display:grid;grid-template-columns:230px 1fr;gap:28px;align-items:start}
+.rail{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:4px}
+.rail h3{margin:18px 0 6px;font-size:13px;font-weight:700;color:var(--mute);letter-spacing:-.01em}
+.rail h3:first-child{margin-top:0}
+.rail button{display:block;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;
+  padding:7px 10px;margin:0;font-size:14px;color:var(--text);cursor:pointer;border-radius:0 8px 8px 0;line-height:1.35}
+.rail button:hover{background:color-mix(in srgb,var(--hi) 8%,transparent)}
+.rail button[aria-current="true"]{border-left-color:var(--hi);background:var(--hi-bg);font-weight:650}
+.picker{display:none;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:14px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.card-h{padding:24px 28px 18px}
+.crumb{display:inline-block;font-size:13px;font-weight:650;color:var(--hi);background:var(--hi-bg);padding:3px 10px;border-radius:999px}
+.card-h h2{margin:10px 0 10px;font-size:30px;line-height:1.2;font-weight:780;letter-spacing:-.035em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 8px;margin:0;padding:0;list-style:none;color:var(--mute);font-size:13px}
+.meta li{background:var(--paper);padding:2px 10px;border-radius:6px}
+.meta li.dir{color:var(--text);font-weight:600}
+
+.finder{padding:0 28px 18px}
+.finder input{width:100%;max-width:340px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.found{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.found span{font-size:13px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:5px 11px}
+.found b{font-weight:700}.found em{font-style:normal;color:var(--mute)}
+
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:0 28px 24px}
+.panel{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.panel>h3{margin:0;background:var(--band);color:#fff;text-align:center;padding:13px 10px;font-size:17px;font-weight:700;letter-spacing:-.02em}
+.grp{padding:14px 16px 6px}
+.grp h4{margin:0 0 8px;font-size:14px;font-weight:700}
+.grp.top h4{color:var(--hi)} .grp.bot h4{color:var(--lo)}
+.grp ol{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:52px 1fr auto;column-gap:10px;align-items:baseline;padding:9px 12px 8px;border-radius:10px;margin-bottom:6px;background:var(--paper);border-left:4px solid var(--hi)}
+.bot .row{border-left-color:var(--lo)}
+.rk{font-size:14px;color:var(--mute);font-weight:600}
+.nm{font-size:17px;font-weight:650;letter-spacing:-.02em;min-width:0}
+.val{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--hi)}
+.bot .val{color:var(--lo)}
+.val small{font-size:13px;font-weight:600;margin-left:2px;color:var(--mute)}
+.gauge{grid-column:2/4;height:3px;background:var(--track);border-radius:3px;margin-top:6px;overflow:hidden}
+.gauge i{display:block;height:100%;background:var(--hi);border-radius:3px}
+.bot .gauge i{background:var(--lo)}
+.tie{background:var(--lo-bg);border-radius:10px;padding:12px 14px;border-left:4px solid var(--lo);margin-bottom:6px}
+.grp.top .tie{background:var(--hi-bg);border-left-color:var(--hi)}
+.tie .big{font-size:26px;font-weight:800;color:var(--lo);letter-spacing:-.03em}
+.grp.top .tie .big{color:var(--hi)}
+.tie .big span{font-size:16px;font-weight:700;color:var(--text);margin-left:6px}
+.tie p{margin:6px 0 0;font-size:13px;color:var(--mute);line-height:1.6}
+
+details.all{border-top:1px solid var(--line);margin-top:auto}
+details.all summary{cursor:pointer;padding:12px 16px;font-size:14px;font-weight:600;color:var(--hi);list-style:none}
+details.all summary::-webkit-details-marker{display:none}
+details.all summary::before{content:"＋ ";}
+details.all[open] summary::before{content:"－ ";}
+.full{list-style:none;margin:0;padding:0 8px 10px;max-height:380px;overflow:auto}
+.full li{display:grid;grid-template-columns:42px 1fr 70px 1fr;gap:8px;align-items:center;padding:4px 8px;border-radius:6px;font-size:14px}
+.full li.hit{background:var(--hi-bg)}
+.full .r{color:var(--mute);text-align:right;font-size:13px}
+.full .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.full .v{text-align:right;font-weight:650}
+.full .b{height:8px;background:var(--track);border-radius:4px;overflow:hidden}
+.full .b i{display:block;height:100%;background:var(--hi);opacity:.55}
+
+.card-f{background:var(--band);color:#fff;padding:14px 28px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.card-f b{font-weight:700;margin-right:6px}
+.card-f span{color:#c9d1ea}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;padding:16px 14px 40px;gap:0}
+  .rail{display:none}.picker{display:block}
+  .card-h{padding:20px 18px 14px}.card-h h2{font-size:24px}
+  .finder{padding:0 18px 14px}
+  .panels{grid-template-columns:1fr;padding:0 14px 18px}
+  .card-f{padding:14px 18px}
+  .hd-in{padding:20px 16px 16px}.hd h1{font-size:22px}
+  .full li{grid-template-columns:38px 1fr 62px}.full .b{display:none}
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>시군구 삶의 질 랭킹</h1>
-  <div class="sub" id="meta"></div>
-</header>
-<div id="banner"></div>
-<main>
+<header class="hd"><div class="hd-in">
+  <div><h1>시군구 삶의 질 랭킹</h1><div class="sub" id="sub"></div></div>
+</div></header>
+<div id="sample"></div>
+<main class="wrap">
+  <nav class="rail" id="rail" aria-label="지표 목록"></nav>
   <section>
-    <div class="tabs" id="themes"></div>
-    <div class="card">
-      <div class="controls">
-        <select id="indicator"></select>
-        <select id="sido"><option value="">전국</option></select>
-        <input id="q" type="search" placeholder="지역 검색">
-        <span class="chip" id="flip">순위 뒤집기</span>
-      </div>
-      <div class="ind-title" id="indTitle"></div>
-      <div class="note" id="indNote"></div>
-      <div id="list"></div>
-    </div>
+    <select class="picker" id="picker" aria-label="지표 선택"></select>
+    <article class="card" id="card" aria-live="polite"></article>
   </section>
-  <aside>
-    <div class="card" id="detail"><div class="empty">왼쪽 목록에서 지역을 누르면 모든 지표의 순위를 볼 수 있어요.</div></div>
-  </aside>
 </main>
-<footer>순위는 '좋은 방향' 기준(자살률·범죄율은 낮을수록 상위). 지표별 출처·기준연도는 data/data.json 참조.</footer>
 
 <script>
-const S={data:null,theme:null,ind:null,sido:"",q:"",flip:false,sel:null};
+const S={d:null,ind:null};
 const $=id=>document.getElementById(id);
-const fmt=(v,u)=>v==null?"-":Number(v).toLocaleString("ko-KR")+(u&&u.length<=2?u:"");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 fetch("data/data.json").then(r=>r.json()).then(d=>{
-  S.data=d; S.theme=d.themes[0].id; S.ind=d.themes[0].indicators[0].id;
-  $("meta").textContent=`업데이트 ${d.meta.updated} · ${d.regions.length}개 시군구`;
-  if(d.meta.isSample) $("banner").innerHTML='<div class="banner">⚠️ 현재 표시된 수치는 화면 확인용 <b>샘플(난수)</b>입니다. 실제 통계가 아닙니다.</div>';
-  const sidos=[...new Set(d.regions.map(r=>r.sido))];
-  $("sido").innerHTML='<option value="">전국</option>'+sidos.map(s=>`<option>${s}</option>`).join("");
-  $("sido").onchange=e=>{S.sido=e.target.value;render()};
-  $("q").oninput=e=>{S.q=e.target.value.trim();render()};
-  $("flip").onclick=()=>{S.flip=!S.flip;$("flip").classList.toggle("on",S.flip);render()};
-  $("indicator").onchange=e=>{S.ind=e.target.value;render()};
+  S.d=d;
+  const first=d.themes[0].indicators[0].id;
+  const h=decodeURIComponent(location.hash.slice(1));
+  S.ind=findInd(h)?h:first;
+  $("sub").textContent=`${d.meta.updated} 업데이트 · 시도 ${d.sidos?d.sidos.length:0}곳, 시군구 ${d.regions.length}곳`;
+  if(d.meta.isSample) $("sample").innerHTML='<div class="sample">화면 확인용 샘플(난수)입니다. 실제 통계가 아닙니다.</div>';
+  buildNav();
   render();
 });
+window.addEventListener("hashchange",()=>{const h=decodeURIComponent(location.hash.slice(1));if(S.d&&findInd(h)){S.ind=h;buildNav();render()}});
 
-function indInfo(id){
-  for(const t of S.data.themes) for(const i of t.indicators) if(i.id===id) return i;
+function findInd(id){for(const t of S.d.themes)for(const i of t.indicators)if(i.id===id)return i;return null}
+function themeOf(id){return S.d.themes.find(t=>t.indicators.some(i=>i.id===id))}
+
+function buildNav(){
+  $("rail").innerHTML=S.d.themes.map(t=>`<h3>${esc(t.name)}</h3>`+t.indicators.map(i=>
+    `<button data-i="${i.id}" ${i.id===S.ind?'aria-current="true"':""}>${esc(i.name)}</button>`).join("")).join("");
+  $("rail").querySelectorAll("button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.i});
+  $("picker").innerHTML=S.d.themes.map(t=>`<optgroup label="${esc(t.name)}">`+t.indicators.map(i=>
+    `<option value="${i.id}" ${i.id===S.ind?"selected":""}>${esc(i.name)}</option>`).join("")+"</optgroup>").join("");
+  $("picker").onchange=e=>{location.hash=e.target.value};
 }
-function ranked(id){
-  const info=indInfo(id), vals=S.data.values[id]||{};
-  const all=S.data.regions.filter(r=>vals[r.code]!=null).map(r=>({...r,v:vals[r.code]}));
-  all.sort((a,b)=>info.higherIsBetter?b.v-a.v:a.v-b.v);
-  all.forEach((r,i)=>r.rank=i+1);
-  return all;
+
+/* 우수한 쪽이 앞(1위)이 되도록 정렬하고 공동순위(1,1,3)를 매긴다 */
+function rankList(items,hib){
+  const a=[...items].sort((x,y)=>hib?y.v-x.v:x.v-y.v);
+  a.forEach((r,i)=>{r.rank=i>0&&a[i-1].v===r.v?a[i-1].rank:i+1});
+  return a;
+}
+function decimals(vals){let m=0;for(const v of vals){const s=String(v);const k=s.indexOf(".");if(k>=0)m=Math.max(m,s.length-k-1)}return Math.min(m,2)}
+function fmtFn(vals,unit){
+  const dc=decimals(vals), short=unit&&unit.length<=2?unit:"";
+  return v=>(Number(v)===0?"0":Number(v).toLocaleString("ko-KR",{minimumFractionDigits:dc,maximumFractionDigits:dc}))+(short?`<small>${esc(short)}</small>`:"");
+}
+function plain(vals,unit){const f=fmtFn(vals,unit);return v=>f(v).replace(/<[^>]+>/g,"")}
+
+/* 높은 순/낮은 순 3개. 동률이 3칸을 넘으면 '값 N곳'으로 묶는다 */
+function pick(ordered,n=3){
+  const groups=[];
+  for(const it of ordered){const g=groups[groups.length-1];if(g&&g[0].v===it.v)g.push(it);else groups.push([it])}
+  const out=[];let used=0;
+  for(const g of groups){
+    if(used>=n)break;
+    if(g.length<=n-used){g.forEach(it=>out.push({one:it}));used+=g.length}
+    else{out.push({tie:g});used=n}
+  }
+  return out;
+}
+
+function panel(title,items,info,nameOf,yearLabel){
+  if(!items.length) return "";
+  const hib=info.higherIsBetter;
+  const best=rankList(items,hib);
+  const vals=best.map(x=>x.v), fmt=fmtFn(vals,info.unit), pl=plain(vals,info.unit);
+  const hiV=best[0].v, loV=best[best.length-1].v, span=Math.abs(hiV-loV)||1;
+  const good=v=>Math.max(Math.abs(v-loV)/span,0.04);
+  const worst=[...best].reverse();
+  const rowHTML=(it)=>`<li class="row"><span class="rk">${it.rank}위</span><span class="nm">${esc(nameOf(it))}</span><span class="val">${fmt(it.v)}</span><span class="gauge"><i style="width:${(good(it.v)*100).toFixed(1)}%"></i></span></li>`;
+  const grp=(cls,label,list)=>{
+    const rows=pick(list).map(p=>p.one?rowHTML(p.one):
+      `<li class="tie"><div class="big">${fmt(p.tie[0].v)}<span>${p.tie.length}곳</span></div><p>${p.tie.map(x=>esc(nameOf(x))).join(" · ")}</p></li>`).join("");
+    return `<div class="grp ${cls}"><h4>${label}</h4><ol>${rows}</ol></div>`;
+  };
+  const all=best.map(it=>`<li data-k="${esc(nameOf(it))}"><span class="r">${it.rank}위</span><span class="n">${esc(nameOf(it))}</span><span class="v">${pl(it.v)}</span><span class="b"><i style="width:${(good(it.v)*100).toFixed(1)}%"></i></span></li>`).join("");
+  return `<section class="panel"><h3>${title}</h3>${grp("top","높은 순 3",best)}${grp("bot","낮은 순 3",worst)}
+    <details class="all"><summary>전체 순위 보기 (${best.length}곳)</summary><ol class="full">${all}</ol></details></section>`;
 }
 
 function render(){
-  const d=S.data;
-  $("themes").innerHTML=d.themes.map(t=>`<span class="tab ${t.id===S.theme?"on":""}" data-t="${t.id}">${t.name}</span>`).join("");
-  document.querySelectorAll(".tab").forEach(el=>el.onclick=()=>{
-    S.theme=el.dataset.t; S.ind=d.themes.find(t=>t.id===S.theme).indicators[0].id; render();
-  });
-  const th=d.themes.find(t=>t.id===S.theme);
-  $("indicator").innerHTML=th.indicators.map(i=>`<option value="${i.id}" ${i.id===S.ind?"selected":""}>${i.name}</option>`).join("");
-  const info=indInfo(S.ind);
-  $("indTitle").textContent=info.name;
-  $("indNote").textContent=`${info.unit} · ${info.higherIsBetter?"높을수록 좋음":"낮을수록 좋음"} · 출처 ${info.source} · ${info.year}년`;
+  const d=S.d, info=findInd(S.ind), th=themeOf(S.ind);
+  const sv=(d.sidoValues&&d.sidoValues[S.ind])||{};
+  const gv=d.values[S.ind]||{};
+  const sidoItems=Object.entries(sv).filter(([,v])=>v!=null).map(([k,v])=>({k,v}));
+  const sgItems=d.regions.filter(r=>gv[r.code]!=null).map(r=>({...r,k:r.code,v:gv[r.code]}));
+  const sgName=r=>r.sido==="세종"?"세종":`${r.sido} ${r.name}`;
+  const sidoName=r=>r.k;
 
-  let rows=ranked(S.ind);
-  if(S.sido) rows=rows.filter(r=>r.sido===S.sido);
-  if(S.q) rows=rows.filter(r=>(r.sido+r.name).includes(S.q));
-  if(S.flip) rows=[...rows].reverse();
-  const max=Math.max(...rows.map(r=>Math.abs(r.v)),1);
-  const n=ranked(S.ind).length;
-  $("list").innerHTML=rows.length?rows.map(r=>`
-    <div class="row ${r.rank<=5?"top":""} ${r.rank>n-5?"bot":""} ${S.sel===r.code?"sel":""}" data-c="${r.code}">
-      <span class="rk">${r.rank}</span>
-      <span class="nm">${r.name}<small>${r.sido}</small></span>
-      <span class="track"><div class="fill" style="width:${Math.max(r.v/max*100,2)}%"></div></span>
-      <span class="val">${fmt(r.v)}</span>
-    </div>`).join(""):'<div class="empty">결과 없음</div>';
-  document.querySelectorAll(".row").forEach(el=>el.onclick=()=>{S.sel=el.dataset.c;render()});
-  renderDetail();
-}
+  const meta=[`단위 ${info.unit}`,
+    info.yearSido?`광역 ${info.yearSido}`:null,
+    info.yearSigungu?`기초 ${info.yearSigungu}`:(info.year?`기초 ${info.year}`:null)].filter(Boolean)
+    .map(t=>`<li>${esc(t)}</li>`).join("")+`<li class="dir">${info.higherIsBetter?"높을수록 좋음":"낮을수록 좋음"}</li>`;
 
-function renderDetail(){
-  if(!S.sel) return;
-  const reg=S.data.regions.find(r=>r.code===S.sel);
-  let html=`<h2>${reg.sido} ${reg.name}</h2><div class="note">지표별 순위 (전체 ${S.data.regions.length}개 중)</div>`;
-  for(const t of S.data.themes){
-    html+=`<div style="margin-top:10px;font-weight:600;font-size:13px">${t.name}</div>`;
-    for(const i of t.indicators){
-      const rk=ranked(i.id).find(r=>r.code===S.sel);
-      html+=`<div class="detail-row"><span>${i.name}</span><span><span class="pill">${rk?rk.rank+"위":"-"}</span> <span style="color:var(--mute)">${rk?fmt(rk.v,i.unit):""}</span></span></div>`;
-    }
-  }
-  $("detail").innerHTML=html;
+  $("card").innerHTML=`
+    <div class="card-h"><span class="crumb">${esc(th.name)}</span><h2>${esc(info.name)}</h2><ul class="meta">${meta}</ul></div>
+    <div class="finder"><input id="q" type="search" placeholder="지역 이름으로 순위 찾기" aria-label="지역 검색"><div class="found" id="found"></div></div>
+    <div class="panels">
+      ${panel(`광역 ${sidoItems.length}개 시도`,sidoItems,info,sidoName)}
+      ${panel(`기초 ${sgItems.length}개 시군구`,sgItems,info,sgName)}
+    </div>
+    <div class="card-f"><span><b>출처</b>${esc(info.source||"-")}</span>${info.note?`<span>${esc(info.note)}</span>`:""}</div>`;
+
+  const rs=rankList(sgItems,info.higherIsBetter), rsido=rankList(sidoItems,info.higherIsBetter);
+  const pl=plain(rs.map(x=>x.v),info.unit), plS=plain(rsido.map(x=>x.v),info.unit);
+  $("q").oninput=e=>{
+    const q=e.target.value.trim().replace(/\s+/g," ");
+    document.querySelectorAll(".full li.hit").forEach(li=>li.classList.remove("hit"));
+    if(!q){$("found").innerHTML="";return}
+    const hits=[
+      ...rsido.filter(r=>r.k.includes(q)).map(r=>`<span><b>${esc(r.k)}</b> 시도 ${r.rank}위/${rsido.length} <em>${plS(r.v)}</em></span>`),
+      ...rs.filter(r=>sgName(r).includes(q)||r.name.includes(q)).slice(0,6).map(r=>`<span><b>${esc(sgName(r))}</b> ${r.rank}위/${rs.length} <em>${pl(r.v)}</em></span>`)
+    ];
+    $("found").innerHTML=hits.length?hits.join(""):'<span>일치하는 지역이 없어요.</span>';
+    const names=new Set(rs.filter(r=>sgName(r).includes(q)||r.name.includes(q)).map(sgName));
+    document.querySelectorAll(".panel:last-child .full li").forEach(li=>{if(names.has(li.dataset.k))li.classList.add("hit")});
+  };
 }
 </script>
 </body>
