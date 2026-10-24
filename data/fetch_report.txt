@@ -14,8 +14,8 @@ OK unemployment: 시도 0, 시군구 227, 202601
 OK wage: 시도 17, 시군구 227, 2024
 OK hh_income: 시도 17, 시군구 0, 2024
 OK grdp: 시도 17, 시군구 0, 2024
-OK semi_basement: 시도 17, 시군구 153, 2024
-OK rooftop: 시도 17, 시군구 173, 2024
+OK semi_basement: 시도 17, 시군구 229, 2024
+OK rooftop: 시도 17, 시군구 229, 2024
 OK no_house: 시도 17, 시군구 228, 2021
 OK own_house: 시도 17, 시군구 228, 2020
 OK old_house: 시도 15, 시군구 201, 2025
