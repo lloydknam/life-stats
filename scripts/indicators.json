@@ -288,8 +288,8 @@
           "itmId": "T01",
           "objL1": "ALL",
           "objL2": "16133T2008_0245",
-          "sidoCodeLen": 11,
-          "sigunguCodeLen": 13,
+          "sidoCodeLen": 10,
+          "sigunguCodeLen": 12,
           "perPop": {
             "scale": 1000
           },
@@ -446,7 +446,7 @@
             "scale": 100000
           },
           "source": "국가데이터처(경찰청 자료)",
-          "note": "시도 단위만 공표. 발생건수 ÷ 주민등록인구"
+          "note": "시도 단위만 공표(광주·전남은 통합 코드 문제로 제외). 발생건수 ÷ 주민등록인구"
         }
       ]
     }
