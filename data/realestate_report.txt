@@ -1,0 +1,14 @@
+코드표 DT_1B040A3: 278개, 코드길이 [2, 5]
+getRTMSDataSvcAptTrade 11680 202609: HTTP403 <?xml version="1.0" encoding="UTF-8"?>
+<OpenAPI_ServiceResponse>
+<cmmMsgHeader>
+  <errMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR</errMsg>
+  <returnAuthMsg>등록되지 않은 서비스키</returnAuthMsg>
+  <returnRe
+getRTMSDataSvcAptTradeDev 11680 202609: HTTP403 <?xml version="1.0" encoding="UTF-8"?>
+<OpenAPI_ServiceResponse>
+<cmmMsgHeader>
+  <errMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR</errMsg>
+  <returnAuthMsg>등록되지 않은 서비스키</returnAuthMsg>
+  <returnRe
+진단 호출 실패 → 중단(키 승인·엔드포인트 확인 필요)
