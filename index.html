@@ -29,7 +29,7 @@ button,select,input{font:inherit;color:inherit}
 .brand img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--hi-bg);box-shadow:0 2px 8px rgba(20,39,94,.15)}
 .brand b{display:block;font-size:27px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1.1}
 .brand b em{font-style:normal;color:var(--hi)}
-.brand span{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+.brand span{display:block;font-size:13.5px;color:var(--mute);margin-top:2px}
 .hd .sub{margin-left:auto;color:var(--mute);font-size:14.5px}
 .sample{background:#ffd75e;color:#4a3600;font-size:13px;font-weight:600;padding:8px 24px;text-align:center}
 
@@ -167,6 +167,11 @@ details.all[open] summary::before{content:"－ ";}
 .mnav a{display:inline-block;font-size:14px;font-weight:650;color:var(--hi);text-decoration:none;padding:6px 2px}
 .rail .home-link{display:block;font-size:15.5px;font-weight:700;color:var(--hi);text-decoration:none;padding:4px 10px 0}
 
+.topnav{margin-left:auto;display:flex;gap:6px}
+.topnav a{text-decoration:none;color:var(--ink);font-size:16px;font-weight:650;padding:9px 18px;border:1px solid var(--line);border-radius:999px;background:var(--card);transition:background .15s,border-color .15s}
+.topnav a:hover{border-color:var(--hi);color:var(--hi)}
+.topnav a[aria-current="page"]{background:var(--hi);border-color:var(--hi);color:#fff}
+
 .card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:14.5px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:var(--mute)}
@@ -175,6 +180,7 @@ details.all[open] summary::before{content:"－ ";}
   .panels{grid-template-columns:1fr 1fr}.mappanel{grid-column:1/-1}.mappanel svg{max-height:640px}
 }
 @media (max-width:900px){
+  .topnav{margin-left:0;width:100%}.topnav a{flex:1;text-align:center;padding:8px 6px;font-size:15px}
   .tb{display:grid;grid-template-columns:1fr 1fr}
   .tb .grp{padding:10px 6px 2px}.tb .grp.top{padding-left:10px}.tb .grp.bot{padding-right:10px;border-left:1px dashed var(--line)}
   .tb .grp h4{font-size:14px;margin-bottom:6px}
@@ -200,8 +206,8 @@ details.all[open] summary::before{content:"－ ";}
 <body>
 <header class="hd"><div class="hd-in">
   <a class="brand" href="./"><img src="assets/clerk.jpg" alt="클사무관" width="56" height="56">
-    <div><b>클사무관<em>의</em> 라이프 인덱스</b></div></a>
-  <div class="sub" id="sub"></div>
+    <div><b>클사무관<em>의</em> 라이프 인덱스</b><span id="sub"></span></div></a>
+  <nav class="topnav" aria-label="주 메뉴"><a id="tn-home" href="#">홈</a><a id="tn-ind" href="#aging">지표</a><a id="tn-lab" href="#qol">🧪 실험실</a></nav>
 </div></header>
 <div id="sample"></div>
 <main class="wrap">
@@ -227,7 +233,7 @@ fetch("data/data.json").then(r=>r.json()).then(async d=>{
   try{S.cfg=await fetch("data/qol_config.json").then(r=>r.json());setupQol()}catch(e){S.cfg=null}
   const h=decodeURIComponent(location.hash.slice(1));
   S.ind=findInd(h)?h:null;
-  $("sub").textContent=`${d.meta.updated} 업데이트 · 시도 ${d.sidos?d.sidos.length:0}곳, 시군구 ${d.regions.length}곳`;
+  $("sub").textContent=`${d.meta.updated} 업데이트 · 매주 자동 갱신`;
   if(d.meta.isSample) $("sample").innerHTML='<div class="sample">화면 확인용 샘플(난수)입니다. 실제 통계가 아닙니다.</div>';
   buildNav();
   render();
@@ -246,6 +252,11 @@ function buildNav(){
     `<option value="${i.id}" ${i.id===S.ind?"selected":""}>${esc(i.name)}</option>`).join("")+"</optgroup>").join("");
   $("picker").onchange=e=>{location.hash=e.target.value};
   $("mnav").innerHTML=S.ind?'<a href="#">☰ 전체 지표 메뉴 보기</a>':"";
+  const lab=S.ind&&S.ind.startsWith("qol");
+  if(S.ind&&!lab)S.last=S.ind;
+  const firstInd=S.d.themes.find(t=>t.id!=="qol").indicators[0].id;
+  $("tn-ind").href="#"+(S.last||firstInd);
+  [["tn-home",!S.ind],["tn-ind",S.ind&&!lab],["tn-lab",lab]].forEach(([id,on])=>on?$(id).setAttribute("aria-current","page"):$(id).removeAttribute("aria-current"));
 }
 
 /* 우수한 쪽이 앞(1위)이 되도록 정렬하고 공동순위(1,1,3)를 매긴다 */
