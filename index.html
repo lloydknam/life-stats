@@ -212,6 +212,12 @@ details.all[open] summary::before{content:"－ ";}
 .zhint{position:absolute;left:8px;bottom:4px;margin:0;font-size:12.5px;color:var(--mute);background:color-mix(in srgb,var(--card) 85%,transparent);padding:2px 8px;border-radius:6px;pointer-events:none}
 .zhint:empty{display:none}
 
+.mtip{position:absolute;z-index:5;pointer-events:none;background:var(--ink);color:#fff;border-radius:10px;padding:8px 11px;font-size:14px;line-height:1.45;box-shadow:0 6px 18px rgba(20,39,94,.25);white-space:nowrap}
+.mtip b{display:block;font-size:15.5px}
+.mtip span{display:block;color:#d6def3}
+.mtip small{color:#aab6d6;font-size:12px}
+.mtip .tv{color:#fff;font-weight:700}
+
 .card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:14.5px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:var(--mute)}
@@ -615,7 +621,7 @@ async function drawMap(sgItems,sidoItems,info,sgName){
     (G.inset?`<rect x="${G.inset.x}" y="${G.inset.y}" width="${G.inset.w}" height="${G.inset.h}" rx="6" fill="none" stroke="var(--line)" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>`:"")+
     paths.map(p=>{const r=byKey.get(p.k);return `<path d="${p.d}" class="${r?cls(r):"m0"}" data-k="${esc(p.k)}"><title>${esc(label(p.k))}${r?` ${r.rank}위 ${pl(r.v)}`:" 자료 없음·비교 대상 아님"}</title></path>`}).join("")+`</svg>
     <div class="zoom" role="group" aria-label="지도 확대·축소"><button type="button" data-z="in" aria-label="확대">+</button><button type="button" data-z="out" aria-label="축소">−</button><button type="button" data-z="reset" aria-label="전체 보기" title="전체 보기">⟲</button></div>
-    <p class="zhint" id="zhint"></p></div>
+    <p class="zhint" id="zhint"></p><div class="mtip" id="mtip" hidden></div></div>
     <div class="legend"><span>좋음</span><i class="m1" style="background:var(--m1)"></i><i style="background:var(--m2)"></i><i style="background:var(--m3)"></i><i style="background:var(--m4)"></i><i style="background:var(--m5)"></i><span>나쁨</span><i style="background:var(--track)"></i><span>자료 없음</span></div>`;
   const svg=el.querySelector("svg"), side=$("mapside");
   const zoomed=()=>v.w<base.w-0.5;
@@ -655,10 +661,27 @@ async function drawMap(sgItems,sidoItems,info,sgName){
   });
   const up=e=>{pts.delete(e.pointerId);if(!pts.size)start=null;else if(start)start.d=0};
   svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
+  const P=S.d.population||{}, popOf=k=>(useSg?(P.sigungu||{}):(P.sido||{}))[k];
+  const fmtPop=x=>x==null?"":x>=10000?`${(x/10000).toLocaleString("ko-KR",{maximumFractionDigits:1})}만 명`:`${x.toLocaleString("ko-KR")}명`;
+  const nameOfKey=k=>useSg?(k.startsWith("세종|")?"세종":k.replace("|"," ")):k;
+  const tip=$("mtip"), box=el.querySelector(".mapbox2");
+  svg.addEventListener("pointermove",e=>{
+    if(e.pointerType!=="mouse"||(start&&moved)){tip.hidden=true;return}
+    const t=e.target.closest&&e.target.closest("path");
+    if(!t){tip.hidden=true;return}
+    const k=t.dataset.k,r=byKey.get(k),pp=popOf(k);
+    tip.innerHTML=`<b>${esc(nameOfKey(k))}</b>${pp!=null?`<span>인구 ${fmtPop(pp)}${P.year?` <small>(${esc(P.year)})</small>`:""}</span>`:""}${r?`<span class="tv">${pl(r.v)} · ${r.rank}위/${n}</span>`:'<span class="tv">자료 없음</span>'}`;
+    tip.hidden=false;
+    const br=box.getBoundingClientRect(); let x=e.clientX-br.left+14, y=e.clientY-br.top+14;
+    if(x+tip.offsetWidth>br.width-4)x=e.clientX-br.left-tip.offsetWidth-12;
+    if(y+tip.offsetHeight>br.height-4)y=e.clientY-br.top-tip.offsetHeight-12;
+    tip.style.left=x+"px";tip.style.top=y+"px";
+  });
+  svg.addEventListener("pointerleave",()=>{tip.hidden=true});
   const show=k=>{
-    const r=byKey.get(k);
-    side.innerHTML=r?`<div class="big">${esc(label(k))}</div><p>${n}곳 중 <b>${r.rank}위</b></p><div class="big">${pl(r.v)}</div><p>${info.unit&&info.unit.length>2?esc(info.unit):""}</p>`
-      :`<div class="big">${esc(label(k))}</div><p>이 지표는 자료가 없어요.</p>`;
+    const r=byKey.get(k),pp=popOf(k),pop=pp!=null?`<p>인구 <b>${fmtPop(pp)}</b>${P.year?` (${esc(P.year)})`:""}</p>`:"";
+    side.innerHTML=r?`<div class="big">${esc(label(k))}</div>${pop}<p>${n}곳 중 <b>${r.rank}위</b></p><div class="big">${pl(r.v)}</div><p>${info.unit&&info.unit.length>2?esc(info.unit):""}</p>`
+      :`<div class="big">${esc(nameOfKey(k))}</div>${pop}<p>이 지표는 자료가 없어요.</p>`;
     el.querySelectorAll("path.sel").forEach(x=>x.classList.remove("sel"));
     const t=[...el.querySelectorAll("path")].find(x=>x.dataset.k===k); if(t) t.classList.add("sel");
   };
