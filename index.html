@@ -172,6 +172,15 @@ details.all[open] summary::before{content:"－ ";}
 .topnav a:hover{border-color:var(--hi);color:var(--hi)}
 .topnav a[aria-current="page"]{background:var(--hi);border-color:var(--hi);color:#fff}
 
+.mpick{display:none;position:relative;margin-bottom:12px}
+#mpbtn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:13px;font-weight:600;text-align:left;cursor:pointer}
+#mpbtn i{font-style:normal;color:var(--mute);font-size:11px}
+#mplist{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);max-height:65vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(20,39,94,.18);padding:6px 10px 10px}
+#mplist h5{margin:10px 0 4px;font-size:12.5px;font-weight:800;color:var(--ink)}
+#mplist div{display:flex;flex-wrap:wrap;gap:4px}
+#mplist a{font-size:12px;line-height:1.3;text-decoration:none;color:var(--text);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 9px}
+#mplist a[aria-current="true"]{background:var(--hi);border-color:var(--hi);color:#fff}
+
 .card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:14.5px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:var(--mute)}
@@ -191,7 +200,7 @@ details.all[open] summary::before{content:"－ ";}
   .tb .tie{padding:8px 9px;border-left-width:3px}.tb .tie .big{font-size:19px}.tb .tie .big span{font-size:13px}.tb .tie p{font-size:12.5px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
   .panel>h3{font-size:16px;padding:10px}
   .wrap{grid-template-columns:1fr;padding:16px 14px 40px;gap:0}
-  .rail{display:none}.picker{display:block}.mnav{display:block}
+  .rail{display:none}.picker{display:none}.mpick{display:block}.mnav{display:block}
   .home{padding:22px 18px 24px}.hero img{width:72px;height:72px}.hero h2{font-size:24px}
   .stats{grid-template-columns:repeat(2,1fr)}.how{grid-template-columns:1fr}.tcards{grid-template-columns:1fr}
   .card-h{padding:20px 18px 14px}.card-h h2{font-size:24px}
@@ -215,6 +224,7 @@ details.all[open] summary::before{content:"－ ";}
   <section>
     <div class="mnav" id="mnav"></div>
     <select class="picker" id="picker" aria-label="지표 선택"></select>
+    <div class="mpick"><button type="button" id="mpbtn" aria-expanded="false" aria-controls="mplist"></button><div id="mplist" hidden></div></div>
     <article class="card" id="card" aria-live="polite"></article>
   </section>
 </main>
@@ -251,6 +261,14 @@ function buildNav(){
   $("picker").innerHTML=`<option value="" ${S.ind?"":"selected"}>지표를 골라 보세요 (전체 ${S.d.themes.reduce((a,t)=>a+(t.id==="qol"?0:t.indicators.length),0)}개)</option>`+S.d.themes.map(t=>`<optgroup label="${esc(t.id==="qol"?"🧪 "+t.name:(S.d.themes.filter(x=>x.id!=="qol").indexOf(t)+1)+". "+t.name)}">`+t.indicators.map(i=>
     `<option value="${i.id}" ${i.id===S.ind?"selected":""}>${esc(i.name)}</option>`).join("")+"</optgroup>").join("");
   $("picker").onchange=e=>{location.hash=e.target.value};
+  // 모바일용 지표 선택(네이티브 드롭다운 대신 작은 글씨 목록)
+  {let k=0;const cur=S.ind?findInd(S.ind):null;
+   $("mpbtn").innerHTML=`<span>${cur?esc(cur.name):"지표를 골라 보세요"}</span><i>▾</i>`;
+   $("mplist").innerHTML=S.d.themes.map(t=>`<h5>${t.id==="qol"?"🧪 실험실":(++k)+". "+esc(t.name)}</h5><div>${t.indicators.map(i=>`<a href="#${i.id}" ${i.id===S.ind?'aria-current="true"':""}>${esc(i.name)}</a>`).join("")}</div>`).join("");
+   const close=()=>{$("mplist").hidden=true;$("mpbtn").setAttribute("aria-expanded","false")};
+   $("mpbtn").onclick=e=>{e.stopPropagation();const o=$("mplist").hidden;$("mplist").hidden=!o;$("mpbtn").setAttribute("aria-expanded",String(o))};
+   $("mplist").querySelectorAll("a").forEach(x=>x.onclick=close);
+   document.onclick=e=>{if(!e.target.closest(".mpick"))close()};}
   $("mnav").innerHTML=S.ind?'<a href="#">☰ 전체 지표 메뉴 보기</a>':"";
   const lab=S.ind&&S.ind.startsWith("qol");
   if(S.ind&&!lab)S.last=S.ind;
