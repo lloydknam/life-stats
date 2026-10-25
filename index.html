@@ -175,6 +175,15 @@ details.all[open] summary::before{content:"－ ";}
   .panels{grid-template-columns:1fr 1fr}.mappanel{grid-column:1/-1}.mappanel svg{max-height:640px}
 }
 @media (max-width:900px){
+  .tb{display:grid;grid-template-columns:1fr 1fr}
+  .tb .grp{padding:10px 6px 2px}.tb .grp.top{padding-left:10px}.tb .grp.bot{padding-right:10px;border-left:1px dashed var(--line)}
+  .tb .grp h4{font-size:14px;margin-bottom:6px}
+  .tb .row{grid-template-columns:auto 1fr;column-gap:6px;padding:7px 8px;margin-bottom:5px;border-left-width:3px}
+  .tb .rk{font-size:12px}.tb .nm{font-size:14px;line-height:1.3}
+  .tb .val{grid-column:1/3;font-size:19px;margin-top:2px}.tb .val small{font-size:11.5px}
+  .tb .gauge{grid-column:1/3;margin-top:4px}
+  .tb .tie{padding:8px 9px;border-left-width:3px}.tb .tie .big{font-size:19px}.tb .tie .big span{font-size:13px}.tb .tie p{font-size:12.5px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+  .panel>h3{font-size:16px;padding:10px}
   .wrap{grid-template-columns:1fr;padding:16px 14px 40px;gap:0}
   .rail{display:none}.picker{display:block}.mnav{display:block}
   .home{padding:22px 18px 24px}.hero img{width:72px;height:72px}.hero h2{font-size:24px}
@@ -280,7 +289,7 @@ function panel(title,items,info,nameOf,yearLabel){
     return `<div class="grp ${cls}"><h4>${label}</h4><ol>${rows}</ol></div>`;
   };
   const all=best.map(it=>`<li data-k="${esc(nameOf(it))}"><span class="r">${it.rank}위</span><span class="n">${esc(nameOf(it))}</span><span class="v">${pl(it.v)}</span><span class="b"><i style="width:${(good(it.v)*100).toFixed(1)}%"></i></span></li>`).join("");
-  return `<section class="panel"><h3>${title}</h3>${grp("top","상위 3",best)}${grp("bot","하위 3",worst)}
+  return `<section class="panel"><h3>${title}</h3><div class="tb">${grp("top","상위 3",best)}${grp("bot","하위 3",worst)}</div>
     <details class="all"><summary>전체 순위 보기 (${best.length}곳)</summary><ol class="full">${all}</ol></details></section>`;
 }
 
