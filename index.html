@@ -137,6 +137,35 @@ details.all[open] summary::before{content:"－ ";}
 .seg button[aria-pressed="true"]{background:var(--hi);color:#fff;font-weight:650}
 .peerhint{margin:8px 0 0;font-size:12.5px;color:var(--mute)}
 
+.home{padding:30px 32px 34px}
+.hero{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.hero img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:4px solid var(--hi-bg);box-shadow:0 4px 14px rgba(20,39,94,.15)}
+.hero h2{margin:0 0 6px;font-size:30px;line-height:1.25;font-weight:800;letter-spacing:-.04em}
+.hero h2 em{font-style:normal;color:var(--hi)}
+.hero p{margin:0;color:var(--mute);font-size:15px;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 22px}
+.stats div{background:var(--hi-bg);border-radius:14px;padding:14px 16px}
+.stats b{display:block;font-size:30px;font-weight:800;color:var(--hi);letter-spacing:-.03em;line-height:1.1}
+.stats span{font-size:13px;color:var(--mute)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 26px;padding:0;list-style:none;counter-reset:h}
+.how li{border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;counter-increment:h}
+.how li::before{content:counter(h);display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--hi);color:#fff;font-size:12px;font-weight:700;margin-right:8px}
+.home h3.sec{font-size:18px;font-weight:800;margin:0 0 12px;letter-spacing:-.02em}
+.tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.tcard{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--card)}
+.tcard h4{margin:0 0 8px;font-size:17px;font-weight:800;letter-spacing:-.02em}
+.tcard h4 i{font-style:normal;color:var(--hi);margin-right:4px}
+.tcard h4 small{font-size:12px;font-weight:600;color:var(--mute);margin-left:6px}
+.tcard.lab{background:var(--paper);border-style:dashed}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a{font-size:13px;text-decoration:none;color:var(--text);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px 11px;line-height:1.3}
+.chips a:hover{border-color:var(--hi);color:var(--hi)}
+.srcs{margin-top:24px;font-size:13px;color:var(--mute)}
+.srcs b{color:var(--text)}
+.mnav{display:none;margin-bottom:10px}
+.mnav a{display:inline-block;font-size:14px;font-weight:650;color:var(--hi);text-decoration:none;padding:6px 2px}
+.rail .home-link{display:block;font-size:14px;font-weight:700;color:var(--hi);text-decoration:none;padding:4px 10px 0}
+
 .card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:var(--mute)}
@@ -146,7 +175,9 @@ details.all[open] summary::before{content:"－ ";}
 }
 @media (max-width:900px){
   .wrap{grid-template-columns:1fr;padding:16px 14px 40px;gap:0}
-  .rail{display:none}.picker{display:block}
+  .rail{display:none}.picker{display:block}.mnav{display:block}
+  .home{padding:22px 18px 24px}.hero img{width:72px;height:72px}.hero h2{font-size:24px}
+  .stats{grid-template-columns:repeat(2,1fr)}.how{grid-template-columns:1fr}.tcards{grid-template-columns:1fr}
   .card-h{padding:20px 18px 14px}.card-h h2{font-size:24px}
   .finder{padding:0 18px 14px}
   .panels{grid-template-columns:1fr;padding:0 14px 18px}
@@ -166,6 +197,7 @@ details.all[open] summary::before{content:"－ ";}
 <main class="wrap">
   <nav class="rail" id="rail" aria-label="지표 목록"></nav>
   <section>
+    <div class="mnav" id="mnav"></div>
     <select class="picker" id="picker" aria-label="지표 선택"></select>
     <article class="card" id="card" aria-live="polite"></article>
   </section>
@@ -183,27 +215,27 @@ fetch("data/data.json").then(r=>r.json()).then(async d=>{
   S.d=d;
   try{const pr=localStorage.getItem("lifestats-peer");if(pr&&PEERS.some(x=>x[0]===pr))S.peer=pr}catch(e){}
   try{S.cfg=await fetch("data/qol_config.json").then(r=>r.json());setupQol()}catch(e){S.cfg=null}
-  const first=d.themes[0].indicators[0].id;
   const h=decodeURIComponent(location.hash.slice(1));
-  S.ind=findInd(h)?h:first;
+  S.ind=findInd(h)?h:null;
   $("sub").textContent=`${d.meta.updated} 업데이트 · 시도 ${d.sidos?d.sidos.length:0}곳, 시군구 ${d.regions.length}곳`;
   if(d.meta.isSample) $("sample").innerHTML='<div class="sample">화면 확인용 샘플(난수)입니다. 실제 통계가 아닙니다.</div>';
   buildNav();
   render();
 });
-window.addEventListener("hashchange",()=>{const h=decodeURIComponent(location.hash.slice(1));if(S.d&&findInd(h)){S.ind=h;buildNav();render()}});
+window.addEventListener("hashchange",()=>{if(!S.d)return;const h=decodeURIComponent(location.hash.slice(1));S.ind=findInd(h)?h:null;buildNav();render();window.scrollTo(0,0)});
 
 function findInd(id){for(const t of S.d.themes)for(const i of t.indicators)if(i.id===id)return i;return null}
 function themeOf(id){return S.d.themes.find(t=>t.indicators.some(i=>i.id===id))}
 
 function buildNav(){
   let n=0;
-  $("rail").innerHTML=S.d.themes.map(t=>(t.id==="qol"?`<h3 class="lab">🧪 ${esc(t.name.replace("실험실 · ",""))} <small>실험실</small></h3>`:`<h3><i>${++n}.</i> ${esc(t.name)}</h3>`)+t.indicators.map(i=>
+  $("rail").innerHTML=`<a class="home-link" href="#">← 처음 화면</a>`+S.d.themes.map(t=>(t.id==="qol"?`<h3 class="lab">🧪 ${esc(t.name.replace("실험실 · ",""))} <small>실험실</small></h3>`:`<h3><i>${++n}.</i> ${esc(t.name)}</h3>`)+t.indicators.map(i=>
     `<button data-i="${i.id}" ${i.id===S.ind?'aria-current="true"':""}>${esc(i.name)}</button>`).join("")).join("");
   $("rail").querySelectorAll("button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.i});
-  $("picker").innerHTML=S.d.themes.map(t=>`<optgroup label="${esc(t.id==="qol"?"🧪 "+t.name:(S.d.themes.filter(x=>x.id!=="qol").indexOf(t)+1)+". "+t.name)}">`+t.indicators.map(i=>
+  $("picker").innerHTML=`<option value="" ${S.ind?"":"selected"}>지표를 골라 보세요 (전체 ${S.d.themes.reduce((a,t)=>a+(t.id==="qol"?0:t.indicators.length),0)}개)</option>`+S.d.themes.map(t=>`<optgroup label="${esc(t.id==="qol"?"🧪 "+t.name:(S.d.themes.filter(x=>x.id!=="qol").indexOf(t)+1)+". "+t.name)}">`+t.indicators.map(i=>
     `<option value="${i.id}" ${i.id===S.ind?"selected":""}>${esc(i.name)}</option>`).join("")+"</optgroup>").join("");
   $("picker").onchange=e=>{location.hash=e.target.value};
+  $("mnav").innerHTML=S.ind?'<a href="#">☰ 전체 지표 메뉴 보기</a>':"";
 }
 
 /* 우수한 쪽이 앞(1위)이 되도록 정렬하고 공동순위(1,1,3)를 매긴다 */
@@ -251,7 +283,27 @@ function panel(title,items,info,nameOf,yearLabel){
     <details class="all"><summary>전체 순위 보기 (${best.length}곳)</summary><ol class="full">${all}</ol></details></section>`;
 }
 
+function renderHome(){
+  const d=S.d, th=d.themes.filter(t=>t.id!=="qol"), lab=d.themes.find(t=>t.id==="qol");
+  const nInd=th.reduce((a,t)=>a+t.indicators.length,0);
+  const sg=th.flatMap(t=>t.indicators).filter(i=>i.yearSigungu).length;
+  const srcs=[...new Set(th.flatMap(t=>t.indicators.map(i=>(i.source||"").replace(/\(.*?\)/g,"").trim())).filter(Boolean))];
+  const chip=i=>`<a href="#${i.id}">${esc(i.name)}</a>`;
+  $("card").innerHTML=`<div class="home">
+    <div class="hero"><img src="assets/clerk.jpg" alt="클사무관"><div>
+      <h2>우리 동네 삶의 질,<br><em>${th.length}개 분야 ${nInd}개 지표</em>로 비교해 보세요</h2>
+      <p>클사무관의 라이프 인덱스는 국가데이터처(KOSIS) 등 공식 통계를 모아 광역 17개 시도와 기초 ${d.regions.length}개 시군구의 순위를 한눈에 보여줍니다. 지표를 고르면 상위·하위 3곳과 지도가 바로 나옵니다.</p></div></div>
+    <div class="stats"><div><b>${th.length}</b><span>분야</span></div><div><b>${nInd}</b><span>지표 (시군구 비교 ${sg}개)</span></div><div><b>${d.sidos.length}</b><span>광역 시도</span></div><div><b>${d.regions.length}</b><span>기초 시군구</span></div></div>
+    <ol class="how"><li>아래에서 분야와 지표를 고릅니다</li><li>광역·기초 상위 3, 하위 3과 지도를 봅니다</li><li>지역 이름을 검색하거나 군·시·자치구끼리 비교합니다</li></ol>
+    <h3 class="sec">분야별 지표</h3>
+    <div class="tcards">${th.map((t,k)=>`<div class="tcard"><h4><i>${k+1}.</i>${esc(t.name)}<small>${t.indicators.length}개</small></h4><div class="chips">${t.indicators.map(chip).join("")}</div></div>`).join("")}
+    ${lab?`<div class="tcard lab"><h4>🧪 실험실<small>종합 지수</small></h4><p style="margin:0 0 8px;font-size:13px;color:var(--mute)">해외 사례를 참고해 분야별 점수를 합친 실험적 지수입니다. 가중치를 직접 정할 수 있어요.</p><div class="chips">${chip(lab.indicators[0])}</div></div>`:""}</div>
+    <p class="srcs"><b>출처</b> ${srcs.map(esc).join(" · ")} · ${esc(d.meta.updated)} 업데이트(매주 자동 갱신)</p>
+  </div>`;
+}
+
 function render(){
+  if(!S.ind){renderHome();return}
   const d=S.d, info=findInd(S.ind), th=themeOf(S.ind);
   const sv=(d.sidoValues&&d.sidoValues[S.ind])||{};
   const gv=d.values[S.ind]||{};
