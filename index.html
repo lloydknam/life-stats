@@ -181,6 +181,23 @@ details.all[open] summary::before{content:"－ ";}
 #mplist a{font-size:12px;line-height:1.3;text-decoration:none;color:var(--text);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 9px}
 #mplist a[aria-current="true"]{background:var(--hi);border-color:var(--hi);color:#fff}
 
+.qwrap{display:grid;grid-template-columns:minmax(280px,440px) 1fr;gap:24px;align-items:center}
+#radar{width:100%;height:auto;display:block;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer}
+#radar .rg{fill:none;stroke:var(--line);stroke-width:1}
+#radar .rg5{stroke:#b9c3d9;stroke-width:1.5;fill:var(--card)}
+#radar .ax{stroke:var(--line);stroke-width:1}
+#radar .tk{font-size:11px;fill:var(--mute)}
+#radar .rp{fill:color-mix(in srgb,var(--hi) 22%,transparent);stroke:var(--hi);stroke-width:2.5;stroke-linejoin:round}
+#radar .hd{fill:#fff;stroke:var(--hi);stroke-width:3}
+#radar .hd.on{fill:var(--hi);r:12}
+#radar .lb{font-size:18px;font-weight:700;fill:var(--ink)}
+#radar .lv{font-size:19px;font-weight:800;fill:var(--hi)}
+.qlist{list-style:none;margin:0 0 6px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
+.qlist li{display:grid;grid-template-columns:1fr auto;column-gap:8px;font-size:14.5px;padding:5px 0;border-bottom:1px solid var(--line)}
+.qlist li span{grid-row:2;color:var(--mute);font-size:12.5px}
+.qlist li em{grid-row:1/3;grid-column:2;align-self:center;font-style:normal;font-weight:800;font-size:20px;color:var(--hi)}
+.qwarn{margin-top:12px!important;font-size:13.5px!important}
+
 .card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:14.5px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:var(--mute)}
@@ -189,6 +206,8 @@ details.all[open] summary::before{content:"－ ";}
   .panels{grid-template-columns:1fr 1fr}.mappanel{grid-column:1/-1}.mappanel svg{max-height:640px}
 }
 @media (max-width:900px){
+  .qctl{margin:0 12px 14px;padding:12px}.qwrap{grid-template-columns:1fr;gap:10px}.qlist{grid-template-columns:1fr 1fr;gap:2px 12px}.qlist li{font-size:13px}.qlist li span{display:none}.qlist li em{font-size:16px}.qlist{display:none}
+  #radar .lb,#radar .lv{font-size:22px}#radar .tk{font-size:14px}#radar .hd{r:12}
   .topnav{margin-left:0;width:100%}.topnav a{flex:1;text-align:center;padding:8px 6px;font-size:15px}
   .tb{display:grid;grid-template-columns:1fr 1fr}
   .tb .grp{padding:10px 6px 2px}.tb .grp.top{padding-left:10px}.tb .grp.bot{padding-right:10px;border-left:1px dashed var(--line)}
@@ -447,23 +466,64 @@ function computeQol(){
   Object.keys(sg).forEach(id=>{d.values[id]=sg[id];d.sidoValues[id]=sd[id]});
   // 종합·분야 점수는 비교집단 안에서만 값이 있으므로, 집단 밖 지역은 자연히 제외된다
 }
+/* 가중치: 정칠각형(분야 7개) 레이더 위에서 손가락·마우스로 꼭짓점을 끌어 0~5를 정한다 */
+const RAD={C:210,R:150,max:5},VB={x:-75,y:-22,w:570,h:468};
+function radAxis(i,n){const a=-Math.PI/2+i*2*Math.PI/n;return [Math.cos(a),Math.sin(a)]}
+function radPt(i,n,v){const [x,y]=radAxis(i,n),r=RAD.R*v/RAD.max;return [RAD.C+x*r,RAD.C+y*r]}
+function radarSVG(){
+  const dims=S.cfg.dims,n=dims.length,C=RAD.C;
+  const ring=v=>dims.map((_,i)=>radPt(i,n,v).map(z=>z.toFixed(1)).join(",")).join(" ");
+  const grid=[1,2,3,4,5].map(v=>`<polygon points="${ring(v)}" class="rg${v===5?" rg5":""}"/>`).join("");
+  const axes=dims.map((_,i)=>{const [x,y]=radPt(i,n,5);return `<line x1="${C}" y1="${C}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" class="ax"/>`}).join("");
+  const ticks=[1,2,3,4,5].map(v=>{const [x,y]=radPt(0,n,v);return `<text x="${(x+6).toFixed(1)}" y="${(y+4).toFixed(1)}" class="tk">${v}</text>`}).join("");
+  const labels=dims.map((d,i)=>{const [ux,uy]=radAxis(i,n),x=C+ux*(RAD.R+34),y=C+uy*(RAD.R+30);
+    const anc=Math.abs(ux)<.2?"middle":ux>0?"start":"end";
+    return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${anc}" class="lb"><tspan>${esc(d.name)}</tspan><tspan x="${x.toFixed(1)}" dy="1.15em" class="lv" id="rl-${d.id}">${S.w[d.id]}</tspan></text>`}).join("");
+  const handles=dims.map((d,i)=>{const [x,y]=radPt(i,n,S.w[d.id]);return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9" class="hd" id="rh-${d.id}"/>`}).join("");
+  return `<svg id="radar" viewBox="${VB.x} ${VB.y} ${VB.w} ${VB.h}" role="img" aria-label="분야별 가중치 레이더. 꼭짓점을 끌어 0~5로 조절">
+    ${grid}${axes}${ticks}<polygon id="rpoly" points="${dims.map((d,i)=>radPt(i,n,S.w[d.id]).map(z=>z.toFixed(1)).join(",")).join(" ")}" class="rp"/>${handles}${labels}</svg>`;
+}
 function qolControls(){
   if(S.ind!=="qol"||!S.cfg)return "";
   const c=S.cfg;
-  return `<div class="qctl"><h3>내 기준으로 가중치 정하기</h3><p>분야마다 얼마나 중요한지 0~5로 정하면 순위와 지도가 바로 바뀝니다. 0이면 제외됩니다.<br><b>실험실 지수입니다(분야·지표 구성이 자의적).</b> 인구 대비 시설·의료 지표가 많아 인구가 적은 군·구도심이 유리하게 나오는 경향이 있으니, 같은 유형끼리 비교해서 보세요.</p>
-    <div class="qgrid">${c.dims.map(x=>`<label><b>${esc(x.name)}</b><em id="qv-${x.id}">${S.w[x.id]}</em><small>${esc(x.desc)}</small><input type="range" min="0" max="5" step="1" value="${S.w[x.id]}" data-w="${x.id}" aria-label="${esc(x.name)} 가중치"></label>`).join("")}</div>
+  return `<div class="qctl"><div class="qwrap"><div class="qradar">${radarSVG()}</div><div class="qside">
+    <h3>내 기준으로 가중치 정하기</h3>
+    <p>그래프의 꼭짓점을 손가락(마우스)으로 끌거나, 원하는 위치를 눌러 분야마다 0~5를 정하세요. 바깥으로 갈수록 중요하게 반영되고, 가운데(0)로 두면 제외됩니다. 손을 떼면 순위와 지도가 바뀝니다.</p>
+    <ul class="qlist">${c.dims.map(x=>`<li><b>${esc(x.name)}</b><span>${esc(x.desc)}</span><em id="qv-${x.id}">${S.w[x.id]}</em></li>`).join("")}</ul>
     <div class="qrow"><label>합성 방식 <select id="qmode"><option value="pow" ${S.mode==="pow"?"selected":""}>약점 반영 (멱평균 β=0.5)</option><option value="avg" ${S.mode==="avg"?"selected":""}>단순 가중평균</option></select></label>
-    <button id="qreset" type="button">기본값(모두 3)</button></div></div>`;
+    <button id="qreset" type="button">기본값(모두 3)</button></div>
+    <p class="qwarn"><b>실험실 지수입니다(분야·지표 구성이 자의적).</b> 인구 대비 시설·의료 지표가 많아 인구가 적은 군·구도심이 유리하게 나오는 경향이 있으니, 같은 유형끼리 비교해서 보세요.</p>
+  </div></div></div>`;
 }
 function bindQol(){
   if(S.ind!=="qol"||!S.cfg)return;
   const save=()=>{try{localStorage.setItem(QKEY,JSON.stringify({w:S.w,mode:S.mode}))}catch(e){}};
-  document.querySelectorAll("input[data-w]").forEach(el=>{
-    el.oninput=()=>{$("qv-"+el.dataset.w).textContent=el.value};
-    el.onchange=()=>{S.w[el.dataset.w]=+el.value;save();computeQol();render()};
+  const commit=()=>{save();computeQol();render()};
+  $("qmode").onchange=e=>{S.mode=e.target.value;commit()};
+  $("qreset").onclick=()=>{S.cfg.dims.forEach(x=>S.w[x.id]=3);S.mode="pow";commit()};
+  const svg=$("radar"),dims=S.cfg.dims,n=dims.length;
+  let axis=-1,changed=false;
+  const local=e=>{const r=svg.getBoundingClientRect();return [VB.x+(e.clientX-r.left)/r.width*VB.w,VB.y+(e.clientY-r.top)/r.height*VB.h]};
+  const setFrom=(x,y)=>{
+    const [ux,uy]=radAxis(axis,n),t=((x-RAD.C)*ux+(y-RAD.C)*uy)/RAD.R*RAD.max;
+    const v=Math.max(0,Math.min(RAD.max,Math.round(t))),d=dims[axis];
+    if(S.w[d.id]===v)return; S.w[d.id]=v; changed=true;
+    const [hx,hy]=radPt(axis,n,v); const h=$("rh-"+d.id); h.setAttribute("cx",hx.toFixed(1)); h.setAttribute("cy",hy.toFixed(1));
+    $("rpoly").setAttribute("points",dims.map((q,i)=>radPt(i,n,S.w[q.id]).map(z=>z.toFixed(1)).join(",")).join(" "));
+    $("rl-"+d.id).textContent=v; $("qv-"+d.id).textContent=v;
+  };
+  svg.addEventListener("pointerdown",e=>{
+    const [x,y]=local(e),dx=x-RAD.C,dy=y-RAD.C;
+    if(Math.hypot(dx,dy)>RAD.R+40)return;
+    // 누른 방향과 가장 가까운 축을 고른다
+    let best=0,bd=-2;dims.forEach((_,i)=>{const [ux,uy]=radAxis(i,n),c=(dx*ux+dy*uy)/(Math.hypot(dx,dy)||1);if(c>bd){bd=c;best=i}});
+    axis=best;changed=false;svg.setPointerCapture(e.pointerId);
+    svg.querySelectorAll(".hd").forEach(h=>h.classList.remove("on"));$("rh-"+dims[axis].id).classList.add("on");
+    setFrom(x,y);e.preventDefault();
   });
-  $("qmode").onchange=e=>{S.mode=e.target.value;save();computeQol();render()};
-  $("qreset").onclick=()=>{S.cfg.dims.forEach(x=>S.w[x.id]=3);S.mode="pow";save();computeQol();render()};
+  svg.addEventListener("pointermove",e=>{if(axis<0)return;const [x,y]=local(e);setFrom(x,y)});
+  const end=()=>{if(axis<0)return;axis=-1;if(changed)commit();else svg.querySelectorAll(".hd").forEach(h=>h.classList.remove("on"))};
+  svg.addEventListener("pointerup",end);svg.addEventListener("pointercancel",end);
 }
 function methodBox(){
   if(!S.ind.startsWith("qol"))return "";
