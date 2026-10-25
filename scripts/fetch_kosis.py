@@ -286,9 +286,14 @@ for theme in CFG["themes"]:
     if items:
         themes.append({"id": theme["id"], "name": theme["name"], "indicators": items})
 
+pop_out = {}
+if POP:
+    pop_out = {"year": max((r["per"] for r in _prow if r.get("per")), default=None),
+               "sido": {k: round(v) for k, v in POP["sd"].items()},
+               "sigungu": {f"{a}|{b}": round(v) for (a, b), v in POP["sg"].items()}}
 out = {"meta": {"isSample": False, "updated": datetime.date.today().isoformat()},
        "themes": themes, "sidos": SIDO_ORDER, "regions": regions,
-       "values": values, "sidoValues": sido_values}
+       "values": values, "sidoValues": sido_values, "population": pop_out}
 (ROOT / "data").mkdir(exist_ok=True)
 (ROOT / "data" / "data.json").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
 (ROOT / "data" / "fetch_report.txt").write_text("\n".join(report), encoding="utf-8")
