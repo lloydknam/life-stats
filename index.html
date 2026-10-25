@@ -202,6 +202,16 @@ details.all[open] summary::before{content:"－ ";}
 .notice b{font-size:16px}
 .notice ul{margin:6px 0 0;padding-left:20px;font-size:14.5px;line-height:1.65}
 
+.mapbox2{position:relative}
+.mapbox2 svg.zoomed{cursor:grab}
+.zoom{position:absolute;top:8px;right:8px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);box-shadow:0 2px 8px rgba(20,39,94,.12)}
+.zoom button{width:40px;height:40px;border:0;background:var(--card);font-size:22px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1}
+.zoom button+button{border-top:1px solid var(--line)}
+.zoom button[data-z="reset"]{font-size:18px}
+.zoom button:hover{background:var(--hi-bg);color:var(--hi)}
+.zhint{position:absolute;left:8px;bottom:4px;margin:0;font-size:12.5px;color:var(--mute);background:color-mix(in srgb,var(--card) 85%,transparent);padding:2px 8px;border-radius:6px;pointer-events:none}
+.zhint:empty{display:none}
+
 .card-f{background:var(--paper);border-top:1px solid var(--line);color:var(--ink);padding:14px 28px;font-size:14.5px;display:flex;flex-wrap:wrap;gap:4px 18px}
 .card-f b{font-weight:700;margin-right:6px}
 .card-f span{color:var(--mute)}
@@ -239,7 +249,7 @@ details.all[open] summary::before{content:"－ ";}
 <body>
 <header class="hd"><div class="hd-in">
   <a class="brand" href="./"><img src="assets/clerk.jpg" alt="클사무관" width="56" height="56">
-    <div><b>클사무관<em>의</em> 라이프 인덱스</b><span id="sub"></span></div></a>
+    <div><b>클사무관의 <em>라이프 인덱스</em></b><span id="sub"></span></div></a>
   <nav class="topnav" aria-label="주 메뉴"><a id="tn-home" href="#">홈</a><a id="tn-ind" href="#aging">지표</a><a id="tn-lab" href="#qol">🧪 실험실</a></nav>
 </div></header>
 <div id="sample"></div>
@@ -598,11 +608,53 @@ async function drawMap(sgItems,sidoItems,info,sgName){
   };
   const label=k=>{const r=byKey.get(k);return useSg&&r?sgName(r):k};
   const paths=G.paths;
-  el.innerHTML=`<svg viewBox="0 0 ${G.w} ${G.h}" role="img" aria-label="${esc(info.name)} 지도">`+
-    (G.inset?`<rect x="${G.inset.x}" y="${G.inset.y}" width="${G.inset.w}" height="${G.inset.h}" rx="6" fill="none" stroke="var(--line)" stroke-dasharray="4 3"/>`:"")+
+  const kind=useSg?"sigungu":"sido", base={x:0,y:0,w:+G.w,h:+G.h};
+  if(!S.mv||S.mv.kind!==kind)S.mv={kind,...base};
+  const v=S.mv;
+  el.innerHTML=`<div class="mapbox2"><svg viewBox="${v.x} ${v.y} ${v.w} ${v.h}" role="img" aria-label="${esc(info.name)} 지도">`+
+    (G.inset?`<rect x="${G.inset.x}" y="${G.inset.y}" width="${G.inset.w}" height="${G.inset.h}" rx="6" fill="none" stroke="var(--line)" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>`:"")+
     paths.map(p=>{const r=byKey.get(p.k);return `<path d="${p.d}" class="${r?cls(r):"m0"}" data-k="${esc(p.k)}"><title>${esc(label(p.k))}${r?` ${r.rank}위 ${pl(r.v)}`:" 자료 없음·비교 대상 아님"}</title></path>`}).join("")+`</svg>
+    <div class="zoom" role="group" aria-label="지도 확대·축소"><button type="button" data-z="in" aria-label="확대">+</button><button type="button" data-z="out" aria-label="축소">−</button><button type="button" data-z="reset" aria-label="전체 보기" title="전체 보기">⟲</button></div>
+    <p class="zhint" id="zhint"></p></div>
     <div class="legend"><span>좋음</span><i class="m1" style="background:var(--m1)"></i><i style="background:var(--m2)"></i><i style="background:var(--m3)"></i><i style="background:var(--m4)"></i><i style="background:var(--m5)"></i><span>나쁨</span><i style="background:var(--track)"></i><span>자료 없음</span></div>`;
-  const side=$("mapside");
+  const svg=el.querySelector("svg"), side=$("mapside");
+  const zoomed=()=>v.w<base.w-0.5;
+  const apply=()=>{
+    v.w=Math.min(base.w,Math.max(base.w/12,v.w)); v.h=v.w*base.h/base.w;
+    v.x=Math.min(base.w-v.w,Math.max(0,v.x)); v.y=Math.min(base.h-v.h,Math.max(0,v.y));
+    svg.setAttribute("viewBox",`${v.x.toFixed(1)} ${v.y.toFixed(1)} ${v.w.toFixed(1)} ${v.h.toFixed(1)}`);
+    svg.style.touchAction=zoomed()?"none":"pan-y"; svg.classList.toggle("zoomed",zoomed());
+    $("zhint").textContent=zoomed()?`${(base.w/v.w).toFixed(1)}배 · 끌어서 이동`:"";
+  };
+  const zoomAt=(f,cx,cy)=>{v.x=cx-(cx-v.x)/f;v.y=cy-(cy-v.y)/f;v.w/=f;apply()};
+  const centerOf=()=>{const t=svg.querySelector("path.sel");if(t&&zoomed()===false){const bb=t.getBBox();return [bb.x+bb.width/2,bb.y+bb.height/2]}
+    if(t){const bb=t.getBBox(),cx=bb.x+bb.width/2,cy=bb.y+bb.height/2;if(cx>v.x&&cx<v.x+v.w&&cy>v.y&&cy<v.y+v.h)return [cx,cy]}
+    return [v.x+v.w/2,v.y+v.h/2]};
+  el.querySelectorAll("[data-z]").forEach(btn=>btn.onclick=()=>{
+    const z=btn.dataset.z;
+    if(z==="reset"){Object.assign(v,base);apply();return}
+    const [cx,cy]=centerOf(); zoomAt(z==="in"?1.8:1/1.8,cx,cy);
+  });
+  // 끌어서 이동, 두 손가락으로 확대·축소
+  const pts=new Map(); let start=null,moved=false;
+  const toSvg=(cx,cy)=>{const r=svg.getBoundingClientRect();return [v.x+(cx-r.left)/r.width*v.w,v.y+(cy-r.top)/r.height*v.h]};
+  svg.addEventListener("pointerdown",e=>{pts.set(e.pointerId,[e.clientX,e.clientY]);moved=false;
+    start={x:v.x,y:v.y,w:v.w,cx:e.clientX,cy:e.clientY,d:pts.size===2?Math.hypot(...[...pts.values()].reduce((a,p,i)=>i?[a[0]-p[0],a[1]-p[1]]:p,[0,0])):0}});
+  svg.addEventListener("pointermove",e=>{
+    if(!pts.has(e.pointerId)||!start)return; pts.set(e.pointerId,[e.clientX,e.clientY]);
+    const r=svg.getBoundingClientRect();
+    if(pts.size===2){const [p1,p2]=[...pts.values()],d=Math.hypot(p1[0]-p2[0],p1[1]-p2[1]);
+      if(!start.d){start.d=d;start.w=v.w;return}
+      const [cx,cy]=toSvg((p1[0]+p2[0])/2,(p1[1]+p2[1])/2),f=(start.w/v.w)*(d/start.d);
+      if(Math.abs(f-1)>.01){zoomAt(f,cx,cy);start.d=d;start.w=v.w}moved=true;return}
+    if(!zoomed())return;
+    const dx=e.clientX-start.cx,dy=e.clientY-start.cy;
+    if(!moved&&Math.hypot(dx,dy)<5)return;
+    if(!moved)svg.setPointerCapture(e.pointerId);
+    moved=true; v.x=start.x-dx/r.width*v.w; v.y=start.y-dy/r.height*v.h; apply();
+  });
+  const up=e=>{pts.delete(e.pointerId);if(!pts.size)start=null;else if(start)start.d=0};
+  svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
   const show=k=>{
     const r=byKey.get(k);
     side.innerHTML=r?`<div class="big">${esc(label(k))}</div><p>${n}곳 중 <b>${r.rank}위</b></p><div class="big">${pl(r.v)}</div><p>${info.unit&&info.unit.length>2?esc(info.unit):""}</p>`
@@ -610,8 +662,9 @@ async function drawMap(sgItems,sidoItems,info,sgName){
     el.querySelectorAll("path.sel").forEach(x=>x.classList.remove("sel"));
     const t=[...el.querySelectorAll("path")].find(x=>x.dataset.k===k); if(t) t.classList.add("sel");
   };
-  el.querySelectorAll("path").forEach(p=>{p.onmouseenter=()=>show(p.dataset.k);p.onclick=()=>show(p.dataset.k)});
-  side.innerHTML=`<p>${useSg?"시군구":"시도"} 단위 지도입니다. ${useSg?"":"이 지표는 시도 단위만 공표돼요. "}지역을 눌러보세요.</p>`;
+  el.querySelectorAll("path").forEach(p=>{p.onmouseenter=()=>{if(!start||!moved)show(p.dataset.k)};p.onclick=()=>{if(!moved)show(p.dataset.k)}});
+  side.innerHTML=`<p>${useSg?"시군구":"시도"} 단위 지도입니다. ${useSg?"":"이 지표는 시도 단위만 공표돼요. "}지역을 누르거나, + 버튼으로 확대해 보세요.</p>`;
+  apply();
 }
 </script>
 </body>
