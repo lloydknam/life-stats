@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>실험실2 · 소득자산 분석</title>
+<meta name="description" content="연령대별 가구 소득·자산의 연도별 변화 갭마인더 — 클사무관의 라이프 인덱스 실험실2">
+<meta name="theme-color" content="#f4f1eb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16191c" media="(prefers-color-scheme: dark)">
+<style>
+:root{color-scheme:light;--bg:#f4f1eb;--paper:#fbfaf6;--rule:#d9d4ca;--ink:#14181d;--ink-2:#4a4f55;--ink-3:#7c8086;--grid:#e2ddd3;--axis:#b5afa4;--head:#0f4c75;--main:#135f8c;--chip:#ece8e0}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){color-scheme:dark;--bg:#16191c;--paper:#1d2125;--rule:#2f3439;--ink:#eef0f2;--ink-2:#b8bdc3;--ink-3:#868b91;--grid:#262a2f;--axis:#454b52;--head:#8cc4ea;--main:#5aa9db;--chip:#23272b}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.5;padding:max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom))}
+main{max-width:760px;margin:0 auto}
+a.back{font-size:13px;color:var(--ink-2);text-decoration:none}
+.badge{display:inline-block;font-size:12px;font-weight:700;color:var(--ink-2);border:1px dashed var(--axis);padding:2px 8px;margin-top:10px}
+h1{font-size:28px;font-weight:800;letter-spacing:-.03em;margin:8px 0 4px;color:var(--head)}
+.sub{font-size:13px;color:var(--ink-2);margin:0 0 12px}
+.empty{border:1px dashed var(--axis);padding:28px 18px;text-align:center;color:var(--ink-2);font-size:14px;margin-top:12px}
+.empty b{color:var(--ink)}
+.bar{display:flex;align-items:center;gap:12px;margin:10px 0 4px;flex-wrap:wrap}
+button{font:inherit;font-size:14px;font-weight:700;background:var(--chip);color:var(--ink);border:1px solid var(--rule);padding:6px 14px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--main);outline-offset:2px}
+.yr{font-size:30px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;min-width:4.2ch}
+input[type=range]{flex:1;min-width:160px;accent-color:var(--main)}
+.wrap{position:relative;background:var(--paper);border:1px solid var(--rule);padding:6px 6px 0}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{fill:var(--ink-3);font-size:11px;font-family:inherit}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--ink-2);margin:10px 0 0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 8px;border-radius:4px;opacity:0;transition:opacity .1s;white-space:nowrap;z-index:2}
+.foot{font-size:12px;color:var(--ink-3);margin-top:16px;line-height:1.6;border-top:1px solid var(--rule);padding-top:10px}
+.foot p{margin:4px 0}
+.series{font-size:12px;color:var(--ink-2);margin-top:6px}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← 클사무관의 라이프 인덱스</a>
+  <h1>실험실2 · 소득자산 분석</h1>
+  <span class="badge">🧪 실험 중 · 비공식</span>
+  <p class="sub" style="margin-top:8px">연령대별 가구 평균 소득(가로)과 자산(세로)이 연도별로 어떻게 움직였는지 봅니다. 버블 크기 = 해당 연령대 가구 비중.</p>
+
+  <div id="root"></div>
+
+  <div class="foot" id="foot"></div>
+</main>
+<div class="tip" id="tip"></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const NS = "http://www.w3.org/2000/svg";
+const PALETTE = ["#2a78d6","#eb6834","#1baf7a","#eda100","#e87ba4","#8a63d2","#9c6b3f","#8a9a2b","#22a6b8","#3f51b5","#c2185b","#607d8b"];
+const DARK_PALETTE = ["#3987e5","#d95926","#199e70","#c98500","#d55181","#9a78e6","#b78452","#a3b23a","#2ab8cb","#7986cb","#e05a8a","#90a4ae"];
+const isDark = () => document.documentElement.getAttribute("data-theme") === "dark" ||
+  (matchMedia("(prefers-color-scheme: dark)").matches && document.documentElement.getAttribute("data-theme") !== "light");
+const colorOf = (i) => (isDark() ? DARK_PALETTE : PALETTE)[i % PALETTE.length];
+const fmtMan = (v) => v == null ? "–" : (v >= 10000 ? (v / 10000).toFixed(2) + "억" : Math.round(v).toLocaleString("ko-KR") + "만");
+const el = (tag, attrs = {}, parent) => {
+  const svgTags = ["svg", "g", "line", "circle", "text"];
+  const n = svgTags.includes(tag) ? document.createElementNS(NS, tag) : document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+  if (parent) parent.appendChild(n);
+  return n;
+};
+
+fetch("../data/household_age.json", { cache: "no-store" })
+  .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(init)
+  .catch(() => { $("#root").innerHTML = '<div class="empty"><b>데이터를 불러오지 못했습니다.</b></div>'; });
+
+function init(D) {
+  $("#foot").innerHTML = `<p>출처: ${D.source}</p><p>단위: ${D.unit}</p><p>${D.note}</p>`;
+  const groups = D.groups.filter((g) => Object.keys(g.data).length);
+  if (!groups.length) {
+    $("#root").innerHTML = '<div class="empty"><b>데이터 대기 중</b></div>';
+    return;
+  }
+  render(D, groups, D.years);
+}
+
+function render(D, groups, years) {
+  const root = $("#root");
+  const W = 720, H = 460, M = { l: 64, r: 16, t: 14, b: 42 };
+  const pw = W - M.l - M.r, ph = H - M.t - M.b;
+
+  const all = groups.flatMap((g) => Object.values(g.data));
+  const xMax = Math.max(...all.map((d) => d.income)) * 1.08;
+  const yMax = Math.max(...all.map((d) => d.asset)) * 1.08;
+  const hMax = Math.max(...all.map((d) => d.share || 0), 1);
+  const X = (v) => M.l + (v / xMax) * pw;
+  const Y = (v) => M.t + ph - (v / yMax) * ph;
+  const R = (h) => 7 + 30 * Math.sqrt((h || 0) / hMax);
+
+  const wrap = el("div", { class: "wrap" }, root);
+  const bar = el("div", { class: "bar" }, wrap);
+  const play = el("button", { type: "button", "aria-label": "재생" }, bar);
+  play.textContent = "▶ 재생";
+  const yr = el("div", { class: "yr", "aria-live": "polite" }, bar);
+  const rng = el("input", { type: "range", min: 0, max: years.length - 1, step: 1, "aria-label": "연도" }, bar);
+
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "연령대별 소득·자산 버블차트" }, wrap);
+  const gGrid = el("g", {}, svg), gAxis = el("g", {}, svg), gBub = el("g", {}, svg);
+  for (let i = 0; i <= 5; i++) {
+    const v = (yMax / 5) * i, y = Y(v);
+    el("line", { x1: M.l, x2: W - M.r, y1: y, y2: y, stroke: "var(--grid)" }, gGrid);
+    el("text", { x: M.l - 8, y: y + 4, "text-anchor": "end" }, gAxis).textContent = fmtMan(v);
+  }
+  for (let i = 0; i <= 6; i++) {
+    const v = (xMax / 6) * i, x = X(v);
+    el("line", { x1: x, x2: x, y1: M.t, y2: M.t + ph, stroke: "var(--grid)" }, gGrid);
+    el("text", { x, y: H - 18, "text-anchor": "middle" }, gAxis).textContent = fmtMan(v);
+  }
+  el("text", { x: M.l + pw / 2, y: H - 3, "text-anchor": "middle" }, gAxis).textContent = "평균 소득 (전년도 경상소득) →";
+  el("text", { x: 0, y: 0, transform: `translate(14 ${M.t + ph / 2}) rotate(-90)`, "text-anchor": "middle" }, gAxis).textContent = "평균 자산 →";
+
+  const legend = el("div", { class: "legend" }, wrap);
+  groups.forEach((g, i) => {
+    const item = el("span", {}, legend);
+    el("i", {}, item).style.background = colorOf(i);
+    item.appendChild(document.createTextNode(g.label));
+  });
+  const series = el("div", { class: "series" }, wrap);
+  series.textContent = "※ 2010~11년: 이전 시리즈(HF) · 2012~16년: 옛 10세 표 · 2017년부터 현행 표. 시리즈가 바뀌는 해 전후는 직접 비교에 주의.";
+
+  const tip = $("#tip");
+  const circles = groups.map((g, i) => {
+    const c = el("circle", { r: 0, fill: colorOf(i), "fill-opacity": 0.72, stroke: colorOf(i), "stroke-width": 1 }, gBub);
+    c.style.cursor = "pointer";
+    c.addEventListener("mouseenter", () => showTip(g, cur, c));
+    c.addEventListener("mouseleave", () => (tip.style.opacity = 0));
+    c.addEventListener("click", () => showTip(g, cur, c));
+    return c;
+  });
+
+  let cur = years.length - 1;
+  function showTip(g, idx) {
+    const d = g.data[years[idx]];
+    if (!d) { tip.style.opacity = 0; return; }
+    tip.innerHTML = `<b>${g.label}</b> · ${years[idx]}<br>소득 ${fmtMan(d.income)} · 자산 ${fmtMan(d.asset)}<br>가구 비중 ${d.share != null ? d.share.toFixed(1) + "%" : "–"}`;
+    const box = svg.getBoundingClientRect(), wb = wrap.getBoundingClientRect();
+    const sx = box.width / W;
+    tip.style.left = (box.left - wb.left + X(d.income) * sx + 12) + "px";
+    tip.style.top = (box.top - wb.top + Y(d.asset) * sx - 10) + "px";
+    tip.style.opacity = 1;
+  }
+
+  function draw(idx) {
+    cur = idx;
+    yr.textContent = years[idx];
+    rng.value = idx;
+    const y = years[idx];
+    groups.forEach((g, i) => {
+      const d = g.data[y];
+      const c = circles[i];
+      if (!d) { c.setAttribute("r", 0); return; }
+      c.setAttribute("cx", X(d.income));
+      c.setAttribute("cy", Y(d.asset));
+      c.setAttribute("r", R(d.share));
+    });
+  }
+
+  let timer = null;
+  const stop = () => { clearInterval(timer); timer = null; play.textContent = "▶ 재생"; };
+  const start = () => {
+    if (cur >= years.length - 1) draw(0);
+    play.textContent = "⏸ 일시정지";
+    timer = setInterval(() => {
+      if (cur >= years.length - 1) { stop(); return; }
+      draw(cur + 1);
+    }, 800);
+  };
+  play.addEventListener("click", () => (timer ? stop() : start()));
+  rng.min = 0; rng.max = years.length - 1; rng.step = 1; rng.value = years.length - 1;
+  rng.addEventListener("input", () => { stop(); draw(+rng.value); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") { stop(); draw(Math.max(0, cur - 1)); }
+    if (e.key === "ArrowRight") { stop(); draw(Math.min(years.length - 1, cur + 1)); }
+  });
+  draw(cur);
+}
+</script>
+</body>
+</html>
