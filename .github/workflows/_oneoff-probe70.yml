@@ -1,0 +1,26 @@
+name: _oneoff-probe70
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe
+        env:
+          KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
+        run: python scripts/_oneoff/probe70.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/probe70
+          git diff --staged --quiet || git commit -m "data: probe70 (oneoff)"
+          git pull --rebase -q origin main
+          git push -q origin HEAD:main
