@@ -1,186 +1,300 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>실험실2 · 소득자산 분석</title>
-<meta name="description" content="연령대별 가구 소득·자산의 연도별 변화 갭마인더 — 클사무관의 라이프 인덱스 실험실2">
-<meta name="theme-color" content="#f4f1eb" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#16191c" media="(prefers-color-scheme: dark)">
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>실험실2 · 소득·자산 분석 — 클사무관의 Global Stats</title>
+<meta name="description" content="연령대별 가구 평균 소득·자산의 연도별 변화 (KOSIS 가계금융복지조사, 2010–2025)">
+<link rel="icon" href="../assets/brand/favicon.svg"><link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png">
 <style>
-:root{color-scheme:light;--bg:#f4f1eb;--paper:#fbfaf6;--rule:#d9d4ca;--ink:#14181d;--ink-2:#4a4f55;--ink-3:#7c8086;--grid:#e2ddd3;--axis:#b5afa4;--head:#0f4c75;--main:#135f8c;--chip:#ece8e0}
-@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){color-scheme:dark;--bg:#16191c;--paper:#1d2125;--rule:#2f3439;--ink:#eef0f2;--ink-2:#b8bdc3;--ink-3:#868b91;--grid:#262a2f;--axis:#454b52;--head:#8cc4ea;--main:#5aa9db;--chip:#23272b}}
+:root{--bg:#eaf6f3;--fg:#1d2a3a;--mut:#4f5f6f;--line:#d9ece7;--card:#fff;--teal:#2bb8a0;--deep:#0f7a68;color-scheme:light}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink)}
-body{font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.5;padding:max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom))}
-main{max-width:760px;margin:0 auto}
-a.back{font-size:13px;color:var(--ink-2);text-decoration:none}
-.badge{display:inline-block;font-size:12px;font-weight:700;color:var(--ink-2);border:1px dashed var(--axis);padding:2px 8px;margin-top:10px}
-h1{font-size:28px;font-weight:800;letter-spacing:-.03em;margin:8px 0 4px;color:var(--head)}
-.sub{font-size:13px;color:var(--ink-2);margin:0 0 12px}
-.empty{border:1px dashed var(--axis);padding:28px 18px;text-align:center;color:var(--ink-2);font-size:14px;margin-top:12px}
-.empty b{color:var(--ink)}
-.bar{display:flex;align-items:center;gap:12px;margin:10px 0 4px;flex-wrap:wrap}
-button{font:inherit;font-size:14px;font-weight:700;background:var(--chip);color:var(--ink);border:1px solid var(--rule);padding:6px 14px;cursor:pointer}
-button:focus-visible,input:focus-visible{outline:2px solid var(--main);outline-offset:2px}
-.yr{font-size:30px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;min-width:4.2ch}
-input[type=range]{flex:1;min-width:160px;accent-color:var(--main)}
-.wrap{position:relative;background:var(--paper);border:1px solid var(--rule);padding:6px 6px 0}
-svg{display:block;width:100%;height:auto;overflow:visible}
-svg text{fill:var(--ink-3);font-size:11px;font-family:inherit}
-.legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--ink-2);margin:10px 0 0}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
-.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 8px;border-radius:4px;opacity:0;transition:opacity .1s;white-space:nowrap;z-index:2}
-.foot{font-size:12px;color:var(--ink-3);margin-top:16px;line-height:1.6;border-top:1px solid var(--rule);padding-top:10px}
-.foot p{margin:4px 0}
-.series{font-size:12px;color:var(--ink-2);margin-top:6px}
-</style>
-</head>
+body{margin:0;background:var(--bg);color:var(--fg);font:20px/1.5 -apple-system,"Noto Sans KR","Pretendard",sans-serif}
+a{color:inherit}
+.hd{background:#fff;border-bottom:2px solid var(--line);padding:12px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:5}
+.hd img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--teal)}
+.hd b{font-size:30px;font-weight:800;display:block;line-height:1.15}
+.hd b em{font-style:normal;color:var(--deep)}
+.hd span{color:var(--mut);font-size:16px}
+.hd a.back{margin-left:auto;font-size:16px;font-weight:700;color:var(--deep);text-decoration:none;border:2px solid var(--teal);border-radius:999px;padding:6px 14px;background:#fff;white-space:nowrap}
+.shell{display:flex;gap:22px;max-width:1500px;margin:0 auto;padding:20px 16px;align-items:flex-start}
+#nav{width:310px;flex:none;position:sticky;top:96px;background:#fff;border:3px solid var(--teal);border-radius:24px;padding:12px 10px}
+#nav h3{margin:14px 8px 6px;font-size:21px;font-weight:800;color:var(--deep)}
+#nav h3:first-child{margin-top:4px}
+#nav button{display:block;width:100%;text-align:left;font:inherit;font-size:19px;font-weight:600;padding:9px 14px;margin:2px 0;border:0;border-radius:12px;background:transparent;color:var(--fg);cursor:pointer}
+#nav button:hover{background:#e3f5f1}
+#nav button.on{background:var(--teal);color:#fff;font-weight:800;box-shadow:0 3px 10px rgba(43,184,160,.4)}
+#nav .note{font-size:14px;color:var(--mut);line-height:1.45;padding:6px 14px 4px}
+main{flex:1;min-width:0}
+.card{background:var(--card);border:6px solid var(--teal);border-radius:36px;padding:22px 28px 20px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+#big{font-size:64px;font-weight:800;line-height:1;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+#big small{display:block;font-size:18px;font-weight:600;color:var(--mut);letter-spacing:0}
+.ttl{text-align:right}
+.ttl h1{font-size:38px;margin:0;font-weight:800}
+.sub{color:var(--mut);font-size:17px}
+.chip{display:inline-block;background:#dff4ef;color:var(--deep);font-weight:800;font-size:17px;border-radius:999px;padding:3px 14px;margin-bottom:4px}
+.box{margin-top:6px;position:relative}
+#chart{width:100%;height:auto;display:block}
+.ax{fill:var(--mut);font-size:19px}
+.grid{stroke:var(--line);stroke-width:1.5}
+.axt{fill:var(--fg);font-weight:800;font-size:23px}
+circle.b{stroke:rgba(255,255,255,.7);stroke-width:1.5;cursor:pointer;transition:r .3s}
+circle.b.sel{stroke:var(--deep);stroke-width:4}
+.lab{font-size:19px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:4px}
+.stats{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:14px;flex-wrap:wrap}
+.stats .l{color:var(--mut);font-size:17px;font-weight:600}
+.stats .v{font-size:46px;font-weight:800;line-height:1.1}
+.v.t{color:var(--deep)}
+.r{text-align:right}
+.row{display:flex;align-items:center;gap:18px;margin-top:12px}
+#play{width:64px;height:64px;border-radius:50%;border:0;background:var(--teal);color:#fff;font-size:26px;cursor:pointer;flex:none}
+input[type=range]{flex:1;height:12px;accent-color:var(--teal)}
+#spd{display:flex;gap:5px;flex:none}
+#spd button{font:inherit;font-size:14px;font-weight:700;padding:4px 10px;border:2px solid var(--teal);border-radius:999px;background:#fff;color:var(--deep);cursor:pointer}
+#spd button.on{background:var(--teal);color:#fff}
+.leg{display:flex;gap:18px;flex-wrap:wrap;font-size:18px;color:var(--mut);margin-top:10px}
+.leg i{display:inline-block;width:16px;height:16px;border-radius:50%;margin-right:6px;vertical-align:-2px}
+#tip{position:fixed;pointer-events:none;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:6px 10px;font-size:15px;line-height:1.45;display:none;z-index:20}
+.src{font-size:15px;color:var(--mut);margin-top:10px;line-height:1.5}
+.warn{font-size:14px;color:#8a5a00;background:#fff7ec;border:1.5px solid #f4c58a;border-radius:12px;padding:8px 12px;margin-top:12px;line-height:1.5}
+footer{margin-top:18px;font-size:15px;color:var(--mut);text-align:center}
+footer a{color:inherit}
+footer img{height:48px;width:auto}
+#msg{color:var(--mut);padding:60px 10px;text-align:center}
+@media(max-width:900px){
+  .shell{display:block;padding:12px}
+  #nav{position:static;width:auto;margin-bottom:14px}
+  #nav h3{margin:8px 6px 4px;font-size:17px}
+  .hd b{font-size:22px}.hd span{display:none}.hd img{width:44px;height:44px}
+}
+@media(max-width:640px){
+  body{font-size:17px}
+  .card{padding:16px 14px 14px;border-width:4px;border-radius:26px}
+  #big{font-size:44px}
+  .ttl h1{font-size:24px}
+  .ax{font-size:12px}
+  .axt{font-size:15px}
+  .lab{font-size:13px;stroke-width:3px}
+  .stats .v{font-size:32px}
+  .hd{padding:10px 12px}
+  .hd b{font-size:17px;white-space:nowrap}
+  .hd a.back{font-size:14px;padding:5px 10px}
+  .leg{font-size:14px;gap:10px}
+  #spd button{font-size:12px;padding:3px 7px}
+}
+</style></head>
 <body>
-<main>
-  <a class="back" href="../">← 클사무관의 라이프 인덱스</a>
-  <h1>실험실2 · 소득자산 분석</h1>
-  <span class="badge">🧪 실험 중 · 비공식</span>
-  <p class="sub" style="margin-top:8px">연령대별 가구 평균 소득(가로)과 자산(세로)이 연도별로 어떻게 움직였는지 봅니다. 버블 크기 = 해당 연령대 가구 비중.</p>
+<header class="hd">
+  <img src="../assets/clerk.jpg" alt="클사무관">
+  <div><b>클사무관의 <em>Global Stats</em></b><span>실험실2 · 소득·자산 분석</span></div>
+  <a class="back" href="../">← 라이프 인덱스</a>
+</header>
 
-  <div id="root"></div>
+<div class="shell">
+  <nav id="nav" aria-label="실험실2 목록">
+    <h3>🧪 실험실2</h3>
+    <button type="button" class="on" aria-current="true">연령대별 소득·자산</button>
+    <div class="note">가구주 연령계층(10세) 기준 전가구 평균. 버블 위치 = 평균 소득(가로) · 평균 자산(세로), 크기 = 가구 비중.</div>
+  </nav>
 
-  <div class="foot" id="foot"></div>
-</main>
-<div class="tip" id="tip"></div>
+  <main>
+    <div class="card">
+      <div class="top">
+        <div id="big">—<small>기준 연도</small></div>
+        <div class="ttl">
+          <div class="chip">2010–2025 · KOSIS</div>
+          <h1>연령대별 소득 · 자산</h1>
+          <div class="sub">X: 평균 소득(전년도 경상소득) · Y: 평균 자산 · 크기: 가구 비중 · 색: 연령대</div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div id="msg" hidden></div>
+        <svg id="chart" viewBox="0 0 960 600" role="img" aria-label="연령대별 소득·자산 버블 차트">
+          <defs>
+            <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#14404a" flood-opacity=".25"/></filter>
+          </defs>
+          <g id="grid"></g>
+          <g id="axes"></g>
+          <g id="bubbles"></g>
+          <g id="labels"></g>
+        </svg>
+      </div>
+
+      <div class="stats">
+        <div><div class="l" id="l1">선택 연령대 평균 소득</div><div class="v" id="v1">—</div></div>
+        <div class="r"><div class="l" id="l2">선택 연령대 평균 자산</div><div class="v t" id="v2">—</div></div>
+      </div>
+
+      <div class="row">
+        <button id="play" type="button" aria-label="재생">▶</button>
+        <input id="yr" type="range" aria-label="연도">
+        <div id="spd" role="group" aria-label="재생 속도">
+          <button type="button" data-s="0.5">0.5×</button><button type="button" data-s="1" class="on">1×</button><button type="button" data-s="2">2×</button>
+        </div>
+      </div>
+
+      <div class="leg" id="leg"></div>
+
+      <div class="src" id="src"></div>
+      <div class="warn" id="warn"></div>
+    </div>
+
+    <footer>
+      <a href="https://github.com/lloydknam" target="_blank" rel="noopener"><img src="../assets/brand/lockup-light.svg" alt="Lloyd's Balcony Lab · with claude · GitHub(@lloydknam)"></a>
+    </footer>
+  </main>
+</div>
+
+<div id="tip"></div>
 
 <script>
-const $ = (s) => document.querySelector(s);
+const COL = { "29세 이하": "#9cc3f5", "30대": "#9edcb8", "40대": "#fbcf8f", "50대": "#f7a3b5", "60세 이상": "#c9b0ec" };
+const W = 960, H = 600, M = { l: 96, r: 20, t: 16, b: 62 };
+const pw = W - M.l - M.r, ph = H - M.t - M.b;
+const $ = (s) => document.getElementById(s);
 const NS = "http://www.w3.org/2000/svg";
-const PALETTE = ["#2a78d6","#eb6834","#1baf7a","#eda100","#e87ba4","#8a63d2","#9c6b3f","#8a9a2b","#22a6b8","#3f51b5","#c2185b","#607d8b"];
-const DARK_PALETTE = ["#3987e5","#d95926","#199e70","#c98500","#d55181","#9a78e6","#b78452","#a3b23a","#2ab8cb","#7986cb","#e05a8a","#90a4ae"];
-const isDark = () => document.documentElement.getAttribute("data-theme") === "dark" ||
-  (matchMedia("(prefers-color-scheme: dark)").matches && document.documentElement.getAttribute("data-theme") !== "light");
-const colorOf = (i) => (isDark() ? DARK_PALETTE : PALETTE)[i % PALETTE.length];
 const fmtMan = (v) => v == null ? "–" : (v >= 10000 ? (v / 10000).toFixed(2) + "억" : Math.round(v).toLocaleString("ko-KR") + "만");
 const el = (tag, attrs = {}, parent) => {
-  const svgTags = ["svg", "g", "line", "circle", "text"];
-  const n = svgTags.includes(tag) ? document.createElementNS(NS, tag) : document.createElement(tag);
+  const n = document.createElementNS(NS, tag);
   for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
   if (parent) parent.appendChild(n);
   return n;
 };
 
+let D = null, years = [], groups = [], cur = 0, sel = 0, timer = null, speed = 1, X, Y, R, circles = [], labelEls = [], hMax = 1, xMax = 1, yMax = 1;
+
 fetch("../data/household_age.json", { cache: "no-store" })
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(init)
-  .catch(() => { $("#root").innerHTML = '<div class="empty"><b>데이터를 불러오지 못했습니다.</b></div>'; });
+  .catch(() => { $("msg").hidden = false; $("msg").textContent = "데이터를 불러오지 못했습니다."; });
 
-function init(D) {
-  $("#foot").innerHTML = `<p>출처: ${D.source}</p><p>단위: ${D.unit}</p><p>${D.note}</p>`;
-  const groups = D.groups.filter((g) => Object.keys(g.data).length);
-  if (!groups.length) {
-    $("#root").innerHTML = '<div class="empty"><b>데이터 대기 중</b></div>';
-    return;
-  }
-  render(D, groups, D.years);
+function init(data) {
+  D = data;
+  years = data.years;
+  groups = data.groups.filter((g) => Object.keys(g.data).length);
+  const all = groups.flatMap((g) => Object.values(g.data));
+  xMax = Math.max(...all.map((d) => d.income)) * 1.08;
+  yMax = Math.max(...all.map((d) => d.asset)) * 1.08;
+  hMax = Math.max(...all.map((d) => d.share || 0), 1);
+  X = (v) => M.l + (v / xMax) * pw;
+  Y = (v) => M.t + ph - (v / yMax) * ph;
+  R = (h) => 14 + 52 * Math.sqrt((h || 0) / hMax);
+
+  drawAxes();
+  buildNav();
+  buildLegend();
+  buildBubbles();
+  $("src").textContent = `출처: ${data.source} · 단위: ${data.unit}`;
+  $("warn").textContent = "⚠️ " + data.note + " 2010~11년 연령 구간 '30세 미만'은 '29세 이하'로 맞췄습니다.";
+  const yr = $("yr");
+  yr.min = 0; yr.max = years.length - 1; yr.step = 1; yr.value = years.length - 1;
+  yr.addEventListener("input", () => { stop(); draw(+yr.value); });
+  cur = years.length - 1;
+  draw(cur);
+  bindControls();
 }
 
-function render(D, groups, years) {
-  const root = $("#root");
-  const W = 720, H = 460, M = { l: 64, r: 16, t: 14, b: 42 };
-  const pw = W - M.l - M.r, ph = H - M.t - M.b;
-
-  const all = groups.flatMap((g) => Object.values(g.data));
-  const xMax = Math.max(...all.map((d) => d.income)) * 1.08;
-  const yMax = Math.max(...all.map((d) => d.asset)) * 1.08;
-  const hMax = Math.max(...all.map((d) => d.share || 0), 1);
-  const X = (v) => M.l + (v / xMax) * pw;
-  const Y = (v) => M.t + ph - (v / yMax) * ph;
-  const R = (h) => 7 + 30 * Math.sqrt((h || 0) / hMax);
-
-  const wrap = el("div", { class: "wrap" }, root);
-  const bar = el("div", { class: "bar" }, wrap);
-  const play = el("button", { type: "button", "aria-label": "재생" }, bar);
-  play.textContent = "▶ 재생";
-  const yr = el("div", { class: "yr", "aria-live": "polite" }, bar);
-  const rng = el("input", { type: "range", min: 0, max: years.length - 1, step: 1, "aria-label": "연도" }, bar);
-
-  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "연령대별 소득·자산 버블차트" }, wrap);
-  const gGrid = el("g", {}, svg), gAxis = el("g", {}, svg), gBub = el("g", {}, svg);
+function drawAxes() {
+  const grid = $("grid"), axes = $("axes");
   for (let i = 0; i <= 5; i++) {
     const v = (yMax / 5) * i, y = Y(v);
-    el("line", { x1: M.l, x2: W - M.r, y1: y, y2: y, stroke: "var(--grid)" }, gGrid);
-    el("text", { x: M.l - 8, y: y + 4, "text-anchor": "end" }, gAxis).textContent = fmtMan(v);
+    el("line", { x1: M.l, x2: W - M.r, y1: y, y2: y, class: "grid" }, grid);
+    el("text", { x: M.l - 10, y: y + 6, "text-anchor": "end", class: "ax" }, axes).textContent = fmtMan(v);
   }
   for (let i = 0; i <= 6; i++) {
     const v = (xMax / 6) * i, x = X(v);
-    el("line", { x1: x, x2: x, y1: M.t, y2: M.t + ph, stroke: "var(--grid)" }, gGrid);
-    el("text", { x, y: H - 18, "text-anchor": "middle" }, gAxis).textContent = fmtMan(v);
+    el("line", { x1: x, x2: x, y1: M.t, y2: M.t + ph, class: "grid" }, grid);
+    el("text", { x, y: H - 30, "text-anchor": "middle", class: "ax" }, axes).textContent = fmtMan(v);
   }
-  el("text", { x: M.l + pw / 2, y: H - 3, "text-anchor": "middle" }, gAxis).textContent = "평균 소득 (전년도 경상소득) →";
-  el("text", { x: 0, y: 0, transform: `translate(14 ${M.t + ph / 2}) rotate(-90)`, "text-anchor": "middle" }, gAxis).textContent = "평균 자산 →";
+  el("text", { x: M.l + pw / 2, y: H - 4, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 소득 <tspan class="p">(전년도 경상소득)</tspan> →`;
+  el("text", { x: 22, y: M.t + ph / 2, transform: `rotate(-90 22 ${M.t + ph / 2})`, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 자산 <tspan class="p">→</tspan>`;
+}
 
-  const legend = el("div", { class: "legend" }, wrap);
-  groups.forEach((g, i) => {
-    const item = el("span", {}, legend);
-    el("i", {}, item).style.background = colorOf(i);
-    item.appendChild(document.createTextNode(g.label));
+function buildNav() {}
+
+function buildLegend() {
+  const leg = $("leg");
+  groups.forEach((g) => {
+    const s = document.createElement("span");
+    const i = document.createElement("i");
+    i.style.background = COL[g.label] || "#ccc";
+    s.appendChild(i);
+    s.appendChild(document.createTextNode(g.label));
+    leg.appendChild(s);
   });
-  const series = el("div", { class: "series" }, wrap);
-  series.textContent = "※ 2010~11년: 이전 시리즈(HF) · 2012~16년: 옛 10세 표 · 2017년부터 현행 표. 시리즈가 바뀌는 해 전후는 직접 비교에 주의.";
+}
 
-  const tip = $("#tip");
-  const circles = groups.map((g, i) => {
-    const c = el("circle", { r: 0, fill: colorOf(i), "fill-opacity": 0.72, stroke: colorOf(i), "stroke-width": 1 }, gBub);
-    c.style.cursor = "pointer";
-    c.addEventListener("mouseenter", () => showTip(g, cur, c));
-    c.addEventListener("mouseleave", () => (tip.style.opacity = 0));
-    c.addEventListener("click", () => showTip(g, cur, c));
+function buildBubbles() {
+  const bg = $("bubbles"), lg = $("labels");
+  circles = groups.map((g, i) => {
+    const c = el("circle", { r: 0, fill: COL[g.label] || "#ccc", class: "b", filter: "url(#sh)" }, bg);
+    c.addEventListener("mouseenter", (e) => showTip(i, e));
+    c.addEventListener("mousemove", (e) => moveTip(e));
+    c.addEventListener("mouseleave", () => ($("tip").style.display = "none"));
+    c.addEventListener("click", () => { sel = i; draw(cur); });
     return c;
   });
+  labelEls = groups.map((g) => el("text", { class: "lab", "text-anchor": "middle" }, lg));
+}
 
-  let cur = years.length - 1;
-  function showTip(g, idx) {
-    const d = g.data[years[idx]];
-    if (!d) { tip.style.opacity = 0; return; }
-    tip.innerHTML = `<b>${g.label}</b> · ${years[idx]}<br>소득 ${fmtMan(d.income)} · 자산 ${fmtMan(d.asset)}<br>가구 비중 ${d.share != null ? d.share.toFixed(1) + "%" : "–"}`;
-    const box = svg.getBoundingClientRect(), wb = wrap.getBoundingClientRect();
-    const sx = box.width / W;
-    tip.style.left = (box.left - wb.left + X(d.income) * sx + 12) + "px";
-    tip.style.top = (box.top - wb.top + Y(d.asset) * sx - 10) + "px";
-    tip.style.opacity = 1;
-  }
+function draw(idx) {
+  cur = idx;
+  const y = years[idx];
+  $("big").firstChild.nodeValue = y;
+  $("yr").value = idx;
+  groups.forEach((g, i) => {
+    const d = g.data[y], c = circles[i], t = labelEls[i];
+    if (!d) { c.setAttribute("r", 0); t.textContent = ""; return; }
+    const cx = X(d.income), cy = Y(d.asset), r = R(d.share);
+    c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", r);
+    c.classList.toggle("sel", i === sel);
+    t.setAttribute("x", cx); t.setAttribute("y", cy + 6); t.textContent = g.label;
+  });
+  const g = groups[sel], d = g && g.data[y];
+  $("l1").textContent = `${g ? g.label : ""} 평균 소득 (${y})`;
+  $("l2").textContent = `${g ? g.label : ""} 평균 자산 (${y})`;
+  $("v1").textContent = d ? fmtMan(d.income) : "–";
+  $("v2").textContent = d ? fmtMan(d.asset) : "–";
+}
 
-  function draw(idx) {
-    cur = idx;
-    yr.textContent = years[idx];
-    rng.value = idx;
-    const y = years[idx];
-    groups.forEach((g, i) => {
-      const d = g.data[y];
-      const c = circles[i];
-      if (!d) { c.setAttribute("r", 0); return; }
-      c.setAttribute("cx", X(d.income));
-      c.setAttribute("cy", Y(d.asset));
-      c.setAttribute("r", R(d.share));
-    });
-  }
+function showTip(i, e) {
+  const g = groups[i], d = g.data[years[cur]];
+  if (!d) return;
+  const tip = $("tip");
+  tip.innerHTML = `<b>${g.label}</b> · ${years[cur]}<br>소득 ${fmtMan(d.income)} · 자산 ${fmtMan(d.asset)}<br>가구 비중 ${d.share != null ? d.share.toFixed(1) + "%" : "–"}`;
+  tip.style.display = "block";
+  moveTip(e);
+}
+function moveTip(e) {
+  const tip = $("tip");
+  tip.style.left = (e.clientX + 14) + "px";
+  tip.style.top = (e.clientY + 12) + "px";
+}
 
-  let timer = null;
-  const stop = () => { clearInterval(timer); timer = null; play.textContent = "▶ 재생"; };
-  const start = () => {
-    if (cur >= years.length - 1) draw(0);
-    play.textContent = "⏸ 일시정지";
-    timer = setInterval(() => {
-      if (cur >= years.length - 1) { stop(); return; }
-      draw(cur + 1);
-    }, 800);
+function stop() {
+  clearInterval(timer); timer = null;
+  $("play").textContent = "▶";
+}
+function start() {
+  if (cur >= years.length - 1) draw(0);
+  $("play").textContent = "⏸";
+  const step = () => {
+    if (cur >= years.length - 1) { stop(); return; }
+    draw(cur + 1);
   };
-  play.addEventListener("click", () => (timer ? stop() : start()));
-  rng.min = 0; rng.max = years.length - 1; rng.step = 1; rng.value = years.length - 1;
-  rng.addEventListener("input", () => { stop(); draw(+rng.value); });
+  timer = setInterval(step, Math.round(1000 / speed));
+}
+
+function bindControls() {
+  $("play").addEventListener("click", () => (timer ? stop() : start()));
+  document.querySelectorAll("#spd button").forEach((b) => b.addEventListener("click", () => {
+    speed = +b.dataset.s;
+    document.querySelectorAll("#spd button").forEach((x) => x.classList.toggle("on", x === b));
+    if (timer) { stop(); start(); }
+  }));
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") { stop(); draw(Math.max(0, cur - 1)); }
     if (e.key === "ArrowRight") { stop(); draw(Math.min(years.length - 1, cur + 1)); }
   });
-  draw(cur);
 }
 </script>
-</body>
-</html>
+</body></html>
