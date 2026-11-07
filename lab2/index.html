@@ -25,9 +25,7 @@ a{color:inherit}
 main{flex:1;min-width:0}
 .card{background:var(--card);border:6px solid var(--teal);border-radius:36px;padding:22px 28px 20px}
 .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-#big{font-size:64px;font-weight:800;line-height:1;letter-spacing:-1px;font-variant-numeric:tabular-nums}
-#big small{display:block;font-size:18px;font-weight:600;color:var(--mut);letter-spacing:0}
-.ttl{text-align:right}
+.ttl{text-align:right;margin-left:auto}
 .ttl h1{font-size:38px;margin:0;font-weight:800}
 .sub{color:var(--mut);font-size:17px}
 .chip{display:inline-block;background:#dff4ef;color:var(--deep);font-weight:800;font-size:17px;border-radius:999px;padding:3px 14px;margin-bottom:4px}
@@ -36,6 +34,7 @@ main{flex:1;min-width:0}
 .ax{fill:var(--mut);font-size:19px}
 .grid{stroke:var(--line);stroke-width:1.5}
 .axt{fill:var(--fg);font-weight:800;font-size:23px}
+#yearbig{font-size:170px;font-weight:800;fill:#bfe9e0;pointer-events:none;font-variant-numeric:tabular-nums;letter-spacing:-4px}
 circle.b{stroke:rgba(255,255,255,.7);stroke-width:1.5;cursor:pointer;transition:r .3s}
 circle.b.sel{stroke:var(--deep);stroke-width:4}
 .lab{font-size:19px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:4px}
@@ -98,7 +97,6 @@ footer img{height:48px;width:auto}
   <main>
     <div class="card">
       <div class="top">
-        <div id="big">—<small>기준 연도</small></div>
         <div class="ttl">
           <div class="chip">2010–2025 · KOSIS</div>
           <h1>연령대별 소득 · 자산</h1>
@@ -114,6 +112,7 @@ footer img{height:48px;width:auto}
           </defs>
           <g id="grid"></g>
           <g id="axes"></g>
+          <text id="yearbig" x="0" y="0" text-anchor="end"></text>
           <g id="bubbles"></g>
           <g id="labels"></g>
         </svg>
@@ -172,8 +171,8 @@ function init(data) {
   years = data.years;
   groups = data.groups.filter((g) => Object.keys(g.data).length);
   const all = groups.flatMap((g) => Object.values(g.data));
-  xMax = Math.max(...all.map((d) => d.income)) * 1.08;
-  yMax = Math.max(...all.map((d) => d.asset)) * 1.08;
+  xMax = Math.ceil(Math.max(...all.map((d) => d.income)) * 1.08 / 2000) * 2000;
+  yMax = Math.ceil(Math.max(...all.map((d) => d.asset)) * 1.08 / 10000) * 10000;
   hMax = Math.max(...all.map((d) => d.share || 0), 1);
   X = (v) => M.l + (v / xMax) * pw;
   Y = (v) => M.t + ph - (v / yMax) * ph;
@@ -195,18 +194,24 @@ function init(data) {
 
 function drawAxes() {
   const grid = $("grid"), axes = $("axes");
-  for (let i = 0; i <= 5; i++) {
-    const v = (yMax / 5) * i, y = Y(v);
+  // Y: 1억원(10,000만원) 단위 정수 라벨
+  for (let v = 0; v <= yMax + 1e-9; v += 10000) {
+    const y = Y(v), n = v / 10000;
     el("line", { x1: M.l, x2: W - M.r, y1: y, y2: y, class: "grid" }, grid);
-    el("text", { x: M.l - 10, y: y + 6, "text-anchor": "end", class: "ax" }, axes).textContent = fmtMan(v);
+    el("text", { x: M.l - 10, y: y + 6, "text-anchor": "end", class: "ax" }, axes).textContent = n === 0 ? "0" : n + "억원";
   }
-  for (let i = 0; i <= 6; i++) {
-    const v = (xMax / 6) * i, x = X(v);
+  // X: 2,000만원 단위
+  for (let v = 0; v <= xMax + 1e-9; v += 2000) {
+    const x = X(v);
     el("line", { x1: x, x2: x, y1: M.t, y2: M.t + ph, class: "grid" }, grid);
-    el("text", { x, y: H - 30, "text-anchor": "middle", class: "ax" }, axes).textContent = fmtMan(v);
+    el("text", { x, y: H - 30, "text-anchor": "middle", class: "ax" }, axes).textContent = v === 0 ? "0" : v.toLocaleString("ko-KR") + "만원";
   }
   el("text", { x: M.l + pw / 2, y: H - 4, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 소득 <tspan class="p">(전년도 경상소득)</tspan> →`;
   el("text", { x: 22, y: M.t + ph / 2, transform: `rotate(-90 22 ${M.t + ph / 2})`, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 자산 <tspan class="p">→</tspan>`;
+  // 연도: 그래프 우측 하단 (draw에서 텍스트 갱신)
+  const yb = $("yearbig");
+  yb.setAttribute("x", W - M.r - 16);
+  yb.setAttribute("y", M.t + ph - 18);
 }
 
 function buildNav() {}
@@ -239,7 +244,7 @@ function buildBubbles() {
 function draw(idx) {
   cur = idx;
   const y = years[idx];
-  $("big").firstChild.nodeValue = y;
+  $("yearbig").textContent = y;
   $("yr").value = idx;
   groups.forEach((g, i) => {
     const d = g.data[y], c = circles[i], t = labelEls[i];
