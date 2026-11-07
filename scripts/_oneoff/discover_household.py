@@ -1,4 +1,4 @@
-"""일회성: 가계금융복지조사 표 탐색 + 메타 덤프 → out/ 에 원본 JSON 저장 (artifact로 업로드)."""
+"""일회성: 가구주연령계층별(10세) 자산·부채·소득 표 메타 + 전체 데이터 덤프 → out/."""
 import json, os, pathlib, urllib.parse, urllib.request, time
 
 KEY = os.environ["KOSIS_API_KEY"]
@@ -7,6 +7,7 @@ OUT = pathlib.Path("out"); OUT.mkdir(exist_ok=True)
 def get(base, **q):
     q.update({"apiKey": KEY, "format": "json", "jsonVD": "Y"})
     url = base + "?" + urllib.parse.urlencode(q)
+    err = ""
     for a in range(3):
         try:
             with urllib.request.urlopen(url, timeout=90) as r:
@@ -15,21 +16,16 @@ def get(base, **q):
             err = str(e); time.sleep(2 * (a + 1))
     return {"err": err}
 
-SEARCH = "https://kosis.kr/openapi/statisticsSearch.do"
 META = "https://kosis.kr/openapi/statisticsData.do"
+DATA = "https://kosis.kr/openapi/Param/statisticsParameterData.do"
+TBL = "DT_1HDAAA06"
 
-hits = {}
-for kw in ["가계금융복지조사", "가구주 연령 자산", "가구주 연령 소득", "가구 자산 부채 연령", "가계금융 복지 소득 연령별"]:
-    res = get(SEARCH, method="getList", vwCd="MT_ZTITLE", searchNm=kw)
-    hits[kw] = res
-json.dump(hits, open(OUT / "search.json", "w"), ensure_ascii=False, indent=1)
+for typ in ["OBJ", "ITM", "PRD"]:
+    res = get(META, method="getMeta", type=typ, orgId="101", tblId=TBL)
+    json.dump(res, open(OUT / f"meta_{TBL}_{typ}.json", "w"), ensure_ascii=False, indent=1)
 
-# 알려진 후보 표의 메타(분류·항목·수록기간)
-for tbl in ["DT_1HDAAD01"]:
-    for typ in ["OBJ", "ITM", "PRD"]:
-        if typ == "PRD":
-            res = get(META, method="getMeta", type="PRD", orgId="101", tblId=tbl)
-        else:
-            res = get(META, method="getMeta", type=typ, orgId="101", tblId=tbl)
-        json.dump(res, open(OUT / f"meta_{tbl}_{typ}.json", "w"), ensure_ascii=False, indent=1)
-print("done", list(hits.keys()))
+# 전체 데이터: 항목·분류 ALL, 연 단위 2017~2025
+res = get(DATA, method="getList", orgId="101", tblId=TBL, itmId="ALL", objL1="ALL", objL2="ALL",
+          objL3="ALL", prdSe="Y", startPrdDe="2017", endPrdDe="2025", newEstPrdCnt="")
+json.dump(res, open(OUT / f"data_{TBL}_all.json", "w"), ensure_ascii=False, indent=1)
+print("done")
