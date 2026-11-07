@@ -6,27 +6,29 @@
 <style>
 :root{--bg:#eaf6f3;--fg:#1d2a3a;--mut:#4f5f6f;--line:#d9ece7;--card:#fff;--teal:#2bb8a0;--deep:#0f7a68;color-scheme:light}
 *{box-sizing:border-box}
+html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:20px/1.5 -apple-system,"Noto Sans KR","Pretendard",sans-serif}
 a{color:inherit}
 .hd{background:#fff;border-bottom:2px solid var(--line);padding:12px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:5}
-.hd img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--teal)}
-.hd b{font-size:30px;font-weight:800;display:block;line-height:1.15}
+.hd img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--teal);flex:none}
+.hd>div{min-width:0}
+.hd b{font-size:30px;font-weight:800;display:block;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hd b em{font-style:normal;color:var(--deep)}
 .hd span{color:var(--mut);font-size:16px}
-.hd a.back{margin-left:auto;font-size:16px;font-weight:700;color:var(--deep);text-decoration:none;border:2px solid var(--teal);border-radius:999px;padding:6px 14px;background:#fff;white-space:nowrap}
+.hd a.back{margin-left:auto;flex:none;font-size:16px;font-weight:700;color:var(--deep);text-decoration:none;border:2px solid var(--teal);border-radius:999px;padding:6px 14px;background:#fff;white-space:nowrap}
+.hd a.back .s{display:none}
 .shell{display:flex;gap:22px;max-width:1500px;margin:0 auto;padding:20px 16px;align-items:flex-start}
 #nav{width:310px;flex:none;position:sticky;top:96px;background:#fff;border:3px solid var(--teal);border-radius:24px;padding:12px 10px}
-#nav h3{margin:14px 8px 6px;font-size:21px;font-weight:800;color:var(--deep)}
-#nav h3:first-child{margin-top:4px}
+#nav h3{margin:4px 8px 6px;font-size:21px;font-weight:800;color:var(--deep)}
 #nav button{display:block;width:100%;text-align:left;font:inherit;font-size:19px;font-weight:600;padding:9px 14px;margin:2px 0;border:0;border-radius:12px;background:transparent;color:var(--fg);cursor:pointer}
 #nav button:hover{background:#e3f5f1}
 #nav button.on{background:var(--teal);color:#fff;font-weight:800;box-shadow:0 3px 10px rgba(43,184,160,.4)}
 #nav .note{font-size:14px;color:var(--mut);line-height:1.45;padding:6px 14px 4px}
 main{flex:1;min-width:0}
 .card{background:var(--card);border:6px solid var(--teal);border-radius:36px;padding:22px 28px 20px}
-.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.ttl{text-align:right;margin-left:auto}
-.ttl h1{font-size:38px;margin:0;font-weight:800}
+.top{display:flex;justify-content:flex-end}
+.ttl{text-align:right}
+.ttl h1{font-size:38px;margin:0;font-weight:800;line-height:1.2}
 .sub{color:var(--mut);font-size:17px}
 .chip{display:inline-block;background:#dff4ef;color:var(--deep);font-weight:800;font-size:17px;border-radius:999px;padding:3px 14px;margin-bottom:4px}
 .box{margin-top:6px;position:relative}
@@ -35,19 +37,19 @@ main{flex:1;min-width:0}
 .grid{stroke:var(--line);stroke-width:1.5}
 .minor{stroke:var(--line);stroke-width:.8;opacity:.8}
 .axt{fill:var(--fg);font-weight:800;font-size:23px}
+.axt .p{font-weight:500;font-size:.7em;fill:var(--mut)}
 #yearbig{font-size:170px;font-weight:800;fill:#bfe9e0;pointer-events:none;font-variant-numeric:tabular-nums;letter-spacing:-4px}
 circle.b{stroke-width:1.5;cursor:pointer}
-.bsz{font-size:13px;font-weight:700;fill:var(--mut);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:3px}
-
 .lab{font-size:19px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:4px}
-.stats{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:14px;flex-wrap:wrap}
+.bsz{font-size:13px;font-weight:700;fill:var(--mut);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:3px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;align-items:end}
 .stats .l{color:var(--mut);font-size:17px;font-weight:600}
-.stats .v{font-size:46px;font-weight:800;line-height:1.1}
+.stats .v{font-size:46px;font-weight:800;line-height:1.1;white-space:nowrap}
 .v.t{color:var(--deep)}
 .r{text-align:right}
 .row{display:flex;align-items:center;gap:18px;margin-top:12px}
 #play{width:64px;height:64px;border-radius:50%;border:0;background:var(--teal);color:#fff;font-size:26px;cursor:pointer;flex:none}
-input[type=range]{flex:1;height:12px;accent-color:var(--teal)}
+input[type=range]{flex:1;min-width:0;height:12px;accent-color:var(--teal)}
 #spd{display:flex;gap:5px;flex:none}
 #spd button{font:inherit;font-size:14px;font-weight:700;padding:4px 10px;border:2px solid var(--teal);border-radius:999px;background:#fff;color:var(--deep);cursor:pointer}
 #spd button.on{background:var(--teal);color:#fff}
@@ -57,36 +59,59 @@ input[type=range]{flex:1;height:12px;accent-color:var(--teal)}
 .src{font-size:15px;color:var(--mut);margin-top:10px;line-height:1.5}
 .warn{font-size:14px;color:#8a5a00;background:#fff7ec;border:1.5px solid #f4c58a;border-radius:12px;padding:8px 12px;margin-top:12px;line-height:1.5}
 footer{margin-top:18px;font-size:15px;color:var(--mut);text-align:center}
-footer a{color:inherit}
-footer img{height:48px;width:auto}
+footer img{height:48px;width:auto;max-width:100%}
 #msg{color:var(--mut);padding:60px 10px;text-align:center}
+
+/* 태블릿 */
 @media(max-width:900px){
   .shell{display:block;padding:12px}
-  #nav{position:static;width:auto;margin-bottom:14px}
-  #nav h3{margin:8px 6px 4px;font-size:17px}
+  #nav{position:static;width:auto;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;border-width:2px;border-radius:18px}
+  #nav h3{margin:0 4px;font-size:16px}
+  #nav button{width:auto;font-size:15px;padding:5px 12px;margin:0}
+  #nav .note{display:none}
+  .hd{padding:10px 16px}
   .hd b{font-size:22px}.hd span{display:none}.hd img{width:44px;height:44px}
 }
+/* 모바일: 별도 크기 */
 @media(max-width:640px){
-  body{font-size:17px}
-  .card{padding:16px 14px 14px;border-width:4px;border-radius:26px}
-  #big{font-size:44px}
-  .ttl h1{font-size:24px}
-  .ax{font-size:12px}
-  .axt{font-size:15px}
-  .lab{font-size:13px;stroke-width:3px}
-  .stats .v{font-size:32px}
-  .hd{padding:10px 12px}
-  .hd b{font-size:17px;white-space:nowrap}
-  .hd a.back{font-size:14px;padding:5px 10px}
-  .leg{font-size:14px;gap:10px}
-  #spd button{font-size:12px;padding:3px 7px}
+  body{font-size:15px}
+  .hd{padding:8px 10px;gap:8px}
+  .hd img{width:34px;height:34px;border-width:2px}
+  .hd b{font-size:clamp(14px,4.4vw,18px)}
+  .hd a.back{font-size:13px;padding:4px 10px;border-width:1.5px}
+  .hd a.back .l{display:none}.hd a.back .s{display:inline}
+  .shell{padding:8px}
+  .card{padding:12px 10px 12px;border-width:3px;border-radius:20px}
+  .top{justify-content:flex-start}
+  .ttl{text-align:left}
+  .chip{font-size:12px;padding:1px 10px;margin-bottom:2px}
+  .ttl h1{font-size:20px}
+  .sub{font-size:12px;line-height:1.4}
+  .ax{font-size:10.5px}
+  .axt{font-size:12px}
+  #yearbig{font-size:64px;letter-spacing:-2px}
+  .lab{font-size:11px;stroke-width:3px}
+  .bsz{font-size:9.5px;stroke-width:2.5px}
+  .stats{gap:8px;margin-top:10px}
+  .stats .l{font-size:12px;line-height:1.3}
+  .stats .v{font-size:24px}
+  .row{gap:8px;margin-top:10px}
+  #play{width:42px;height:42px;font-size:17px}
+  #spd{gap:3px}
+  #spd button{font-size:11.5px;padding:2px 7px;border-width:1.5px}
+  .leg{font-size:12.5px;gap:4px 12px;margin-top:8px}
+  .leg i{width:11px;height:11px;margin-right:4px;vertical-align:-1px}
+  .src{font-size:11.5px}
+  .warn{font-size:11.5px;padding:6px 9px;border-radius:10px}
+  footer img{height:36px}
+  #tip{font-size:12px;padding:4px 8px;border-radius:10px}
 }
 </style></head>
 <body>
 <header class="hd">
   <img src="../assets/clerk.jpg" alt="클사무관">
   <div><b>클사무관의 <em>Global Stats</em></b><span>실험실2 · 소득·자산 분석</span></div>
-  <a class="back" href="../">← 라이프 인덱스</a>
+  <a class="back" href="../" aria-label="라이프 인덱스로 돌아가기"><span class="l">← 라이프 인덱스</span><span class="s">← 홈</span></a>
 </header>
 
 <div class="shell">
@@ -109,9 +134,6 @@ footer img{height:48px;width:auto}
       <div class="box">
         <div id="msg" hidden></div>
         <svg id="chart" viewBox="0 0 960 600" role="img" aria-label="연령대별 소득·자산 버블 차트">
-          <defs>
-            <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#14404a" flood-opacity=".25"/></filter>
-          </defs>
           <g id="grid"></g>
           <g id="axes"></g>
           <text id="yearbig" x="0" y="0" text-anchor="end"></text>
@@ -149,8 +171,6 @@ footer img{height:48px;width:auto}
 
 <script>
 const COL = { "20대 이하": "#a9cdf7", "30대": "#a8e3c8", "40대": "#fde0a8", "50대": "#f9b8c8", "60세 이상": "#d8c4f4" };
-const W = 960, H = 600, M = { l: 96, r: 20, t: 16, b: 62 };
-const pw = W - M.l - M.r, ph = H - M.t - M.b;
 const $ = (s) => document.getElementById(s);
 const NS = "http://www.w3.org/2000/svg";
 const fmtMan = (v) => v == null ? "–" : (v >= 10000 ? (v / 10000).toFixed(2) + "억" : Math.round(v).toLocaleString("ko-KR") + "만");
@@ -163,6 +183,7 @@ const el = (tag, attrs = {}, parent) => {
 const lerp = (a, b, t) => a + (b - a) * t;
 
 let D = null, years = [], groups = [], pos = 0, sel = 0, raf = null, playing = false, speed = 1;
+let MOB = false, W = 960, H = 600, M = { l: 96, r: 20, t: 16, b: 62 }, pw = 0, ph = 0;
 let X, Y, R, xMax = 1, yMax = 1, hMax = 1, circles = [], labelEls = [], shareEls = [];
 
 fetch("../data/household_age.json", { cache: "no-store" })
@@ -178,51 +199,82 @@ function init(data) {
   xMax = Math.ceil(Math.max(...all.map((d) => d.income)) * 1.08 / 2000) * 2000;
   yMax = Math.ceil(Math.max(...all.map((d) => d.asset)) * 1.08 / 10000) * 10000;
   hMax = Math.max(...all.map((d) => d.share || 0), 1);
-  X = (v) => M.l + (v / xMax) * pw;
-  Y = (v) => M.t + ph - (v / yMax) * ph;
-  R = (h) => 1.2 * (14 + 52 * Math.sqrt((h || 0) / hMax));
 
-  drawAxes();
   buildLegend();
-  buildBubbles();
   $("src").textContent = `출처: ${data.source} · 단위: ${data.unit}`;
   $("warn").textContent = "⚠️ " + data.note + " 2010~11년 연령 구간 '30세 미만'은 '20대 이하'로 맞췄습니다.";
   const yr = $("yr");
-  yr.min = 0; yr.max = years.length - 1; yr.step = 0.01; yr.value = years.length - 1;
+  yr.min = 0; yr.max = years.length - 1; yr.step = 0.01;
   yr.addEventListener("input", () => { stop(); setPos(+yr.value); });
-  setPos(years.length - 1);
+  pos = years.length - 1;
+  layout();
   bindControls();
+
+  let lastW = window.innerWidth, t = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(t);
+    t = setTimeout(() => { if (Math.abs(window.innerWidth - lastW) > 20) { lastW = window.innerWidth; layout(); } }, 150);
+  });
 }
+
+// 화면 크기에 따라 SVG 좌표계를 따로 잡음: 모바일은 실제 픽셀 폭에 맞춰 글자가 작아지지 않게
+function layout() {
+  MOB = window.innerWidth <= 640;
+  if (MOB) {
+    W = Math.max(300, Math.round($("chart").parentNode.clientWidth));
+    H = Math.round(W * 1.05);
+    M = { l: 40, r: 8, t: 10, b: 40 };
+  } else {
+    W = 960; H = 600; M = { l: 96, r: 20, t: 16, b: 62 };
+  }
+  pw = W - M.l - M.r; ph = H - M.t - M.b;
+  $("chart").setAttribute("viewBox", `0 0 ${W} ${H}`);
+  X = (v) => M.l + (v / xMax) * pw;
+  Y = (v) => M.t + ph - (v / yMax) * ph;
+  R = MOB
+    ? (h) => 1.2 * (7 + 26 * Math.sqrt((h || 0) / hMax))
+    : (h) => 1.2 * (14 + 52 * Math.sqrt((h || 0) / hMax));
+  ["grid", "axes", "bubbles", "labels"].forEach((id) => $(id).replaceChildren());
+  drawAxes();
+  buildBubbles();
+  render();
+}
+
+const yLabel = (n) => n === 0 ? "0" : MOB ? n + "억" : n + "억원";
+const xLabel = (v) => {
+  if (v === 0) return "0";
+  if (!MOB) return v >= 10000 ? (v / 10000) + "억원" : v.toLocaleString("ko-KR") + "만원";
+  return v >= 10000 ? (v / 10000) + "억" : (v / 1000) + "천만";
+};
 
 function drawAxes() {
   const grid = $("grid"), axes = $("axes");
-  // 보조 눈금선(얇게): 주 눈금 사이 한 개씩
-  for (let v = 5000; v < yMax; v += 10000) {
-    el("line", { x1: M.l, x2: W - M.r, y1: Y(v), y2: Y(v), class: "minor" }, grid);
-  }
-  for (let v = 1000; v < xMax; v += 2000) {
-    el("line", { x1: X(v), x2: X(v), y1: M.t, y2: M.t + ph, class: "minor" }, grid);
-  }
-  // 주 눈금선 + 라벨
+  for (let v = 5000; v < yMax; v += 10000) el("line", { x1: M.l, x2: W - M.r, y1: Y(v), y2: Y(v), class: "minor" }, grid);
+  for (let v = 1000; v < xMax; v += 2000) el("line", { x1: X(v), x2: X(v), y1: M.t, y2: M.t + ph, class: "minor" }, grid);
+  const yo = MOB ? 4 : 6;
   for (let v = 0; v <= yMax + 1e-9; v += 10000) {
-    const y = Y(v), n = v / 10000;
+    const y = Y(v);
     el("line", { x1: M.l, x2: W - M.r, y1: y, y2: y, class: "grid" }, grid);
-    el("text", { x: M.l - 10, y: y + 6, "text-anchor": "end", class: "ax" }, axes).textContent = n === 0 ? "0" : n + "억원";
+    el("text", { x: M.l - (MOB ? 5 : 10), y: y + yo, "text-anchor": "end", class: "ax" }, axes).textContent = yLabel(v / 10000);
   }
   for (let v = 0; v <= xMax + 1e-9; v += 2000) {
     const x = X(v);
     el("line", { x1: x, x2: x, y1: M.t, y2: M.t + ph, class: "grid" }, grid);
-    el("text", { x, y: H - 30, "text-anchor": "middle", class: "ax" }, axes).textContent = v === 0 ? "0" : v.toLocaleString("ko-KR") + "만원";
+    const lastTick = v + 2000 > xMax + 1e-9;
+    el("text", { x: lastTick ? x + 2 : x, y: M.t + ph + (MOB ? 14 : 30), "text-anchor": lastTick ? "end" : "middle", class: "ax" }, axes).textContent = xLabel(v);
   }
-  el("text", { x: M.l + pw / 2, y: H - 4, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 소득 <tspan class="p">(전년도 경상소득)</tspan> →`;
-  el("text", { x: 22, y: M.t + ph / 2, transform: `rotate(-90 22 ${M.t + ph / 2})`, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 자산 <tspan class="p">→</tspan>`;
+  el("text", { x: M.l + pw / 2, y: H - (MOB ? 6 : 4), "text-anchor": "middle", class: "axt" }, axes).innerHTML =
+    MOB ? `평균 소득 →` : `평균 소득 <tspan class="p">(전년도 경상소득)</tspan> →`;
+  const ay = M.t + ph / 2, axx = MOB ? 10 : 22;
+  el("text", { x: axx, y: ay, transform: `rotate(-90 ${axx} ${ay})`, "text-anchor": "middle", class: "axt" }, axes).textContent = "평균 자산 →";
   const yb = $("yearbig");
-  yb.setAttribute("x", W - M.r - 16);
-  yb.setAttribute("y", M.t + ph - 18);
+  yb.setAttribute("x", W - M.r - (MOB ? 6 : 16));
+  yb.setAttribute("y", M.t + ph - (MOB ? 8 : 18));
 }
 
 function buildLegend() {
   const leg = $("leg");
+  leg.replaceChildren();
   groups.forEach((g) => {
     const s = document.createElement("span");
     const i = document.createElement("i");
@@ -240,7 +292,7 @@ function buildBubbles() {
     c.addEventListener("mouseenter", (e) => showTip(i, e));
     c.addEventListener("mousemove", (e) => moveTip(e));
     c.addEventListener("mouseleave", () => ($("tip").style.display = "none"));
-    c.addEventListener("click", () => { sel = i; render(); });
+    c.addEventListener("click", (e) => { sel = i; render(); showTip(i, e); });
     return c;
   });
   labelEls = groups.map(() => el("text", { class: "lab", "text-anchor": "middle" }, lg));
@@ -266,17 +318,32 @@ function setPos(p) {
 }
 
 function render() {
+  if (!circles.length) return;
   const yi = Math.round(pos);
   $("yearbig").textContent = years[yi];
   $("yr").value = pos;
+  const nameDy = MOB ? -1 : -2, shareDy = MOB ? 11 : 17;
+  const pts = [];
   groups.forEach((g, i) => {
     const d = valueAt(g, pos), c = circles[i], t = labelEls[i], sz = shareEls[i];
     if (!d) { c.setAttribute("r", 0); t.textContent = ""; sz.textContent = ""; return; }
     const cx = X(d.income), cy = Y(d.asset), r = R(d.share);
     c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", r);
-    t.setAttribute("x", cx); t.setAttribute("y", cy - 2); t.textContent = g.label;
-    sz.setAttribute("x", cx); sz.setAttribute("y", cy + 17); sz.textContent = d.share != null ? d.share.toFixed(1) + "%" : "";
+    pts.push({ i, cx, cy, r, ly: cy, share: d.share || 0, label: g.label, txt: d.share != null ? d.share.toFixed(1) + "%" : "" });
   });
+  const lw = MOB ? 52 : 80, lh = MOB ? 26 : 38;
+  pts.sort((a, b) => b.share - a.share);
+  const placed = [];
+  for (const p of pts) {
+    const hit = placed.some((q) => Math.abs(q.cx - p.cx) < lw && Math.abs(q.ly - p.ly) < lh);
+    if (hit) p.ly = p.cy + p.r + (MOB ? 12 : 18);   // 버블 아래쪽 바깥으로
+    placed.push(p);
+  }
+  for (const p of pts) {
+    const t = labelEls[p.i], sz = shareEls[p.i];
+    t.setAttribute("x", p.cx); t.setAttribute("y", p.ly + nameDy); t.textContent = p.label;
+    sz.setAttribute("x", p.cx); sz.setAttribute("y", p.ly + shareDy); sz.textContent = p.txt;
+  }
   const g = groups[sel], d = g && valueAt(g, pos), y = years[yi];
   $("l1").textContent = `${g ? g.label : ""} 평균 소득 (${y})`;
   $("l2").textContent = `${g ? g.label : ""} 평균 자산 (${y})`;
@@ -294,11 +361,14 @@ function showTip(i, e) {
 }
 function moveTip(e) {
   const tip = $("tip");
-  tip.style.left = (e.clientX + 14) + "px";
+  const w = tip.offsetWidth || 160;
+  const x = Math.min(e.clientX + 14, window.innerWidth - w - 8);
+  tip.style.left = Math.max(8, x) + "px";
   tip.style.top = (e.clientY + 12) + "px";
 }
+document.addEventListener("touchstart", (e) => { if (!(e.target instanceof SVGCircleElement)) $("tip").style.display = "none"; }, { passive: true });
 
-// 재생: 연도당 약 1초 기준, 프레임마다 실수 위치를 올려 부드럽게 이동
+// 재생: 연도당 약 1초, 프레임마다 실수 위치를 올려 부드럽게 이동
 let last = 0;
 function frame(ts) {
   if (!playing) return;
