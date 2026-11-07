@@ -256,7 +256,7 @@ details.all[open] summary::before{content:"－ ";}
 <header class="hd"><div class="hd-in">
   <a class="brand" href="./"><img src="assets/clerk.jpg" alt="클사무관" width="56" height="56">
     <div><b>클사무관의 <em>라이프 인덱스</em></b><span id="sub"></span></div></a>
-  <nav class="topnav" aria-label="주 메뉴"><a id="tn-home" href="#">홈</a><a id="tn-ind" href="#aging">지표</a><a id="tn-lab" href="#qol">🧪 실험실</a></nav>
+  <nav class="topnav" aria-label="주 메뉴"><a id="tn-home" href="#">홈</a><a id="tn-ind" href="#aging">지표</a><a id="tn-lab" href="#qol">🧪 실험실</a><a href="lab2/">🧪 실험실2</a></nav>
 </div></header>
 <div id="sample"></div>
 <main class="wrap">
@@ -303,7 +303,7 @@ function themeOf(id){return S.d.themes.find(t=>t.indicators.some(i=>i.id===id))}
 function buildNav(){
   let n=0;
   $("rail").innerHTML=`<a class="home-link" href="#">← 처음 화면</a>`+S.d.themes.map(t=>(t.id==="qol"?`<h3 class="lab">🧪 ${esc(t.name.replace("실험실 · ",""))} <small>실험실</small></h3>`:`<h3><i>${++n}.</i> ${esc(t.name)}</h3>`)+t.indicators.map(i=>
-    `<button data-i="${i.id}" ${i.id===S.ind?'aria-current="true"':""}>${esc(i.name)}</button>`).join("")).join("");
+    `<button data-i="${i.id}" ${i.id===S.ind?'aria-current="true"':""}>${esc(i.name)}</button>`).join("")).join("")+`<h3 class="lab"><a href="lab2/" style="color:inherit;text-decoration:none">🧪 실험실2 <small>소득자산 분석</small></a></h3>`;
   $("rail").querySelectorAll("button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.i});
   $("picker").innerHTML=`<option value="" ${S.ind?"":"selected"}>지표를 골라 보세요 (전체 ${S.d.themes.reduce((a,t)=>a+(t.id==="qol"?0:t.indicators.length),0)}개)</option>`+S.d.themes.map(t=>`<optgroup label="${esc(t.id==="qol"?"🧪 "+t.name:(S.d.themes.filter(x=>x.id!=="qol").indexOf(t)+1)+". "+t.name)}">`+t.indicators.map(i=>
     `<option value="${i.id}" ${i.id===S.ind?"selected":""}>${esc(i.name)}</option>`).join("")+"</optgroup>").join("");
