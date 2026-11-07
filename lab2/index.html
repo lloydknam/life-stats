@@ -35,8 +35,9 @@ main{flex:1;min-width:0}
 .grid{stroke:var(--line);stroke-width:1.5}
 .axt{fill:var(--fg);font-weight:800;font-size:23px}
 #yearbig{font-size:170px;font-weight:800;fill:#bfe9e0;pointer-events:none;font-variant-numeric:tabular-nums;letter-spacing:-4px}
-circle.b{stroke:rgba(255,255,255,.7);stroke-width:1.5;cursor:pointer;transition:r .3s}
-circle.b.sel{stroke:var(--deep);stroke-width:4}
+circle.b{stroke-width:1.5;cursor:pointer;transition:r .3s}
+.bsz{font-size:13px;font-weight:700;fill:var(--mut);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:3px}
+circle.b.sel{stroke:var(--deep)!important;stroke-width:3}
 .lab{font-size:19px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:4px}
 .stats{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:14px;flex-wrap:wrap}
 .stats .l{color:var(--mut);font-size:17px;font-weight:600}
@@ -146,7 +147,7 @@ footer img{height:48px;width:auto}
 <div id="tip"></div>
 
 <script>
-const COL = { "29세 이하": "#9cc3f5", "30대": "#9edcb8", "40대": "#fbcf8f", "50대": "#f7a3b5", "60세 이상": "#c9b0ec" };
+const COL = { "29세 이하": "#a9cdf7", "30대": "#a8e3c8", "40대": "#fde0a8", "50대": "#f9b8c8", "60세 이상": "#d8c4f4" };
 const W = 960, H = 600, M = { l: 96, r: 20, t: 16, b: 62 };
 const pw = W - M.l - M.r, ph = H - M.t - M.b;
 const $ = (s) => document.getElementById(s);
@@ -159,7 +160,7 @@ const el = (tag, attrs = {}, parent) => {
   return n;
 };
 
-let D = null, years = [], groups = [], cur = 0, sel = 0, timer = null, speed = 1, X, Y, R, circles = [], labelEls = [], hMax = 1, xMax = 1, yMax = 1;
+let shareEls = [], D = null, years = [], groups = [], cur = 0, sel = 0, timer = null, speed = 1, X, Y, R, circles = [], labelEls = [], hMax = 1, xMax = 1, yMax = 1;
 
 fetch("../data/household_age.json", { cache: "no-store" })
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -176,7 +177,7 @@ function init(data) {
   hMax = Math.max(...all.map((d) => d.share || 0), 1);
   X = (v) => M.l + (v / xMax) * pw;
   Y = (v) => M.t + ph - (v / yMax) * ph;
-  R = (h) => 14 + 52 * Math.sqrt((h || 0) / hMax);
+  R = (h) => 1.2 * (14 + 52 * Math.sqrt((h || 0) / hMax));
 
   drawAxes();
   buildNav();
@@ -231,7 +232,7 @@ function buildLegend() {
 function buildBubbles() {
   const bg = $("bubbles"), lg = $("labels");
   circles = groups.map((g, i) => {
-    const c = el("circle", { r: 0, fill: COL[g.label] || "#ccc", class: "b", filter: "url(#sh)" }, bg);
+    const c = el("circle", { r: 0, fill: COL[g.label] || "#ccc", "fill-opacity": ".5", stroke: COL[g.label] || "#ccc", "stroke-opacity": ".9", class: "b" }, bg);
     c.addEventListener("mouseenter", (e) => showTip(i, e));
     c.addEventListener("mousemove", (e) => moveTip(e));
     c.addEventListener("mouseleave", () => ($("tip").style.display = "none"));
@@ -239,6 +240,7 @@ function buildBubbles() {
     return c;
   });
   labelEls = groups.map((g) => el("text", { class: "lab", "text-anchor": "middle" }, lg));
+  shareEls = groups.map((g) => el("text", { class: "bsz", "text-anchor": "middle" }, lg));
 }
 
 function draw(idx) {
@@ -247,12 +249,13 @@ function draw(idx) {
   $("yearbig").textContent = y;
   $("yr").value = idx;
   groups.forEach((g, i) => {
-    const d = g.data[y], c = circles[i], t = labelEls[i];
-    if (!d) { c.setAttribute("r", 0); t.textContent = ""; return; }
+    const d = g.data[y], c = circles[i], t = labelEls[i], sz = shareEls[i];
+    if (!d) { c.setAttribute("r", 0); t.textContent = ""; sz.textContent = ""; return; }
     const cx = X(d.income), cy = Y(d.asset), r = R(d.share);
     c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", r);
     c.classList.toggle("sel", i === sel);
-    t.setAttribute("x", cx); t.setAttribute("y", cy + 6); t.textContent = g.label;
+    t.setAttribute("x", cx); t.setAttribute("y", cy - 2); t.textContent = g.label;
+    sz.setAttribute("x", cx); sz.setAttribute("y", cy + 17); sz.textContent = d.share != null ? d.share.toFixed(1) + "%" : "";
   });
   const g = groups[sel], d = g && g.data[y];
   $("l1").textContent = `${g ? g.label : ""} 평균 소득 (${y})`;
