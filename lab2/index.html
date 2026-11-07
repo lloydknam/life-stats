@@ -33,11 +33,12 @@ main{flex:1;min-width:0}
 #chart{width:100%;height:auto;display:block}
 .ax{fill:var(--mut);font-size:19px}
 .grid{stroke:var(--line);stroke-width:1.5}
+.minor{stroke:var(--line);stroke-width:.8;opacity:.8}
 .axt{fill:var(--fg);font-weight:800;font-size:23px}
 #yearbig{font-size:170px;font-weight:800;fill:#bfe9e0;pointer-events:none;font-variant-numeric:tabular-nums;letter-spacing:-4px}
-circle.b{stroke-width:1.5;cursor:pointer;transition:r .3s}
+circle.b{stroke-width:1.5;cursor:pointer}
 .bsz{font-size:13px;font-weight:700;fill:var(--mut);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:3px}
-circle.b.sel{stroke:var(--deep)!important;stroke-width:3}
+
 .lab{font-size:19px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:4px}
 .stats{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:14px;flex-wrap:wrap}
 .stats .l{color:var(--mut);font-size:17px;font-weight:600}
@@ -159,8 +160,10 @@ const el = (tag, attrs = {}, parent) => {
   if (parent) parent.appendChild(n);
   return n;
 };
+const lerp = (a, b, t) => a + (b - a) * t;
 
-let shareEls = [], D = null, years = [], groups = [], cur = 0, sel = 0, timer = null, speed = 1, X, Y, R, circles = [], labelEls = [], hMax = 1, xMax = 1, yMax = 1;
+let D = null, years = [], groups = [], pos = 0, sel = 0, raf = null, playing = false, speed = 1;
+let X, Y, R, xMax = 1, yMax = 1, hMax = 1, circles = [], labelEls = [], shareEls = [];
 
 fetch("../data/household_age.json", { cache: "no-store" })
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -180,28 +183,32 @@ function init(data) {
   R = (h) => 1.2 * (14 + 52 * Math.sqrt((h || 0) / hMax));
 
   drawAxes();
-  buildNav();
   buildLegend();
   buildBubbles();
   $("src").textContent = `출처: ${data.source} · 단위: ${data.unit}`;
   $("warn").textContent = "⚠️ " + data.note + " 2010~11년 연령 구간 '30세 미만'은 '20대 이하'로 맞췄습니다.";
   const yr = $("yr");
-  yr.min = 0; yr.max = years.length - 1; yr.step = 1; yr.value = years.length - 1;
-  yr.addEventListener("input", () => { stop(); draw(+yr.value); });
-  cur = years.length - 1;
-  draw(cur);
+  yr.min = 0; yr.max = years.length - 1; yr.step = 0.01; yr.value = years.length - 1;
+  yr.addEventListener("input", () => { stop(); setPos(+yr.value); });
+  setPos(years.length - 1);
   bindControls();
 }
 
 function drawAxes() {
   const grid = $("grid"), axes = $("axes");
-  // Y: 1억원(10,000만원) 단위 정수 라벨
+  // 보조 눈금선(얇게): 주 눈금 사이 한 개씩
+  for (let v = 5000; v < yMax; v += 10000) {
+    el("line", { x1: M.l, x2: W - M.r, y1: Y(v), y2: Y(v), class: "minor" }, grid);
+  }
+  for (let v = 1000; v < xMax; v += 2000) {
+    el("line", { x1: X(v), x2: X(v), y1: M.t, y2: M.t + ph, class: "minor" }, grid);
+  }
+  // 주 눈금선 + 라벨
   for (let v = 0; v <= yMax + 1e-9; v += 10000) {
     const y = Y(v), n = v / 10000;
     el("line", { x1: M.l, x2: W - M.r, y1: y, y2: y, class: "grid" }, grid);
     el("text", { x: M.l - 10, y: y + 6, "text-anchor": "end", class: "ax" }, axes).textContent = n === 0 ? "0" : n + "억원";
   }
-  // X: 2,000만원 단위
   for (let v = 0; v <= xMax + 1e-9; v += 2000) {
     const x = X(v);
     el("line", { x1: x, x2: x, y1: M.t, y2: M.t + ph, class: "grid" }, grid);
@@ -209,13 +216,10 @@ function drawAxes() {
   }
   el("text", { x: M.l + pw / 2, y: H - 4, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 소득 <tspan class="p">(전년도 경상소득)</tspan> →`;
   el("text", { x: 22, y: M.t + ph / 2, transform: `rotate(-90 22 ${M.t + ph / 2})`, "text-anchor": "middle", class: "axt" }, axes).innerHTML = `평균 자산 <tspan class="p">→</tspan>`;
-  // 연도: 그래프 우측 하단 (draw에서 텍스트 갱신)
   const yb = $("yearbig");
   yb.setAttribute("x", W - M.r - 16);
   yb.setAttribute("y", M.t + ph - 18);
 }
-
-function buildNav() {}
 
 function buildLegend() {
   const leg = $("leg");
@@ -236,28 +240,44 @@ function buildBubbles() {
     c.addEventListener("mouseenter", (e) => showTip(i, e));
     c.addEventListener("mousemove", (e) => moveTip(e));
     c.addEventListener("mouseleave", () => ($("tip").style.display = "none"));
-    c.addEventListener("click", () => { sel = i; draw(cur); });
+    c.addEventListener("click", () => { sel = i; render(); });
     return c;
   });
-  labelEls = groups.map((g) => el("text", { class: "lab", "text-anchor": "middle" }, lg));
-  shareEls = groups.map((g) => el("text", { class: "bsz", "text-anchor": "middle" }, lg));
+  labelEls = groups.map(() => el("text", { class: "lab", "text-anchor": "middle" }, lg));
+  shareEls = groups.map(() => el("text", { class: "bsz", "text-anchor": "middle" }, lg));
 }
 
-function draw(idx) {
-  cur = idx;
-  const y = years[idx];
-  $("yearbig").textContent = y;
-  $("yr").value = idx;
+// 연속 위치(pos: 실수 연도 인덱스) → 두 해 사이 직선 보간
+function valueAt(g, p) {
+  const i = Math.floor(p), f = p - i;
+  const a = g.data[years[i]], b = g.data[years[Math.min(i + 1, years.length - 1)]];
+  if (!a) return null;
+  if (!b || f === 0) return a;
+  return {
+    income: lerp(a.income, b.income, f),
+    asset: lerp(a.asset, b.asset, f),
+    share: a.share != null && b.share != null ? lerp(a.share, b.share, f) : a.share,
+  };
+}
+
+function setPos(p) {
+  pos = Math.max(0, Math.min(years.length - 1, p));
+  render();
+}
+
+function render() {
+  const yi = Math.round(pos);
+  $("yearbig").textContent = years[yi];
+  $("yr").value = pos;
   groups.forEach((g, i) => {
-    const d = g.data[y], c = circles[i], t = labelEls[i], sz = shareEls[i];
+    const d = valueAt(g, pos), c = circles[i], t = labelEls[i], sz = shareEls[i];
     if (!d) { c.setAttribute("r", 0); t.textContent = ""; sz.textContent = ""; return; }
     const cx = X(d.income), cy = Y(d.asset), r = R(d.share);
     c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", r);
-    c.classList.toggle("sel", i === sel);
     t.setAttribute("x", cx); t.setAttribute("y", cy - 2); t.textContent = g.label;
     sz.setAttribute("x", cx); sz.setAttribute("y", cy + 17); sz.textContent = d.share != null ? d.share.toFixed(1) + "%" : "";
   });
-  const g = groups[sel], d = g && g.data[y];
+  const g = groups[sel], d = g && valueAt(g, pos), y = years[yi];
   $("l1").textContent = `${g ? g.label : ""} 평균 소득 (${y})`;
   $("l2").textContent = `${g ? g.label : ""} 평균 자산 (${y})`;
   $("v1").textContent = d ? fmtMan(d.income) : "–";
@@ -265,10 +285,10 @@ function draw(idx) {
 }
 
 function showTip(i, e) {
-  const g = groups[i], d = g.data[years[cur]];
+  const g = groups[i], d = valueAt(g, pos);
   if (!d) return;
   const tip = $("tip");
-  tip.innerHTML = `<b>${g.label}</b> · ${years[cur]}<br>소득 ${fmtMan(d.income)} · 자산 ${fmtMan(d.asset)}<br>가구 비중 ${d.share != null ? d.share.toFixed(1) + "%" : "–"}`;
+  tip.innerHTML = `<b>${g.label}</b> · ${years[Math.round(pos)]}<br>소득 ${fmtMan(d.income)} · 자산 ${fmtMan(d.asset)}<br>가구 비중 ${d.share != null ? d.share.toFixed(1) + "%" : "–"}`;
   tip.style.display = "block";
   moveTip(e);
 }
@@ -278,30 +298,40 @@ function moveTip(e) {
   tip.style.top = (e.clientY + 12) + "px";
 }
 
+// 재생: 연도당 약 1초 기준, 프레임마다 실수 위치를 올려 부드럽게 이동
+let last = 0;
+function frame(ts) {
+  if (!playing) return;
+  if (!last) last = ts;
+  const dt = (ts - last) / 1000;
+  last = ts;
+  const next = pos + dt * speed;
+  if (next >= years.length - 1) { setPos(years.length - 1); stop(); return; }
+  setPos(next);
+  raf = requestAnimationFrame(frame);
+}
 function stop() {
-  clearInterval(timer); timer = null;
+  playing = false; last = 0;
+  if (raf) cancelAnimationFrame(raf);
+  raf = null;
   $("play").textContent = "▶";
 }
 function start() {
-  if (cur >= years.length - 1) draw(0);
+  if (pos >= years.length - 1) setPos(0);
+  playing = true; last = 0;
   $("play").textContent = "⏸";
-  const step = () => {
-    if (cur >= years.length - 1) { stop(); return; }
-    draw(cur + 1);
-  };
-  timer = setInterval(step, Math.round(1000 / speed));
+  raf = requestAnimationFrame(frame);
 }
 
 function bindControls() {
-  $("play").addEventListener("click", () => (timer ? stop() : start()));
+  $("play").addEventListener("click", () => (playing ? stop() : start()));
   document.querySelectorAll("#spd button").forEach((b) => b.addEventListener("click", () => {
     speed = +b.dataset.s;
     document.querySelectorAll("#spd button").forEach((x) => x.classList.toggle("on", x === b));
-    if (timer) { stop(); start(); }
   }));
   document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") { stop(); draw(Math.max(0, cur - 1)); }
-    if (e.key === "ArrowRight") { stop(); draw(Math.min(years.length - 1, cur + 1)); }
+    if (e.key === "ArrowLeft") { stop(); setPos(Math.round(pos) - 1); }
+    if (e.key === "ArrowRight") { stop(); setPos(Math.round(pos) + 1); }
   });
 }
 </script>
