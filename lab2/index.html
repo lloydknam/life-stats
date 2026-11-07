@@ -147,7 +147,7 @@ footer img{height:48px;width:auto}
 <div id="tip"></div>
 
 <script>
-const COL = { "29세 이하": "#a9cdf7", "30대": "#a8e3c8", "40대": "#fde0a8", "50대": "#f9b8c8", "60세 이상": "#d8c4f4" };
+const COL = { "20대 이하": "#a9cdf7", "30대": "#a8e3c8", "40대": "#fde0a8", "50대": "#f9b8c8", "60세 이상": "#d8c4f4" };
 const W = 960, H = 600, M = { l: 96, r: 20, t: 16, b: 62 };
 const pw = W - M.l - M.r, ph = H - M.t - M.b;
 const $ = (s) => document.getElementById(s);
@@ -184,7 +184,7 @@ function init(data) {
   buildLegend();
   buildBubbles();
   $("src").textContent = `출처: ${data.source} · 단위: ${data.unit}`;
-  $("warn").textContent = "⚠️ " + data.note + " 2010~11년 연령 구간 '30세 미만'은 '29세 이하'로 맞췄습니다.";
+  $("warn").textContent = "⚠️ " + data.note + " 2010~11년 연령 구간 '30세 미만'은 '20대 이하'로 맞췄습니다.";
   const yr = $("yr");
   yr.min = 0; yr.max = years.length - 1; yr.step = 1; yr.value = years.length - 1;
   yr.addEventListener("input", () => { stop(); draw(+yr.value); });
