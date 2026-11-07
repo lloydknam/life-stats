@@ -1,0 +1,22 @@
+name: _oneoff-household
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Discover household survey tables
+        env:
+          KOSIS_API_KEY: ${{ secrets.KOSIS_API_KEY }}
+        run: python scripts/_oneoff/discover_household.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: household-discovery
+          path: out/
