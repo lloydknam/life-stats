@@ -26,8 +26,8 @@ a{color:inherit}
 #nav .note{font-size:14px;color:var(--mut);line-height:1.45;padding:6px 14px 4px}
 main{flex:1;min-width:0}
 .card{background:var(--card);border:6px solid var(--teal);border-radius:36px;padding:22px 28px 20px}
-.top{display:flex;justify-content:flex-end}
-.ttl{text-align:right}
+.top{display:flex;justify-content:flex-start}
+.ttl{text-align:left}
 .ttl h1{font-size:38px;margin:0;font-weight:800;line-height:1.2}
 .sub{color:var(--mut);font-size:17px}
 .chip{display:inline-block;background:#dff4ef;color:var(--deep);font-weight:800;font-size:17px;border-radius:999px;padding:3px 14px;margin-bottom:4px}
@@ -206,9 +206,10 @@ function init(data) {
   const yr = $("yr");
   yr.min = 0; yr.max = years.length - 1; yr.step = 0.01;
   yr.addEventListener("input", () => { stop(); setPos(+yr.value); });
-  pos = years.length - 1;
+  pos = 0;
   layout();
   bindControls();
+  start(); // 페이지 열면 첫 연도부터 자동 재생
 
   let lastW = window.innerWidth, t = null;
   window.addEventListener("resize", () => {
